@@ -10,12 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ secure_asset('secure_assets/images/logo.png') }}">
-    <script src="{{ secure_asset('secure_assets/javascript/config.js') }}"></script>
-    <script src="{{ secure_asset('secure_assets/javascript/animate.js') }}"></script>
-    <link rel="stylesheet" href="{{ secure_asset('secure_assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{ secure_asset('secure_assets/css/calendrier-manager.css')}}">
-    <link rel="stylesheet" href="{{ secure_asset('assets/css/dashboard.css')}}">
+<link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
+    <script src="{{ asset('assets/javascript/config.js') }}"></script>
+    <script src="{{ asset('assets/javascript/animate.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/calendrier-manager.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css')}}">
 </head>
 
 <body class="h-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-poppins transition-all duration-500">
@@ -541,9 +541,9 @@
     </div>
 
 
-<script src="{{ secure_asset('secure_assets/javascript/logout.js') }}"></script>
-<script src="{{ secure_asset('secure_assets/javascript/profile.js') }}"></script>
-<script src="{{ secure_asset('secure_assets/javascript/config.js') }}"></script>
+<script src="{{ asset('assets/javascript/logout.js') }}"></script>
+<script src="{{ asset('assets/javascript/profile.js') }}"></script>
+<script src="{{ asset('assets/javascript/config.js') }}"></script>
 <script src="{{ asset('assets/javascript/password.js') }}"></script>
 </body>
 </html>
