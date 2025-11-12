@@ -1,0 +1,33 @@
+APP_NAME="Graxel Technologies"
+APP_ENV=production
+APP_KEY=base64:LPDwL29OhPD8cUob+7Lt1hv2d3ZIti8jI0qSeT/D2Uw=
+APP_DEBUG=false
+APP_URL=https://graxel-gestion-de-conges.koyeb.app
+
+APP_LOCALE=fr
+APP_FALLBACK_LOCALE=fr
+APP_FAKER_LOCALE=fr_FR
+
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+DB_HOST=<adresse_de_ton_db>
+DB_PORT=3306
+DB_DATABASE=graxel_conges
+DB_USERNAME=<utilisateur_db>
+DB_PASSWORD=<mot_de_passe_db>
+
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+CACHE_STORE=file
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=graxeltechnologies228@gmail.com
+MAIL_PASSWORD="hnnf crtt wakk jkyp"
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="graxeltechnologies228@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
