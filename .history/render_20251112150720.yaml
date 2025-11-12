@@ -1,0 +1,8 @@
+# Render config for services:
+  - type: web
+    name: gestion-de-conges
+    env: docker
+    plan: free
+    region: oregon
+    buildCommand: ""
+    startCommand: ""
