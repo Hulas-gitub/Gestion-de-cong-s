@@ -8,17 +8,15 @@
     <title>Graxel Technologies - Connexion</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
-    <link rel="stylesheet" href="{{ asset('secure_assets/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
 
-    <!-- Vite compile CSS et JS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Loader amélioré et centré -->
     <div class="loader-container" id="loader">
         <div class="loader-content">
             <div class="loader-logo-container">
-                <img src="{{ secure_asset('secure_assets/images/logo.png') }}" alt="Graxel Logo" class="loader-logo">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Graxel Logo" class="loader-logo">
             </div>
             <div class="loader-spinner"></div>
             <div class="loader-text">Veuillez patienter un instant</div>
@@ -89,7 +87,7 @@
 
                 <div class="logo-section">
                     <div class="logo">
-                        <img src="{{ secure_asset('secure_assets/images/logo.png') }}" alt="Graxel Logo" class="loader-logo">
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="Graxel Logo" class="loader-logo">
                     </div>
                     <h1 class="company-name">Graxel Technologies</h1>
                     <p class="company-slogan">Gestion des Congés - Connectez-vous à votre espace</p>
@@ -154,6 +152,6 @@
         </div>
     </div>
 
-    <script src="{{ secure_asset('assets/javascript/index.js') }}"></script>
+    <script src="{{ asset('assets/javascript/index.js') }}"></script>
 </body>
 </html>

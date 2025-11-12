@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Vos fichiers existants -->
-    <script src="{{ secure_asset('secure_assets/javascript/config.js') }}"></script>
-    <script src="{{ secure_asset('secure_assets/javascript/animate.js') }}"></script>
-    <link rel="stylesheet" href="{{ secure_asset('secure_assets/css/style.css') }}">
-     <link rel="stylesheet" href="{{ secure_asset('secure_assets/css/demandes.css') }}">
-    <link rel="icon" type="image/png" href="{{ secure_asset('secure_assets/images/logo.png') }}">
+    <script src="{{ asset('assets/javascript/config.js') }}"></script>
+    <script src="{{ asset('assets/javascript/animate.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+     <link rel="stylesheet" href="{{ asset('assets/css/demandes.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1"></script>
 </head>
@@ -42,7 +42,7 @@
                 <!-- Logo -->
                 <div class="flex items-center space-x-4 mb-10">
                     <div class="w-25 h-25 rounded-2xl flex items-center justify-center shadow-lg">
-                        <img src="{{ secure_asset('secure_assets/images/logo.png') }}" alt="Logo Graxel Tech" class="w-full h-full object-contain rounded-2xl" />
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Graxel Tech" class="w-full h-full object-contain rounded-2xl" />
                     </div>
                 </div>
      <!-- Navigation -->
@@ -897,8 +897,8 @@ document.getElementById('periodeFilter').addEventListener('change', function(e) 
     @csrf
 </form>
 ```
-       <script src="{{ secure_asset('secure_assets/javascript/config.js') }}"></script>
-    <script src="{{ secure_asset('secure_assets/javascript/dashboard-manager.js') }}"></script>
-  <script src="{{ secure_asset('assets/javascript/logout.js') }}"></script>
+       <script src="{{ asset('assets/javascript/config.js') }}"></script>
+    <script src="{{ asset('assets/javascript/dashboard-manager.js') }}"></script>
+  <script src="{{ asset('assets/javascript/logout.js') }}"></script>
 </body>
 </html>
