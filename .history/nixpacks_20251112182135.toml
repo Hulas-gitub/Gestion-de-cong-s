@@ -1,8 +1,0 @@
-[phases.setup]
-
-[phases.install]
-
-[phases.build]
-
-[start]
-cmd = "php artisan migrate --force && /start-container.sh"

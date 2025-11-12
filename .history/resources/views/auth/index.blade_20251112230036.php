@@ -8,10 +8,6 @@
     <title>Graxel Technologies - Connexion</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
-
-
-    <!-- Vite compile CSS et JS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Loader amélioré et centré -->

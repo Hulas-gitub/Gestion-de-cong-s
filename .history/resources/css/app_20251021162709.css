@@ -9,12 +9,3 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
-@import'./';
-@import "./style.css";
-@import "./styles.css";
-@import "./index.css";
-@import "./dashboard.css";
-@import "./demandes.css";
-@import "./calendrier.css";
-@import "./calendrier-manager.css";
-@import "./new-password.css";

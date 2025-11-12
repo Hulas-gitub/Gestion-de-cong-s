@@ -773,9 +773,6 @@
             </div>
         </div>
 
-        <script src="{{asset('assets/javascript/administration.js')}}"></script>
-        <script src="{{asset('assets/javascript/logout.js')}}"></script>
-        <script src="{{asset('assets/javascript/config.js')}}"></script>
 </body>
 
 </html>
