@@ -12,16 +12,11 @@
         rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Vos fichiers existants -->
-    <script src="{{asset('assets/javascript/config.js')}}"></script>
-    <script src="{{asset('assets/javascript/animate.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('assets/css/demandes.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    <link rel="icon" type="image/png" href="{{asset('assets/images/logo.png')}}">
 
+    <link rel="icon" type="image/png" href="{{asset('assets/images/logo.png')}}">
+      @vite(['resources/js/config.js','resources/js/app.js','resources/js/animate.js','resources/css/style.css','resources/css/app.css','resources/css/demandes.css'])
  <!-- Scripts -->
  <!-- SweetAlert2 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">

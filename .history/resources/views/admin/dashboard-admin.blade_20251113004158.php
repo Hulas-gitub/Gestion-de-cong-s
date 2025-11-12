@@ -10,18 +10,14 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Vos fichiers existants -->
-    <script src="{{ asset('assets/javascript/config.js') }}"></script>
-    <script src="{{ asset('assets/javascript/animate.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-     <link rel="stylesheet" href="{{ asset('assets/css/demandes.css') }}">
+
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1"></script>
+     @vite(['resources/js/config.js','resources/js/animate.js','resources/css/style.css','resources/css/demandes.css'])
 </head>
 <body class="h-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-poppins transition-all duration-500">
     <!-- Background Pattern -->

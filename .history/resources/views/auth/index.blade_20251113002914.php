@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
 
     <!-- Vite compile CSS et JS -->
-    @vite(['resources/css/app.css,'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Loader amélioré et centré -->
