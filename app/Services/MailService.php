@@ -41,16 +41,11 @@ class MailService
         try {
             $this->mailer->clearAddresses();
             $this->mailer->addAddress($destinataire, "$prenom $nom");
-
             $this->mailer->isHTML(true);
-            $this->mailer->Subject = '🎉 Bienvenue chez Graxel - Votre compte est créé';
-
+            $this->mailer->Subject = '🎉Nos félicitations - Votre compte est créé';
             $lienConnexion = url("/");
-
             $this->mailer->Body = $this->templateCredentialsCompte($nom, $prenom, $motDePasse, $matricule, $lienConnexion, $destinataire);
-
             $result = $this->mailer->send();
-
             if ($result) {
                 Log::info('Email credentials envoyé avec succès', [
                     'destinataire' => $destinataire,
@@ -58,7 +53,6 @@ class MailService
                     'prenom' => $prenom
                 ]);
             }
-
             return $result;
         } catch (Exception $e) {
             Log::error('Erreur envoi email credentials: ' . $e->getMessage(), [
@@ -121,33 +115,26 @@ class MailService
                     <h1>Bienvenue dans l'équipe !</h1>
                     <p>Système de Gestion des Congés</p>
                 </div>
-
                 <div class='content'>
                     <h2>Bonjour {$prenom} {$nom},</h2>
-
                     <p>Félicitations ! Votre compte a été créé avec succès sur la plateforme <strong>Graxel Congés</strong>.</p>
-
                     <div class='welcome-box'>
                         <p><strong>👤 Votre profil :</strong></p>
                         <p>Nom complet : <strong>{$prenom} {$nom}</strong></p>
                         <p>Matricule : <strong>{$matricule}</strong></p>
                     </div>
-
                     <div class='credentials-box'>
                         <h3>🔐 Vos identifiants de connexion</h3>
                         <p style='color: #856404; margin-bottom: 15px;'>Utilisez ces informations pour vous connecter à la plateforme :</p>
-
                         <div class='credential-item'>
                             <label>📧 Email de connexion</label>
                             <div class='value'>{$email}</div>
                         </div>
-
                         <div class='credential-item'>
                             <label>🔑 Mot de passe temporaire</label>
                             <div class='value'>{$motDePasse}</div>
                         </div>
                     </div>
-
                     <div class='warning-box'>
                         <strong>⚠️ IMPORTANT - Sécurité de votre compte</strong>
                         <ul>
@@ -157,11 +144,9 @@ class MailService
                             <li>Mettez à jour vos informations personnelles si nécessaire</li>
                         </ul>
                     </div>
-
                     <div class='button-container'>
                         <a href='{$lienConnexion}' class='button'>🚀 Se connecter maintenant</a>
                     </div>
-
                     <div class='features'>
                         <h3>📋 Ce que vous pourrez faire :</h3>
                         <ul>
@@ -172,15 +157,12 @@ class MailService
                             <li>👤 Gérer votre profil</li>
                         </ul>
                     </div>
-
                     <div class='divider'></div>
-
                     <p style='margin-top: 30px; font-size: 14px; color: #666;'>
                         <strong>Besoin d'aide ?</strong><br>
                         Si vous rencontrez des difficultés lors de la connexion, n'hésitez pas à contacter le support technique ou l'administrateur système.
                     </p>
                 </div>
-
                 <div class='footer'>
                     <p><strong>Graxel Technologies</strong></p>
                     <p>Système de Gestion des Congés</p>
@@ -205,16 +187,11 @@ class MailService
         try {
             $this->mailer->clearAddresses();
             $this->mailer->addAddress($destinataire, "$prenom $nom");
-
             $this->mailer->isHTML(true);
             $this->mailer->Subject = '🎉 Bienvenue chez Graxel - Activez votre compte';
-
             $lienActivation = url("/activation-compte/{$tokenActivation}");
-
             $this->mailer->Body = $this->templateActivationCompte($nom, $prenom, $lienActivation);
-
             $result = $this->mailer->send();
-
             if ($result) {
                 Log::info('Email d\'activation envoyé avec succès', [
                     'destinataire' => $destinataire,
@@ -222,7 +199,6 @@ class MailService
                     'prenom' => $prenom
                 ]);
             }
-
             return $result;
         } catch (Exception $e) {
             Log::error('Erreur envoi email activation: ' . $e->getMessage(), [
@@ -281,30 +257,23 @@ class MailService
                     <h1>Bienvenue dans l'équipe !</h1>
                     <p>Système de Gestion des Congés</p>
                 </div>
-
                 <div class='content'>
                     <h2>Bonjour {$prenom} {$nom},</h2>
-
                     <p>Félicitations ! Votre compte a été créé avec succès sur la plateforme <strong>Graxel Congés</strong>.</p>
-
                     <div class='welcome-box'>
                         <p><strong>👤 Votre profil :</strong></p>
                         <p>Nom complet : <strong>{$prenom} {$nom}</strong></p>
                         <p>Vous faites maintenant partie de notre système de gestion des congés.</p>
                     </div>
-
                     <p>Pour commencer à utiliser votre compte, vous devez d'abord <strong>l'activer</strong> et <strong>définir votre mot de passe</strong>.</p>
-
                     <div class='button-container'>
                         <a href='{$lienActivation}' class='button'>🔓 Activer mon compte</a>
                     </div>
-
                     <div class='link-section'>
                         <p><strong>Le bouton ne fonctionne pas ?</strong></p>
                         <p>Copiez et collez ce lien dans votre navigateur :</p>
                         <div class='link-text'>{$lienActivation}</div>
                     </div>
-
                     <div class='info-box'>
                         <strong>⏰ Important - Délai d'activation</strong>
                         <ul>
@@ -313,7 +282,6 @@ class MailService
                             <li>Lors de l'activation, choisissez un mot de passe sécurisé</li>
                         </ul>
                     </div>
-
                     <div class='features'>
                         <h3>📋 Ce que vous pourrez faire :</h3>
                         <ul>
@@ -324,15 +292,12 @@ class MailService
                             <li>👤 Gérer votre profil</li>
                         </ul>
                     </div>
-
                     <div class='divider'></div>
-
                     <p style='margin-top: 30px; font-size: 14px; color: #666;'>
                         <strong>Besoin d'aide ?</strong><br>
                         Si vous rencontrez des difficultés lors de l'activation, n'hésitez pas à contacter le support technique ou l'administrateur système.
                     </p>
                 </div>
-
                 <div class='footer'>
                     <p><strong>Graxel Technologies</strong></p>
                     <p>Système de Gestion des Congés</p>
@@ -371,7 +336,6 @@ class MailService
         <body>
             <div class='container'>
                 <div class='header'>
-                    <img src='assets/image/logo.png' alt='Graxel Technologies' style='max-width: 150px; margin-bottom: 10px;'>
                     <h1>📋 Nouvelle demande de congé</h1>
                 </div>
                 <div class='content'>
@@ -416,7 +380,6 @@ class MailService
         <body>
             <div class='container'>
                 <div class='header'>
-                    <img src='assets/image/logo.png' alt='Graxel Technologies' style='max-width: 150px; margin-bottom: 10px;'>
                     <h1>✅ Demande approuvée !</h1>
                 </div>
                 <div class='content'>
@@ -458,7 +421,6 @@ class MailService
         <body>
             <div class='container'>
                 <div class='header'>
-                    <img src='assets/image/logo.png' alt='Graxel Technologies' style='max-width: 150px; margin-bottom: 10px;'>
                     <h1>❌ Demande refusée</h1>
                 </div>
                 <div class='content'>
@@ -478,5 +440,66 @@ class MailService
         </body>
         </html>
         ";
+    }
+
+    /**
+     * Notifier le chef de département d'une nouvelle demande
+     */
+    public function envoyerNouvelleDemande($demande, $employe, $chef)
+    {
+        try {
+            $this->mailer->clearAddresses();
+            $this->mailer->addAddress($chef->email, "{$chef->prenom} {$chef->nom}");
+            $this->mailer->isHTML(true);
+            $this->mailer->Subject = '📋 Nouvelle demande de congé - ' . $employe->prenom . ' ' . $employe->nom;
+            $this->mailer->Body = $this->templateNouvelleDemande($demande, $employe);
+            $result = $this->mailer->send();
+            if ($result) {
+                Log::info('Email nouvelle demande envoyé', [
+                    'chef' => $chef->email,
+                    'employe' => $employe->email
+                ]);
+            }
+            return $result;
+        } catch (Exception $e) {
+            Log::error('Erreur envoi email nouvelle demande: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Notifier l'employé que sa demande est approuvée
+     */
+    public function envoyerDemandeApprouvee($demande, $employe, $validateur)
+    {
+        try {
+            $this->mailer->clearAddresses();
+            $this->mailer->addAddress($employe->email, "{$employe->prenom} {$employe->nom}");
+            $this->mailer->isHTML(true);
+            $this->mailer->Subject = '✅ Demande de congé approuvée';
+            $this->mailer->Body = $this->templateDemandeApprouvee($demande, $employe, $validateur);
+            return $this->mailer->send();
+        } catch (Exception $e) {
+            Log::error('Erreur envoi email approbation: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Notifier l'employé que sa demande est refusée
+     */
+    public function envoyerDemandeRefusee($demande, $employe, $validateur)
+    {
+        try {
+            $this->mailer->clearAddresses();
+            $this->mailer->addAddress($employe->email, "{$employe->prenom} {$employe->nom}");
+            $this->mailer->isHTML(true);
+            $this->mailer->Subject = '❌ Demande de congé refusée';
+            $this->mailer->Body = $this->templateDemandeRefusee($demande, $employe, $validateur);
+            return $this->mailer->send();
+        } catch (Exception $e) {
+            Log::error('Erreur envoi email refus: ' . $e->getMessage());
+            return false;
+        }
     }
 }

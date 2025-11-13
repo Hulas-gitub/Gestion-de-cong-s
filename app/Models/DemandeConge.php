@@ -38,4 +38,9 @@ class DemandeConge extends Model
     {
         return $this->belongsTo(User::class, 'validateur_id', 'id_user');
     }
+
+    public function typeConge()
+    {
+        return $this->belongsTo(TypeConge::class, 'type_conge_id', 'id_type');
+    }
 }

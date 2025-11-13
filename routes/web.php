@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdministrationControllers;
 use App\Http\Controllers\AccountActivationController;
-
+use App\Http\Controllers\DemandesEmployesController;
 /*
 |--------------------------------------------------------------------------
 | Routes d'authentification (Invités uniquement)
@@ -41,30 +41,42 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Routes pour les employés
-    |--------------------------------------------------------------------------
-    */
-    Route::prefix('employes')->name('employes.')->group(function () {
-        Route::get('/tableau-de-bord-employers', function () {
-            return view('employes.tableau-de-bord-employers');
-        })->name('tableau-de-bord-employers');
+/* The code snippet you provided is defining routes specifically for employees in your application. Here's a breakdown of what each part of the code is doing: */
+/*
 
-        Route::get('/calendrier-employers', function () {
-            return view('employes.calendrier-employers');
-        })->name('calendrier-employers');
+|--------------------------------------------------------------------------
+| Routes pour les employés
+|--------------------------------------------------------------------------
+*/Route::prefix('employes')->name('employes.')->middleware(['auth'])->group(function () {
 
-        Route::get('/conges-employers', function () {
-            return view('employes.conges-employers');
-        })->name('conges-employers');
+    // Pages simples
+    Route::get('/tableau-de-bord-employers', function () {
+        return view('employes.tableau-de-bord-employers');
+    })->name('tableau-de-bord-employers');
 
-        Route::get('/profile', function () {
-            return view('employes.profile');
-        })->name('profile');
-    });
+    Route::get('/calendrier-employers', function () {
+        return view('employes.calendrier-employers');
+    })->name('calendrier-employers');
 
-    /*
+    Route::get('/profile', function () {
+        return view('employes.profile');
+    })->name('profile');
+
+    // Gestion des congés
+    Route::get('/conges-employers', [DemandesEmployesController::class, 'index'])->name('conges-employers');
+    Route::get('/conges-employers/data', [DemandesEmployesController::class, 'getData'])->name('conges-employers.data');
+    Route::post('/conges/store', [DemandesEmployesController::class, 'store'])->name('conges.store');
+    Route::delete('/conges/{id}/supprimer', [DemandesEmployesController::class, 'supprimer'])->name('conges.supprimer');
+    Route::match(['POST', 'PUT'], '/conges/{id}/modifier', [DemandesEmployesController::class, 'modifier'])->name('conges.modifier');
+    Route::post('/conges/{id}/retour-anticipe', [DemandesEmployesController::class, 'retourAnticipe'])->name('conges.retourAnticipe');
+
+    // Documents justificatifs
+    Route::get('/conges/document/{id}', [DemandesEmployesController::class, 'telechargerDocument'])->name('conges.telecharger');
+    Route::get('/conges/document/{id}/visualiser', [DemandesEmployesController::class, 'visualiserDocument'])->name('conges.visualiser'); // ← NOUVEAU
+    Route::post('/conges/{id}/relancer', [DemandesEmployesController::class, 'relancer'])->name('conges.relancer');
+});
+
+/*
     |--------------------------------------------------------------------------
     | Routes pour le chef de département
     |--------------------------------------------------------------------------

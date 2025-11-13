@@ -1597,3 +1597,91 @@ footer.bg-white\/80.dark\:bg-gray-800\/80 {
 .modal .modal-header {
     @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
 }
+
+
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .holiday-badge {
+            width: 8px;
+            height: 8px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            margin-top: 2px;
+        }
+        .today {
+            background-color: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .has-leave {
+            position: relative;
+        }
+        .has-leave::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .leave-paid::after {
+            background-color: #3b82f6;
+        }
+        .leave-sick::after {
+            background-color: #ef4444;
+        }
+        .holiday-label {
+            font-size: 0.65rem;
+            line-height: 1;
+        }
+        .hover-lift {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .click-scale {
+            transition: transform 0.1s;
+        }
+        .click-scale:active {
+            transform: scale(0.98);
+        }
+        .dark .today {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+.swal-wide-popup {
+    max-width: 1200px !important;
+    width: 90% !important;
+}
+
+.swal-wide-popup .swal2-html-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+.swal2-popup {
+    padding: 1.5rem !important;
+}
+
+
+
