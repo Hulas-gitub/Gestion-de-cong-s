@@ -225,34 +225,36 @@ $nomComplet = trim($prenom . ' ' . $nom);
                             <h2 class="text-xl font-bold text-gray-900 dark:text-white">Historique de mes demandes</h2>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Gérez vos demandes de congés</p>
                         </div>
-                        <button id="btn-nouvelle-demande"
-                            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl transition-all duration-300 hover-lift click-scale shadow-lg">
-                            <i class="fas fa-plus mr-2"></i>
-                            Nouvelle demande
-                        </button>
+                         <button id="btn-nouvelle-demande" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <i class="fas fa-plus mr-2"></i>Nouvelle demande
+                    </button>
                     </div>
 
-<!-- Solde Disponible (Grande carte responsive) -->
-<div class="mt-6 bg-gradient-to-r from-blue-400 to-purple-600 rounded-xl p-4 sm:p-6 md:p-8 shadow-2xl">
-    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
-        <!-- Contenu principal -->
-        <div class="flex-1 w-full md:w-auto">
-            <p class="text-white/80 text-xs sm:text-sm font-medium mb-2">SOLDE DISPONIBLE</p>
-            <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2" id="available-balance">
-                {{ $soldeDisponible }} jour{{ $soldeDisponible > 1 ? 's' : '' }}
-            </p>
-            <p class="text-white/90 text-xs sm:text-sm">
-                <i class="fas fa-info-circle mr-2"></i>
-                <span class="inline">Vous pouvez effectuer une demande dans la limite de ce solde</span>
-            </p>
-        </div>
 
-        <!-- Icône décorative -->
+<!-- Solde Disponible (Grande carte responsive) -->
+<div class="container my-4">
+    <div class="rounded-xl shadow-lg p-4 sm:p-6 md:p-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 gap-md-4">
+            <!-- Contenu principal -->
+            <div class="flex-grow-1 w-100">
+                <p class="text-white-50 small mb-2">SOLDE DISPONIBLE</p>
+                <p class="display-6 fw-bold mb-2" id="available-balance">
+                    {{ $soldeDisponible}} jour{{ $soldeDisponible> 1? 's': ''}}
+                </p>
+                <p class="text-white-75 small">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span>Vous pouvez effectuer une demande dans la limite de ce solde</span>
+                </p>
+                        <!-- Icône décorative -->
         <div class="flex-shrink-0 self-end md:self-center">
             <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/20 rounded-full flex items-center justify-center">
                 <i class="fas fa-umbrella-beach text-white text-2xl sm:text-3xl md:text-4xl"></i>
             </div>
         </div>
+            </div>
+        </div>
+    </div>
+</div>
     </div>
 </div>
 
@@ -260,6 +262,7 @@ $nomComplet = trim($prenom . ' ' . $nom);
             <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden">
                 <!-- Les demandes seront chargées ici dynamiquement via AJAX -->
             </div>
+
  <!-- Pop-up Nouvelle demande -->
     <div id="popup-nouvelle-demande"
          class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">

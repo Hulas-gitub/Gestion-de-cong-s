@@ -26,9 +26,27 @@ class AuthController extends Controller
      */
     public function showLoginForm()
     {
-        // Si déjà connecté, rediriger selon le rôle
+        // Si déjà connecté, vérifier le statut et rediriger selon le rôle
         if (Auth::check()) {
-            return $this->redirectByRole(Auth::user());
+            $user = Auth::user();
+
+            // Vérifier si le compte est toujours actif
+            if (!$user->actif) {
+                Log::warning('Tentative d\'accès avec compte inactif', [
+                    'user_id' => $user->id_user,
+                    'email' => $user->email
+                ]);
+
+                // Déconnexion forcée
+                Auth::logout();
+                Session::flush();
+                request()->session()->invalidate();
+                request()->session()->regenerateToken();
+
+                return redirect()->route('index')->with('error', 'Votre compte a été désactivé. Contactez l\'administrateur.');
+            }
+
+            return $this->redirectByRole($user);
         }
 
         return view('auth.index');
@@ -54,22 +72,34 @@ class AuthController extends Controller
             // Rechercher l'utilisateur par email avec sa relation role
             $user = User::with('role')
                         ->where('email', $request->email)
-                        ->where('actif', true)
                         ->first();
 
             // Log pour déboguer
             Log::info('Tentative de connexion', [
                 'email' => $request->email,
-                'user_found' => $user ? 'oui' : 'non'
+                'user_found' => $user ? 'oui' : 'non',
+                'user_actif' => $user ? ($user->actif ? 'oui' : 'non') : 'n/a'
             ]);
 
             // Vérifier si l'utilisateur existe
             if (!$user) {
-                Log::warning('Utilisateur non trouvé ou inactif', ['email' => $request->email]);
+                Log::warning('Utilisateur non trouvé', ['email' => $request->email]);
                 return response()->json([
                     'success' => false,
                     'message' => 'Email ou mot de passe incorrect'
                 ], 401);
+            }
+
+            // Vérifier si le compte est actif
+            if (!$user->actif) {
+                Log::warning('Tentative de connexion avec compte inactif', [
+                    'email' => $request->email,
+                    'user_id' => $user->id_user
+                ]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Votre compte a été désactivé. Veuillez contacter l\'administrateur.'
+                ], 403);
             }
 
             // Vérifier le mot de passe
@@ -101,10 +131,12 @@ class AuthController extends Controller
             Session::put('user_email', $user->email);
             Session::put('user_matricule', $user->matricule);
             Session::put('departement_id', $user->departement_id);
+            Session::put('user_actif', $user->actif); // Pour vérification ultérieure
 
             Log::info('Connexion réussie', [
                 'user_id' => $user->id_user,
-                'role' => $user->role->nom_role
+                'role' => $user->role->nom_role,
+                'actif' => $user->actif
             ]);
 
             // Déterminer l'URL de redirection selon le rôle
@@ -122,6 +154,7 @@ class AuthController extends Controller
                     'role_id' => $user->role->id_role,
                     'matricule' => $user->matricule,
                     'departement_id' => $user->departement_id,
+                    'actif' => $user->actif,
                 ]
             ], 200);
 
@@ -140,19 +173,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Déconnexion
-     */
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        Session::flush();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('index')->with('success', 'Déconnexion réussie');
-    }
-
-    /**
      * Obtenir l'URL de redirection selon le rôle
      */
     private function getRedirectUrlByRole($user)
@@ -160,7 +180,7 @@ class AuthController extends Controller
         // Vérifier que le rôle existe
         if (!$user->role) {
             Log::error('Tentative de redirection sans rôle', ['user_id' => $user->id_user]);
-            return route('index'); // ✅ CHANGÉ de route('login') à route('index')
+            return route('index');
         }
 
         $roleName = $user->role->nom_role;
@@ -187,7 +207,8 @@ class AuthController extends Controller
         // Vérifier que le rôle existe
         if (!$user->role) {
             Log::error('Tentative de redirection sans rôle', ['user_id' => $user->id_user]);
-            Auth::logout(); // ✅ AJOUTÉ : Déconnecter l'utilisateur sans rôle
+            Auth::logout();
+            Session::flush();
             return redirect()->route('index')->with('error', 'Votre compte n\'a pas de rôle assigné');
         }
 
@@ -229,7 +250,7 @@ class AuthController extends Controller
         ]);
 
         try {
-            // Vérifier si l'utilisateur existe
+            // Vérifier si l'utilisateur existe ET est actif
             $user = User::where('email', $request->email)
                        ->where('actif', true)
                        ->first();
@@ -363,13 +384,15 @@ class AuthController extends Controller
                 ], 400);
             }
 
-            // Mettre à jour le mot de passe
-            $user = User::where('email', $request->email)->first();
+            // Mettre à jour le mot de passe - Vérifier que l'utilisateur est actif
+            $user = User::where('email', $request->email)
+                       ->where('actif', true)
+                       ->first();
 
             if (!$user) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Utilisateur non trouvé.'
+                    'message' => 'Utilisateur non trouvé ou compte inactif.'
                 ], 404);
             }
 
@@ -400,4 +423,31 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    public function logout(Request $request)
+{
+    $userId = Auth::id();
+
+    Log::info('Déconnexion utilisateur', ['user_id' => $userId]);
+
+    // Déconnexion complète
+    Auth::logout();
+
+    // Détruire toutes les données de session
+    Session::flush();
+
+    // Invalider la session actuelle
+    $request->session()->invalidate();
+
+    // Régénérer le token CSRF pour la sécurité
+    $request->session()->regenerateToken();
+
+    // Redirection avec headers pour empêcher le cache
+    return redirect()->route('index')
+        ->with('success', 'Vous êtes déconnecté')
+        ->withHeaders([
+            'Cache-Control' => 'no-cache, no-store, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
+            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
+        ]);
+}
 }

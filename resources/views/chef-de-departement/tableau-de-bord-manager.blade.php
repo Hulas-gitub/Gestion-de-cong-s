@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graxel Tech - Tableau de bord Chef de Département</title>
+    <title>Graxel Tech - Tableau de bord chef de département</title>
+            <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="{{asset('assets/javascript/animate.js')}}"></script>
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-       <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-    <!-- Nouveaux scripts pour les graphiques -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('assets/javascript/config.js') }}"></script>
+    <script src="{{ asset('assets/javascript/animate.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/calendrier-manager.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css')}}">   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.2.0"></script>
 </head>
+
 <body class="h-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-poppins transition-all duration-500">
     <!-- Background Pattern -->
     <div class="fixed inset-0 bg-pattern opacity-5 pointer-events-none"></div>
-
-    <!-- Token de notification -->
-    <div id="notification-token" class="notification-token glass-effect text-white px-6 py-3 rounded-2xl shadow-2xl">
-        <div class="flex items-center space-x-3">
-            <div class="w-3 h-3 bg-white rounded-full animate-pulse"></div>
-            <span id="token-text" class="text-sm font-medium">Bienvenue, Chef de Département</span>
-            <i id="token-icon" class="fas fa-check text-sm"></i>
-        </div>
-    </div>
 
     <!-- Sidebar Overlay (Mobile) -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden sidebar-overlay"></div>
@@ -131,24 +123,25 @@
             </div>
         </div>
 
-
-<!-- Main Content -->
-<div class="flex-1 overflow-auto custom-scrollbar">
-    <!-- Header (à fleur) -->
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto custom-scrollbar">
+          <!-- Header (à fleur) -->
     <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg shadow-lg border-b border-gray-200/50 dark:border-gray-700/50 px-4 md:px-0 py-6 animate-fade-in sticky top-0 z-30 w-full">
         <div class="max-w-full mx-0 px-4 md:px-6 flex justify-between items-center w-full">
              <div class="flex items-center space-x-4">
                         <button id="toggle-sidebar" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 md:hidden">
                             <i class="fas fa-bars text-gray-600 dark:text-gray-400"></i>
                         </button>
-                        <div>
-                            <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Tableau de bord</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">
-                                <i class="fas fa-users mr-2"></i>
-                                <span id="current-date"></span>
-                                <span>| Département Finance</span>
-                            </p>
-                        </div>
+                <div>
+    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        Gestion de l'équipe
+    </h1>
+    <p class="text-gray-600 dark:text-gray-400 mt-1">
+        <i class="fas fa-users mr-2"></i>
+        <span id="current-date"></span>
+        <span>| Département <span id="departement-name">{{ $departement->nom_departement ?? 'N/A' }}</span></span>
+    </p>
+</div>
                     </div>
                     <div class="flex items-center space-x-4">
                         <div class="relative">
@@ -226,8 +219,8 @@
                     </div>
                 </div>
             </div>
-    <!-- Dashboard Content (à fleur) -->
-    <div class="p-0 md:p-0 space-y-6 w-full">
+
+            <div class="p-4 md:p-8 space-y-8">
 
         <!-- Stats Cards (à fleur) -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 w-full">
@@ -323,9 +316,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-                 <!-- Footer -->
+        <!-- Footer -->
             <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
                 <div class="max-w-7xl mx-auto">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -342,206 +333,124 @@
 
                 </div>
             </footer>
-
-        </div>
-    </div>
-   <script src="{{ asset('assets/javascript/config.js') }}"></script>
-    <script src="{{ asset('assets/javascript/dashboard-manager.js') }}"></script>
-      <!-- Modal de confirmation -->
-    <div id="confirmModal" class="fixed inset-0 z-50 hidden">
-        <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeModal('confirmModal')"></div>
-        <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
-                <!-- Header -->
-                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center space-x-3">
-                        <div id="confirmIcon" class="w-12 h-12 rounded-full flex items-center justify-center">
-                            <i class="fas fa-question text-xl"></i>
-                        </div>
-                        <h3 id="confirmTitle" class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation</h3>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6">
-                    <p id="confirmMessage" class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir effectuer cette action ?</p>
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <p class="text-sm font-medium text-gray-900 dark:text-white" id="confirmDetails">Jean Martin - Congés payés</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-400" id="confirmDates">2025-09-15 - 2025-09-20 (5 jours)</p>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
-                    <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" onclick="closeModal('confirmModal')">
-                        Annuler
-                    </button>
-                    <button id="confirmActionBtn" class="px-4 py-2 rounded-lg transition-colors" onclick="executeAction()">
-                        Confirmer
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Toast notification -->
-    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 max-w-sm">
-            <div class="flex items-center space-x-3">
-                <div id="toastIcon" class="w-8 h-8 rounded-full flex items-center justify-center">
-                    <i class="fas fa-check"></i>
-                </div>
-                <div>
-                    <p id="toastTitle" class="font-semibold text-gray-900 dark:text-white">Action réussie</p>
-                    <p id="toastMessage" class="text-sm text-gray-600 dark:text-gray-400">L'action a été effectuée avec succès.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal de confirmation de déconnexion -->
-    <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
-        <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
-        <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
-                <!-- Header -->
-                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                            <i class="fas fa-sign-out-alt text-xl text-red-600 dark:text-red-400"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation de déconnexion</h3>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6">
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir vous déconnecter ?</p>
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+        <!-- Modal de confirmation de déconnexion -->
+        <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
+            <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
+            <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
+                    <!-- Header -->
+                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                JM
+                            <div
+                                class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                                <i class="fas fa-sign-out-alt text-xl text-red-600 dark:text-red-400"></i>
                             </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">Jean Martin</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Chef de Département Finance</p>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation de déconnexion
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6">
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir vous déconnecter ?
+                        </p>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                @auth
+                                    @php
+                                        // Récupérer les initiales de l'utilisateur
+$prenom = Auth::user()->prenom ?? '';
+$nom = Auth::user()->nom ?? '';
+$initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+
+// Nom complet
+$nomComplet = trim($prenom . ' ' . $nom);
+
+// Rôle de l'utilisateur
+                                        $role = Auth::user()->role->nom_role ?? 'Utilisateur';
+
+                                        // Couleurs aléatoires basées sur le nom (pour cohérence)
+                                        $colors = [
+                                            'from-purple-400 to-pink-400',
+                                            'from-blue-400 to-indigo-400',
+                                            'from-green-400 to-teal-400',
+                                            'from-orange-400 to-red-400',
+                                            'from-yellow-400 to-orange-400',
+                                            'from-pink-400 to-rose-400',
+                                        ];
+                                        $colorIndex = strlen($nomComplet) % count($colors);
+                                        $gradient = $colors[$colorIndex];
+                                    @endphp
+
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        {{ $initiales }}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $nomComplet }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
+                                    </div>
+                                @else
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        ?
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Utilisateur</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Non connecté</p>
+                                    </div>
+                                @endauth
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Actions -->
-                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
-                    <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" onclick="closeLogoutModal()">
-                        Annuler
-                    </button>
-                    <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors" onclick="executeLogout()">
-                        Se déconnecter
-                    </button>
+                    <!-- Actions -->
+                    <div
+                        class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+                        <button type="button"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                            onclick="closeLogoutModal()">
+                            <i class="fas fa-times mr-2"></i>
+                            Annuler
+                        </button>
+                        <button type="button"
+                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                            onclick="executeLogout()">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Se déconnecter
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Toast notification de déconnexion -->
-    <div id="logoutToast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <i class="fas fa-check text-green-600 dark:text-green-400"></i>
-                </div>
-                <div>
-                    <p class="font-semibold text-gray-900 dark:text-white">Déconnexion réussie</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Vous allez être redirigé...</p>
-                </div>
+        <!-- Formulaire de déconnexion caché -->
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+
+<!-- Toast notification de déconnexion -->
+<div id="logoutToast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <i class="fas fa-check text-green-600 dark:text-green-400"></i>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Déconnexion réussie</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Vous allez être redirigé...</p>
             </div>
         </div>
     </div>
-
-  <!-- Modal de détails de la demande -->
-    <div id="detailsModal" class="fixed inset-0 z-50 hidden">
-        <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeModal('detailsModal')"></div>
-        <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-2xl w-full max-h-screen overflow-hidden">
-                <!-- Header -->
-                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Détails de la demande</h3>
-                    <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onclick="closeModal('detailsModal')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6 space-y-6 max-h-96 overflow-y-auto">
-                    <div class="flex items-center space-x-4">
-                        <div id="detailsAvatar" class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-user text-white text-xl"></i>
-                        </div>
-                        <div>
-                            <h4 id="detailsName" class="text-lg font-semibold text-gray-900 dark:text-white">Jean Martin</h4>
-                            <p id="detailsType" class="text-sm text-gray-500 dark:text-gray-400">Congés payés</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-600 dark:text-gray-400">Date de début</label>
-                            <p id="detailsStartDate" class="text-gray-900 dark:text-white">2025-09-15</p>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-600 dark:text-gray-400">Date de fin</label>
-                            <p id="detailsEndDate" class="text-gray-900 dark:text-white">2025-09-20</p>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-600 dark:text-gray-400">Durée</label>
-                            <p id="detailsDuration" class="text-gray-900 dark:text-white">5 jours</p>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-600 dark:text-gray-400">Statut</label>
-                            <p id="detailsStatus" class="text-yellow-600 dark:text-yellow-400">En attente</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-sm font-medium text-gray-600 dark:text-gray-400">Motif</label>
-                        <p id="detailsReason" class="text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">Congés pour vacances en famille. Voyage prévu depuis plusieurs mois.</p>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-sm font-medium text-gray-600 dark:text-gray-400">Justificatif (PDF)</label>
-                        <div class="pdf-viewer bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border">
-                            <div class="flex items-center space-x-3 mb-3">
-                                <i class="fas fa-file-pdf text-red-500 text-xl"></i>
-                                <span id="pdfName" class="text-gray-900 dark:text-white font-medium">justificatif_conges.pdf</span>
-                                <button class="text-blue-500 hover:text-blue-700 text-sm" onclick="viewPDF()">
-                                    <i class="fas fa-external-link-alt mr-1"></i>Ouvrir
-                                </button>
-                            </div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400 space-y-2">
-                                <p><strong>Contenu du document:</strong></p>
-                                <p>• Réservation d'hôtel confirmée</p>
-                                <p>• Billets d'avion</p>
-                                <p>• Planning de congés équipe</p>
-                                <p>• Accord du chef d'équipe</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
-                    <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" onclick="closeModal('detailsModal')">
-                        Fermer
-                    </button>
-                    <button class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors" onclick="closeModal('detailsModal'); showConfirmModal('reject', currentRequestId)">
-                        <i class="fas fa-times mr-2"></i>Refuser
-                    </button>
-                    <button class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors" onclick="closeModal('detailsModal'); showConfirmModal('approve', currentRequestId)">
-                        <i class="fas fa-check mr-2"></i>Approuver
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+    <script src="{{ asset('assets/javascript/dashboard-manager.js') }}"></script>
+<script src="{{ asset('assets/javascript/logout.js') }}"></script>
+<script src="{{ asset('assets/javascript/config.js') }}"></script>
 
 </body>
 </html>

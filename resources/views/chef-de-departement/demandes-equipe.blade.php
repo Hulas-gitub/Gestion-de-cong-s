@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graxel Tech - Informations</title>
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Graxel Tech - Equipe du département</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -18,10 +19,7 @@
     <script src="assets/javascript/animate.js"></script>
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
      <link rel="stylesheet" href="{{asset('assets/css/demandes.css')}}">
-    <!-- Nouveaux scripts pour les graphiques -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.2.0"></script>
+
     <link rel="icon" type="image/png" href="{{asset('assets/images/logo.png')}}">
 </head>
 <body class="h-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-poppins transition-all duration-500">
@@ -72,21 +70,59 @@
     </a>
                 </nav>
 
-                <!-- User Profile -->
-                <div class="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
-                    <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-lg animate-float">
-                            JM
-                        </div>
-                        <div class="flex-2">
-                            <p class="font-semibold text-gray-900 dark:text-white">Jean Martin </p>
-                        </div>
-                         <a href="#"  id="logoutBtn"  class="flex items-center space-x-3 text-red-600 hover:text-red-700 dark:text-red-400 text-sm hover-lift transition-all duration-200 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20">
-                            <i class="fas fa-sign-out-alt w-4 h-4"></i>
-                            <span></span>
-                        </a>
-                    </div>
-                </div>
+
+          <!-- User Profile -->
+<div class="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
+    <div class="flex items-center space-x-4 mb-4">
+        @auth
+            @php
+                // Récupérer les initiales de l'utilisateur
+                $prenom = Auth::user()->prenom ?? '';
+                $nom = Auth::user()->nom ?? '';
+                $initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+
+                // Nom complet
+                $nomComplet = trim($prenom . ' ' . $nom);
+
+                // Rôle de l'utilisateur
+                $role = Auth::user()->role->nom_role ?? 'Utilisateur';
+
+                // Couleurs aléatoires basées sur le nom (pour cohérence)
+                $colors = [
+                    'from-purple-400 to-pink-400',
+                    'from-blue-400 to-indigo-400',
+                    'from-green-400 to-teal-400',
+                    'from-orange-400 to-red-400',
+                    'from-yellow-400 to-orange-400',
+                    'from-pink-400 to-rose-400',
+                ];
+                $colorIndex = strlen($nomComplet) % count($colors);
+                $gradient = $colors[$colorIndex];
+            @endphp
+
+            <div class="w-12 h-12 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-lg animate-float">
+                {{ $initiales }}
+            </div>
+            <div class="flex-2">
+                <p class="font-semibold text-gray-900 dark:text-white">{{ $nomComplet }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
+            </div>
+        @else
+            <div class="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-lg animate-float">
+                ?
+            </div>
+            <div class="flex-2">
+                <p class="font-semibold text-gray-900 dark:text-white">Utilisateur</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Non connecté</p>
+            </div>
+        @endauth
+
+        <a href="#" id="logoutBtn" class="flex items-center space-x-3 text-red-600 hover:text-red-700 dark:text-red-400 text-sm hover-lift transition-all duration-200 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20">
+            <i class="fas fa-sign-out-alt w-4 h-4"></i>
+            <span></span>
+        </a>
+    </div>
+</div>
             </div>
         </div>
 
@@ -100,14 +136,16 @@
                         <button id="toggle-sidebar" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 md:hidden">
                             <i class="fas fa-bars text-gray-600 dark:text-gray-400"></i>
                         </button>
-                        <div>
-                            <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Informations</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">
-                                <i class="fas fa-users mr-2"></i>
-                                <span id="current-date"></span>
-                                <span>| Département Finance</span>
-                            </p>
-                        </div>
+                   <div>
+    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        Gestion de l'équipe
+    </h1>
+    <p class="text-gray-600 dark:text-gray-400 mt-1">
+        <i class="fas fa-users mr-2"></i>
+        <span id="current-date"></span>
+        <span>| Département <span id="departement-name">{{ $departement->nom_departement ?? 'N/A' }}</span></span>
+    </p>
+</div>
                     </div>
                     <div class="flex items-center space-x-4">
                         <div class="relative">
@@ -198,70 +236,78 @@
                     </div>
                 </div>
             </div>
+
 <div class="space-y-6">
-    <!-- Barre de recherche et filtres -->
-    <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div class="relative flex-1 w-full md:w-auto">
-            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            <input
-                type="text"
-                id="searchEmployee"
-                placeholder="Rechercher un employé..."
-                class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-            >
-        </div>
-        <select
-            id="positionFilter"
-            class="px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all w-full md:w-auto"
-        >
-            <option value="">Tous les postes</option>
-            <option value="developer">Développeur</option>
-            <option value="designer">Designer</option>
-            <option value="manager">Manager</option>
-        </select>
-    </div>
+   <div class="space-y-6">
+                    <!-- Barre de recherche et filtres -->
+                    <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                        <div class="relative flex-1 w-full md:w-auto">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input
+                                type="text"
+                                id="searchEmployee"
+                                placeholder="Rechercher un employé..."
+                                class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            >
+                        </div>
+                        <select
+                            id="positionFilter"
+                            class="px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all w-full md:w-auto"
+                        >
+                            <option value="">Tous les postes</option>
+                        </select>
+                    </div>
 
-    <!-- Tableau des employés -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-gray-50 dark:bg-gray-700/50">
-                    <tr>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Employé</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Poste</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Contact</th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="employeeTableBody" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                    <!-- Les lignes seront générées par JavaScript -->
-                </tbody>
-            </table>
-        </div>
 
-        <!-- Pagination -->
-        <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="text-sm text-gray-700 dark:text-gray-300" id="paginationInfo">
-                    Affichage de 1 à 5 sur 6 employés
-                </div>
-                <div class="flex items-center gap-2" id="paginationControls">
-                    <!-- Les contrôles de pagination seront générés par JavaScript -->
-                </div>
-            </div>
+                <!-- Tableau des employés -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-700/50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Employé</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Poste</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Contact</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeTableBody" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                <!-- Les lignes seront générées par JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+<!-- Pagination -->
+                        <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div class="text-sm text-gray-700 dark:text-gray-300" id="paginationInfo">
+                                    Chargement...
+                                </div>
+                                <div class="flex items-center gap-2" id="paginationControls">
+                                    <!-- Les contrôles de pagination seront générés par JavaScript -->
+                                </div>
+                            </div>
+</div>
+
+<!-- Modal détails employé -->
+<div id="employeeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+            <h3 id="employeeModalTitle" class="text-xl font-bold text-gray-900 dark:text-white">Détails de l'employé</h3>
+            <button id="closeEmployeeModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div id="employeeModalContent" class="p-6 space-y-6">
+            <!-- Le contenu sera généré par JavaScript -->
         </div>
     </div>
 </div>
-
         </div>
     </div>
+
+
 </div>
-
-
-    <script src="{{asset('assets/javascript/config.js')}}"></script>
-<script src="{{ asset('assets/javascript/demande-manager.js') }}"></script>
-    <script src="{{asset('assets/javascript/logout.js')}}"></script>
 
     </div>
         <!-- Footer -->
@@ -298,100 +344,140 @@
             </div>
         </div>
     </div>
+<!-- Toast de notification -->
+<div id="toast" class="fixed top-4 right-4 bg-white dark:bg-gray-800 border-l-4 border-green-500 rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50 min-w-80">
+    <div class="flex items-start space-x-3">
+        <div id="toastIcon" class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-check text-green-500"></i>
+        </div>
+        <div class="flex-1">
+            <h4 id="toastTitle" class="font-semibold text-gray-900 dark:text-white text-sm">Action réussie</h4>
+            <p id="toastMessage" class="text-sm text-gray-500 dark:text-gray-400">L'action a été effectuée avec succès</p>
+        </div>
+        <button onclick="document.getElementById('toast').style.transform = 'translateX(100%)'" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
 
-    <!-- Modal de confirmation de déconnexion -->
-    <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
-        <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
-        <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
-                <!-- Header -->
-                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                            <i class="fas fa-sign-out-alt text-xl text-red-600 dark:text-red-400"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation de déconnexion</h3>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6">
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir vous déconnecter ?</p>
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+        <!-- Modal de confirmation de déconnexion -->
+        <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
+            <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
+            <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
+                    <!-- Header -->
+                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                JM
+                            <div
+                                class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                                <i class="fas fa-sign-out-alt text-xl text-red-600 dark:text-red-400"></i>
                             </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">Jean Martin</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Chef de Département Finance</p>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation de déconnexion
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6">
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir vous déconnecter ?
+                        </p>
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                @auth
+                                    @php
+                                        // Récupérer les initiales de l'utilisateur
+$prenom = Auth::user()->prenom ?? '';
+$nom = Auth::user()->nom ?? '';
+$initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+
+// Nom complet
+$nomComplet = trim($prenom . ' ' . $nom);
+
+// Rôle de l'utilisateur
+                                        $role = Auth::user()->role->nom_role ?? 'Utilisateur';
+
+                                        // Couleurs aléatoires basées sur le nom (pour cohérence)
+                                        $colors = [
+                                            'from-purple-400 to-pink-400',
+                                            'from-blue-400 to-indigo-400',
+                                            'from-green-400 to-teal-400',
+                                            'from-orange-400 to-red-400',
+                                            'from-yellow-400 to-orange-400',
+                                            'from-pink-400 to-rose-400',
+                                        ];
+                                        $colorIndex = strlen($nomComplet) % count($colors);
+                                        $gradient = $colors[$colorIndex];
+                                    @endphp
+
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        {{ $initiales }}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $nomComplet }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
+                                    </div>
+                                @else
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        ?
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Utilisateur</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Non connecté</p>
+                                    </div>
+                                @endauth
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Actions -->
-                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
-                    <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" onclick="closeLogoutModal()">
-                        Annuler
-                    </button>
-                    <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors" onclick="executeLogout()">
-                        Se déconnecter
-                    </button>
+                    <!-- Actions -->
+                    <div
+                        class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+                        <button type="button"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                            onclick="closeLogoutModal()">
+                            <i class="fas fa-times mr-2"></i>
+                            Annuler
+                        </button>
+                        <button type="button"
+                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                            onclick="executeLogout()">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Se déconnecter
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Toast notification -->
-    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 max-w-sm">
-            <div class="flex items-center space-x-3">
-                <div id="toastIcon" class="w-8 h-8 rounded-full flex items-center justify-center">
-                    <i class="fas fa-check"></i>
-                </div>
-                <div>
-                    <p id="toastTitle" class="font-semibold text-gray-900 dark:text-white">Action réussie</p>
-                    <p id="toastMessage" class="text-sm text-gray-600 dark:text-gray-400">L'action a été effectuée avec
-                        succès.</p>
-                </div>
+        <!-- Formulaire de déconnexion caché -->
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+
+<!-- Toast notification de déconnexion -->
+<div id="logoutToast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <i class="fas fa-check text-green-600 dark:text-green-400"></i>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Déconnexion réussie</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Vous allez être redirigé...</p>
             </div>
         </div>
     </div>
-    <!-- Modal pour les détails de l'employé -->
-    <div id="employeeModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 id="employeeModalTitle" class="text-xl font-bold text-gray-900 dark:text-white"></h3>
-                    <button id="closeEmployeeModal"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div id="employeeModalContent" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Contenu généré par JavaScript -->
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
-    <!-- Toast notification de déconnexion -->
-    <div id="logoutToast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <i class="fas fa-check text-green-600 dark:text-green-400"></i>
-                </div>
-                <div>
-                    <p class="font-semibold text-gray-900 dark:text-white">Déconnexion réussie</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Vous allez être redirigé...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <script src="{{asset('assets/javascript/config.js')}}"></script>
+<script src="{{ asset('assets/javascript/demande-manager.js') }}"></script>
+    <script src="{{asset('assets/javascript/logout.js')}}"></script>
 
 </body>
 </html>

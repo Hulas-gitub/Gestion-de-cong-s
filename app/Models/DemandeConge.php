@@ -20,7 +20,8 @@ class DemandeConge extends Model
         'commentaire_refus',
         'validateur_id',
         'date_validation',
-        'document_justificatif'
+        'document_justificatif',
+        'document_de_validation'
     ];
 
     protected $casts = [

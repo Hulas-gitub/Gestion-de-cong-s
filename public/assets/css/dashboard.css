@@ -1,4 +1,4 @@
- 
+
         /* Styles supplémentaires pour les nouvelles fonctionnalités */
         .chart-container { position: relative; height: 280px; width: 100%; }
         .alert-timeline { display: flex; flex-direction: column; gap: 8px; }
@@ -11,7 +11,7 @@
         .calendar-day.absent { background: rgba(255, 0, 0, 0.1); color: #ef4444; }
         .calendar-day.today { background: #3b82f6; color: white; }
             /* CORRECTION CSS NOTIFICATIONS - Version simplifiée et fonctionnelle */
-        
+
         /* Container notifications - MUST be relative */
         .notifications-container {
             position: relative;
@@ -21,16 +21,16 @@
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
-        
+
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
-        
+
         .hover-lift {
             transition: transform 0.2s ease-in-out;
         }
-        
+
         .hover-lift:hover {
             transform: translateY(-2px);
         }
@@ -65,13 +65,13 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             border: 1px solid #e5e7eb;
             z-index: 1000;
-            
+
             /* États de transition */
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px) scale(0.95);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            
+
             /* Empêche les problèmes d'overflow */
             max-height: 400px;
             overflow: hidden;
@@ -248,11 +248,11 @@
                 width: 90vw;
                 max-width: 350px;
             }
-            
+
             .notification-dropdown.show {
                 transform: translate(-50%, -50%) scale(1);
             }
-            
+
             /* Overlay mobile */
             .notification-dropdown.show::before {
                 content: '';
@@ -269,44 +269,44 @@
         .hover-lift:hover {
             transform: translateY(-2px);
         }
-        
+
         .modal {
             transition: opacity 0.25s ease-out, transform 0.25s ease-out;
         }
-        
+
         .modal.show {
             opacity: 1;
             transform: scale(1);
         }
-        
+
         .modal:not(.show) {
             opacity: 0;
             transform: scale(0.95);
         }
-        
+
         .backdrop {
             transition: opacity 0.25s ease-out;
         }
-        
+
         .backdrop.show {
             opacity: 1;
         }
-        
+
         .backdrop:not(.show) {
             opacity: 0;
         }
-        
+
         .fade-out {
             animation: fadeOut 0.5s ease-out forwards;
         }
-        
+
         @keyframes fadeOut {
             to {
                 opacity: 0;
                 transform: translateX(100px);
             }
         }
-        
+
         .pdf-viewer {
             max-height: 400px;
             overflow-y: auto;
@@ -314,46 +314,45 @@
        .hover-lift:hover {
             transform: translateY(-2px);
         }
-        
+
         .modal {
             transition: opacity 0.25s ease-out, transform 0.25s ease-out;
         }
-        
+
         .modal.show {
             opacity: 1;
             transform: scale(1);
         }
-        
+
         .modal:not(.show) {
             opacity: 0;
             transform: scale(0.95);
         }
-        
+
         .backdrop {
             transition: opacity 0.25s ease-out;
         }
-        
+
         .backdrop.show {
             opacity: 1;
         }
-        
+
         .backdrop:not(.show) {
             opacity: 0;
         }
-        
+
         .fade-out {
             animation: fadeOut 0.5s ease-out forwards;
         }
-        
+
         @keyframes fadeOut {
             to {
                 opacity: 0;
                 transform: translateX(100px);
             }
         }
-        
+
         .pdf-viewer {
             max-height: 400px;
             overflow-y: auto;
         }
-    

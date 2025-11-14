@@ -34,6 +34,204 @@ class MailService
     }
 
     /**
+     * Méthode générique pour envoyer un email
+     */
+    public function sendEmail($destinataire, $sujet, $template, $data)
+    {
+        try {
+            $this->mailer->clearAddresses();
+            $this->mailer->addAddress($destinataire);
+            $this->mailer->isHTML(true);
+            $this->mailer->Subject = $sujet;
+
+            // Générer le corps de l'email selon le template
+            switch ($template) {
+                case 'emails.demande-approuvee':
+                    $this->mailer->Body = $this->templateDemandeApprouvee($data);
+                    break;
+                case 'emails.demande-refusee':
+                    $this->mailer->Body = $this->templateDemandeRefusee($data);
+                    break;
+                default:
+                    throw new \Exception("Template email inconnu: $template");
+            }
+
+            $result = $this->mailer->send();
+
+            if ($result) {
+                Log::info("Email envoyé avec succès", [
+                    'destinataire' => $destinataire,
+                    'sujet' => $sujet
+                ]);
+            }
+
+            return $result;
+        } catch (Exception $e) {
+            Log::error('Erreur envoi email: ' . $e->getMessage(), [
+                'destinataire' => $destinataire,
+                'sujet' => $sujet
+            ]);
+            return false;
+        }
+    }
+
+    /**
+     * Template pour demande approuvée
+     */
+    private function templateDemandeApprouvee($data)
+    {
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; margin: 0; padding: 0; }
+                .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+                .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 40px 20px; text-align: center; }
+                .header h1 { margin: 0; font-size: 28px; font-weight: 600; }
+                .header p { margin: 10px 0 0; opacity: 0.9; font-size: 14px; }
+                .content { padding: 40px 30px; }
+                .content h2 { color: #333; font-size: 24px; margin: 0 0 20px; }
+                .content p { color: #666; margin: 15px 0; line-height: 1.8; font-size: 15px; }
+                .success-box { background: #d1fae5; border-left: 4px solid #10b981; padding: 20px; margin: 25px 0; border-radius: 5px; }
+                .success-box p { margin: 5px 0; color: #065f46; }
+                .info-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #e9ecef; }
+                .info-item label { display: block; color: #666; font-size: 12px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+                .info-item .value { font-size: 16px; font-weight: 600; color: #333; }
+                .icon { font-size: 64px; margin-bottom: 15px; }
+                .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }
+                .footer p { margin: 5px 0; color: #6c757d; font-size: 13px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <div class='icon'>✅</div>
+                    <h1>Demande approuvée !</h1>
+                    <p>Bonne nouvelle</p>
+                </div>
+                <div class='content'>
+                    <h2>Bonjour {$data['nom_employe']},</h2>
+                    <p>Nous avons le plaisir de vous informer que votre demande de congé a été <strong>approuvée</strong> par {$data['nom_chef']}.</p>
+                    <div class='success-box'>
+                        <p><strong>✅ Votre demande a été validée</strong></p>
+                        <p>Vous pouvez profiter de vos congés aux dates prévues.</p>
+                    </div>
+                    <div class='info-item'>
+                        <label>📋 Type de congé</label>
+                        <div class='value'>{$data['type_conge']}</div>
+                    </div>
+                    <div class='info-item'>
+                        <label>📅 Période</label>
+                        <div class='value'>Du {$data['date_debut']} au {$data['date_fin']}</div>
+                    </div>
+                    <div class='info-item'>
+                        <label>⏱️ Durée</label>
+                        <div class='value'>{$data['nb_jours']} jour(s)</div>
+                    </div>
+                    <p style='margin-top: 30px; font-size: 14px; color: #666;'>
+                        Profitez bien de vos congés ! 🌴<br>
+                        Nous vous souhaitons un excellent repos.
+                    </p>
+                </div>
+                <div class='footer'>
+                    <p><strong>Graxel Technologies</strong></p>
+                    <p>Système de Gestion des Congés</p>
+                    <p style='margin-top: 10px; color: #adb5bd; font-size: 12px;'>
+                        © 2025 Graxel Technologies. Tous droits réservés.
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+    }
+
+    /**
+     * Template pour demande refusée
+     */
+    private function templateDemandeRefusee($data)
+    {
+        $commentaireHtml = !empty($data['commentaire']) ? "
+            <div class='info-item'>
+                <label>💬 Motif du refus</label>
+                <div class='value'>{$data['commentaire']}</div>
+            </div>
+        " : "";
+
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; margin: 0; padding: 0; }
+                .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+                .header { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 40px 20px; text-align: center; }
+                .header h1 { margin: 0; font-size: 28px; font-weight: 600; }
+                .header p { margin: 10px 0 0; opacity: 0.9; font-size: 14px; }
+                .content { padding: 40px 30px; }
+                .content h2 { color: #333; font-size: 24px; margin: 0 0 20px; }
+                .content p { color: #666; margin: 15px 0; line-height: 1.8; font-size: 15px; }
+                .alert-box { background: #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin: 25px 0; border-radius: 5px; }
+                .alert-box p { margin: 5px 0; color: #991b1b; }
+                .info-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #e9ecef; }
+                .info-item label { display: block; color: #666; font-size: 12px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+                .info-item .value { font-size: 16px; font-weight: 600; color: #333; }
+                .icon { font-size: 64px; margin-bottom: 15px; }
+                .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }
+                .footer p { margin: 5px 0; color: #6c757d; font-size: 13px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <div class='icon'>❌</div>
+                    <h1>Demande refusée</h1>
+                    <p>Information importante</p>
+                </div>
+                <div class='content'>
+                    <h2>Bonjour {$data['nom_employe']},</h2>
+                    <p>Nous vous informons que votre demande de congé a été <strong>refusée</strong> par {$data['nom_chef']}.</p>
+                    <div class='alert-box'>
+                        <p><strong>❌ Votre demande n'a pas été validée</strong></p>
+                        <p>Veuillez contacter votre responsable pour plus d'informations.</p>
+                    </div>
+                    <div class='info-item'>
+                        <label>📋 Type de congé</label>
+                        <div class='value'>{$data['type_conge']}</div>
+                    </div>
+                    <div class='info-item'>
+                        <label>📅 Période demandée</label>
+                        <div class='value'>Du {$data['date_debut']} au {$data['date_fin']}</div>
+                    </div>
+                    <div class='info-item'>
+                        <label>⏱️ Durée</label>
+                        <div class='value'>{$data['nb_jours']} jour(s)</div>
+                    </div>
+                    {$commentaireHtml}
+                    <p style='margin-top: 30px; font-size: 14px; color: #666;'>
+                        <strong>Besoin d'aide ?</strong><br>
+                        N'hésitez pas à contacter votre responsable pour discuter de cette décision ou soumettre une nouvelle demande avec d'autres dates.
+                    </p>
+                </div>
+                <div class='footer'>
+                    <p><strong>Graxel Technologies</strong></p>
+                    <p>Système de Gestion des Congés</p>
+                    <p style='margin-top: 10px; color: #adb5bd; font-size: 12px;'>
+                        © 2025 Graxel Technologies. Tous droits réservés.
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+    }
+
+    /**
      * Envoyer les credentials de connexion au nouvel utilisateur
      */
     public function envoyerCredentialsCompte($destinataire, $nom, $prenom, $motDePasse, $matricule)
@@ -359,7 +557,7 @@ class MailService
         ";
     }
 
-    private function templateDemandeApprouvee($demande, $employe, $validateur)
+    private function templateDemandeApprouvee_OLD($demande, $employe, $validateur)
     {
         $dateDebut = date('d/m/Y', strtotime($demande->date_debut));
         $dateFin = date('d/m/Y', strtotime($demande->date_fin));
@@ -400,7 +598,7 @@ class MailService
         ";
     }
 
-    private function templateDemandeRefusee($demande, $employe, $validateur)
+    private function templateDemandeRefusee_OLD($demande, $employe, $validateur)
     {
         $dateDebut = date('d/m/Y', strtotime($demande->date_debut));
         $dateFin = date('d/m/Y', strtotime($demande->date_fin));
@@ -468,7 +666,7 @@ class MailService
     }
 
     /**
-     * Notifier l'employé que sa demande est approuvée
+     * Notifier l'employé que sa demande est approuvée (ANCIENNE MÉTHODE - CONSERVÉE POUR COMPATIBILITÉ)
      */
     public function envoyerDemandeApprouvee($demande, $employe, $validateur)
     {
@@ -477,7 +675,7 @@ class MailService
             $this->mailer->addAddress($employe->email, "{$employe->prenom} {$employe->nom}");
             $this->mailer->isHTML(true);
             $this->mailer->Subject = '✅ Demande de congé approuvée';
-            $this->mailer->Body = $this->templateDemandeApprouvee($demande, $employe, $validateur);
+            $this->mailer->Body = $this->templateDemandeApprouvee_OLD($demande, $employe, $validateur);
             return $this->mailer->send();
         } catch (Exception $e) {
             Log::error('Erreur envoi email approbation: ' . $e->getMessage());
@@ -486,7 +684,7 @@ class MailService
     }
 
     /**
-     * Notifier l'employé que sa demande est refusée
+     * Notifier l'employé que sa demande est refusée (ANCIENNE MÉTHODE - CONSERVÉE POUR COMPATIBILITÉ)
      */
     public function envoyerDemandeRefusee($demande, $employe, $validateur)
     {
@@ -495,7 +693,7 @@ class MailService
             $this->mailer->addAddress($employe->email, "{$employe->prenom} {$employe->nom}");
             $this->mailer->isHTML(true);
             $this->mailer->Subject = '❌ Demande de congé refusée';
-            $this->mailer->Body = $this->templateDemandeRefusee($demande, $employe, $validateur);
+            $this->mailer->Body = $this->templateDemandeRefusee_OLD($demande, $employe, $validateur);
             return $this->mailer->send();
         } catch (Exception $e) {
             Log::error('Erreur envoi email refus: ' . $e->getMessage());

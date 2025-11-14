@@ -178,10 +178,10 @@
             animateProgressBars();
         }, 1000);
 
-   
+
         let currentAction = '';
         let currentRequestId = 0;
-        
+
         // Données simulées des demandes
         const requests = {
             1: {
@@ -211,7 +211,7 @@
         function showDetailsModal(requestId) {
             currentRequestId = requestId;
             const request = requests[requestId];
-            
+
             // Remplir les détails
             document.getElementById('detailsName').textContent = request.name;
             document.getElementById('detailsType').textContent = request.type;
@@ -221,7 +221,7 @@
             document.getElementById('detailsReason').textContent = request.reason;
             document.getElementById('pdfName').textContent = request.pdfName;
             document.getElementById('detailsAvatar').className = `w-16 h-16 bg-gradient-to-r ${request.avatar} rounded-xl flex items-center justify-center`;
-            
+
             showModal('detailsModal');
         }
 
@@ -229,13 +229,13 @@
             currentAction = action;
             currentRequestId = requestId;
             const request = requests[requestId];
-            
+
             const isApprove = action === 'approve';
             const icon = document.getElementById('confirmIcon');
             const title = document.getElementById('confirmTitle');
             const message = document.getElementById('confirmMessage');
             const actionBtn = document.getElementById('confirmActionBtn');
-            
+
             // Configuration selon l'action
             if (isApprove) {
                 icon.className = 'w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center';
@@ -252,25 +252,25 @@
                 actionBtn.className = 'px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors';
                 actionBtn.innerHTML = '<i class="fas fa-times mr-2"></i>Refuser';
             }
-            
+
             document.getElementById('confirmDetails').textContent = `${request.name} - ${request.type}`;
             document.getElementById('confirmDates').textContent = `${request.startDate} - ${request.endDate} (${request.duration})`;
-            
+
             showModal('confirmModal');
         }
 
         function executeAction() {
             const request = requests[currentRequestId];
             const isApprove = currentAction === 'approve';
-            
+
             // Fermer le modal de confirmation
             closeModal('confirmModal');
-            
+
             // Simuler un délai de traitement
             setTimeout(() => {
                 // Mettre à jour l'interface
                 updateRequestStatus(currentRequestId, isApprove);
-                
+
                 // Afficher la notification
                 showToast(
                     isApprove ? 'Demande approuvée' : 'Demande refusée',
@@ -284,28 +284,28 @@
             // Trouver l'élément de demande
             const demandItems = document.querySelectorAll('.demand-item');
             const demandItem = demandItems[requestId - 1];
-            
+
             // Mettre à jour le badge de statut
             const statusBadge = demandItem.querySelector('.status-badge');
             const statusText = approved ? 'Approuvée' : 'Refusée';
-            const statusClass = approved ? 
+            const statusClass = approved ?
                 'px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-semibold rounded-full' :
                 'px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 text-xs font-semibold rounded-full';
-            
+
             statusBadge.textContent = statusText;
             statusBadge.className = statusClass;
-            
+
             // Masquer les boutons d'action
             const approveBtn = demandItem.querySelector('.approve-btn');
             const rejectBtn = demandItem.querySelector('.reject-btn');
             approveBtn.style.display = 'none';
             rejectBtn.style.display = 'none';
-            
+
             // Changer l'émoji de statut
             const statusEmoji = demandItem.querySelector('.text-yellow-500');
             statusEmoji.textContent = approved ? '🟢' : '🔴';
             statusEmoji.className = approved ? 'text-green-500' : 'text-red-500';
-            
+
             // Animation de fade
             demandItem.style.animation = 'fadeOut 0.3s ease-out';
             setTimeout(() => {
@@ -317,13 +317,13 @@
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.classList.remove('hidden');
-            
+
             // Force reflow
             modal.offsetHeight;
-            
+
             const backdrop = modal.querySelector('.backdrop');
             const modalContent = modal.querySelector('.modal');
-            
+
             backdrop.classList.add('show');
             modalContent.classList.add('show');
         }
@@ -332,10 +332,10 @@
             const modal = document.getElementById(modalId);
             const backdrop = modal.querySelector('.backdrop');
             const modalContent = modal.querySelector('.modal');
-            
+
             backdrop.classList.remove('show');
             modalContent.classList.remove('show');
-            
+
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 250);
@@ -346,7 +346,7 @@
             const toastIcon = document.getElementById('toastIcon');
             const toastTitle = document.getElementById('toastTitle');
             const toastMessage = document.getElementById('toastMessage');
-            
+
             // Configuration selon le type
             if (type === 'success') {
                 toastIcon.className = 'w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center';
@@ -357,13 +357,13 @@
                 toastIcon.innerHTML = '<i class="fas fa-times text-red-500"></i>';
                 toast.querySelector('.border-l-4').style.borderLeftColor = '#EF4444';
             }
-            
+
             toastTitle.textContent = title;
             toastMessage.textContent = message;
-            
+
             // Afficher le toast
             toast.style.transform = 'translateX(0)';
-            
+
             // Masquer automatiquement après 3 secondes
             setTimeout(() => {
                 toast.style.transform = 'translateX(100%)';
@@ -384,7 +384,7 @@
                 });
             }
         });
-   
+
         // Fonction pour ouvrir le modal de déconnexion
         function openLogoutModal() {
             const modal = document.getElementById('logoutConfirmModal');
@@ -411,7 +411,7 @@
             const toast = document.getElementById('logoutToast');
             toast.classList.remove('translate-x-full');
             toast.classList.add('translate-x-0');
-            
+
             // Masquer automatiquement après 3 secondes
             setTimeout(() => {
                 toast.classList.remove('translate-x-0');
@@ -423,12 +423,12 @@
         function executeLogout() {
             // Fermer le modal
             closeLogoutModal();
-            
+
             // Afficher le toast
             setTimeout(() => {
                 showLogoutToast();
             }, 300);
-            
+
             // Rediriger vers la page d'accueil après 2 secondes
             setTimeout(() => {
                 window.location.href = '../index.html';
@@ -455,4 +455,3 @@
             modal.style.transform = 'scale(0.95)';
             modal.style.transition = 'all 0.2s ease-out';
         });
-       

@@ -1,169 +1,16 @@
 // =============================================
-// DONNÉES SIMULÉES
+// VARIABLES GLOBALES
 // =============================================
-const employeesData = [
-    {
-        id: 'jean-dupont',
-        name: 'Jean Dupont',
-        email: 'j.dupont@email.com',
-        phone: '+241 07 45 23 12',
-        position: 'developer',
-        positionLabel: 'Développeur',
-        remainingLeave: 25,
-        status: 'available',
-        blocked: false,
-        photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
-    },
-    {
-        id: 'marie-martin',
-        name: 'Marie Martin',
-        email: 'm.martin@email.com',
-        phone: '+241 06 78 91 45',
-        position: 'designer',
-        positionLabel: 'Designer',
-        remainingLeave: 18,
-        status: 'on-leave',
-        blocked: false,
-        photo: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face'
-    },
-    {
-        id: 'paul-bernard',
-        name: 'Paul Bernard',
-        email: 'p.bernard@email.com',
-        phone: '+241 05 23 67 89',
-        position: 'manager',
-        positionLabel: 'Manager',
-        remainingLeave: 30,
-        status: 'available',
-        blocked: true,
-        photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face'
-    },
-    {
-        id: 'sophie-durand',
-        name: 'Sophie Durand',
-        email: 's.durand@email.com',
-        phone: '+241 07 12 34 56',
-        position: 'developer',
-        positionLabel: 'Développeur',
-        remainingLeave: 22,
-        status: 'available',
-        blocked: false,
-        photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face'
-    },
-    {
-        id: 'marc-petit',
-        name: 'Marc Petit',
-        email: 'm.petit@email.com',
-        phone: '+241 06 89 45 23',
-        position: 'designer',
-        positionLabel: 'Designer',
-        remainingLeave: 15,
-        status: 'on-leave',
-        blocked: false,
-        photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face'
-    },
-    {
-        id: 'claire-moreau',
-        name: 'Claire Moreau',
-        email: 'c.moreau@email.com',
-        phone: '+241 05 67 89 12',
-        position: 'manager',
-        positionLabel: 'Manager',
-        remainingLeave: 28,
-        status: 'available',
-        blocked: false,
-        photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face'
-    }
-];
-
-const leaveEvents = [
-    {
-        id: '1',
-        title: 'Jean Dupont - Congés payés',
-        start: '2025-10-15',
-        end: '2025-10-21',
-        backgroundColor: '#10b981',
-        borderColor: '#10b981',
-        extendedProps: {
-            employeeId: 'jean-dupont',
-            employeeName: 'Jean Dupont',
-            leaveType: 'vacation',
-            leaveTypeLabel: 'Congés payés',
-            remainingLeave: 3,
-            photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
-        }
-    },
-    {
-        id: '2',
-        title: 'Marie Martin - Maladie',
-        start: '2025-10-18',
-        end: '2025-10-20',
-        backgroundColor: '#ef4444',
-        borderColor: '#ef4444',
-        extendedProps: {
-            employeeId: 'marie-martin',
-            employeeName: 'Marie Martin',
-            leaveType: 'sick',
-            leaveTypeLabel: 'Maladie',
-            remainingLeave: 2,
-            photo: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face'
-        }
-    },
-    {
-        id: '3',
-        title: 'Paul Bernard - Paternité',
-        start: '2025-10-22',
-        end: '2025-10-25',
-        backgroundColor: '#3b82f6',
-        borderColor: '#3b82f6',
-        extendedProps: {
-            employeeId: 'paul-bernard',
-            employeeName: 'Paul Bernard',
-            leaveType: 'training',
-            leaveTypeLabel: 'Paternité',
-            remainingLeave: 2,
-            photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face'
-        }
-    },
-    {
-        id: '4',
-        title: 'Sophie Durand - Congés payés',
-        start: '2025-10-10',
-        end: '2025-10-14',
-        backgroundColor: '#10b981',
-        borderColor: '#10b981',
-        extendedProps: {
-            employeeId: 'sophie-durand',
-            employeeName: 'Sophie Durand',
-            leaveType: 'vacation',
-            leaveTypeLabel: 'Congés payés',
-            remainingLeave: 3,
-            photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face'
-        }
-    },
-    {
-        id: '5',
-        title: 'Marc Petit - Maternité',
-        start: '2025-10-05',
-        end: '2025-10-12',
-        backgroundColor: '#ec4899',
-        borderColor: '#ec4899',
-        extendedProps: {
-            employeeId: 'marc-petit',
-            employeeName: 'Marc Petit',
-            leaveType: 'maternity',
-            leaveTypeLabel: 'Maternité',
-            remainingLeave: 6,
-            photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face'
-        }
-    }
-];
+let currentPage = 1;
+const itemsPerPage = 5;
+let filteredEmployees = [];
+let allEmployees = [];
+let searchTimeout = null;
 
 // =============================================
 // SYSTÈME DE TOAST NOTIFICATIONS
 // =============================================
 function showToast(message, type = 'success') {
-    // Créer le conteneur de toasts s'il n'existe pas
     let toastContainer = document.getElementById('toastContainer');
     if (!toastContainer) {
         toastContainer = document.createElement('div');
@@ -172,7 +19,6 @@ function showToast(message, type = 'success') {
         document.body.appendChild(toastContainer);
     }
 
-    // Définir les couleurs selon le type
     const colors = {
         success: 'bg-green-500',
         error: 'bg-red-500',
@@ -191,12 +37,11 @@ function showToast(message, type = 'success') {
         red: 'fa-lock'
     };
 
-    // Créer le toast
     const toast = document.createElement('div');
     const toastId = 'toast-' + Date.now();
     toast.id = toastId;
     toast.className = `${colors[type] || colors.success} text-white px-6 py-4 rounded-lg shadow-2xl flex items-center space-x-3 min-w-[320px] transform transition-all duration-300 ease-in-out translate-x-[400px]`;
-    
+
     toast.innerHTML = `
         <i class="fas ${icons[type] || icons.success} text-xl"></i>
         <span class="flex-1 font-medium">${message}</span>
@@ -207,12 +52,10 @@ function showToast(message, type = 'success') {
 
     toastContainer.appendChild(toast);
 
-    // Animation d'entrée
     setTimeout(() => {
         toast.style.transform = 'translateX(0)';
     }, 10);
 
-    // Auto-fermeture après 4 secondes
     setTimeout(() => {
         closeToast(toastId);
     }, 4000);
@@ -244,16 +87,17 @@ function calculateDuration(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffTime = Math.abs(end - start);
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 }
 
 function getPositionColor(position) {
     const colors = {
-        developer: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-        designer: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-        manager: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+        'Développeur': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+        'Designer': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+        'Manager': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+        'default': 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
     };
-    return colors[position] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+    return colors[position] || colors['default'];
 }
 
 function getStatusColor(blocked) {
@@ -263,31 +107,137 @@ function getStatusColor(blocked) {
 }
 
 function getStatusLabel(blocked) {
-    return blocked ? 'Bloqué' : 'Actif';
+    return blocked ? 'Inactif' : 'Actif';
+}
+
+function isDarkMode() {
+    return document.documentElement.classList.contains('dark');
 }
 
 // =============================================
-// VARIABLES GLOBALES POUR LE TABLEAU
+// GÉNÉRER LA PHOTO DE PROFIL
 // =============================================
-let currentPage = 1;
-const itemsPerPage = 5;
-let filteredEmployees = [...employeesData];
+function generatePhotoHTML(photoData) {
+    if (photoData.type === 'url') {
+        return `<img class="h-10 w-10 rounded-full object-cover" src="${photoData.value}" alt="Profile">`;
+    } else {
+        // Type 'initials'
+        return `
+            <div class="h-10 w-10 bg-gradient-to-r ${photoData.gradient} rounded-full flex items-center justify-center text-white font-bold text-sm">
+                ${photoData.initials}
+            </div>
+        `;
+    }
+}
+
+function generateLargePhotoHTML(photoData, name) {
+    if (photoData.type === 'url') {
+        return `<img src="${photoData.value}" alt="${name}" class="w-24 h-24 rounded-full object-cover mb-3 border-4 border-blue-500">`;
+    } else {
+        // Type 'initials'
+        return `
+            <div class="w-24 h-24 bg-gradient-to-r ${photoData.gradient} rounded-full flex items-center justify-center text-white font-bold text-3xl mb-3 border-4 border-blue-500">
+                ${photoData.initials}
+            </div>
+        `;
+    }
+}
 
 // =============================================
-// FONCTIONS POUR LE TABLEAU DES EMPLOYÉS
+// CHARGEMENT DES EMPLOYÉS
 // =============================================
+async function loadEmployees(page = 1) {
+    try {
+        const searchValue = document.getElementById('searchEmployee').value;
+        const positionValue = document.getElementById('positionFilter').value;
 
+        const params = new URLSearchParams({
+            page: page,
+            search: searchValue,
+            position: positionValue
+        });
+
+        const response = await fetch(`/chef-de-departement/gestion-equipe/employees?${params}`, {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            allEmployees = result.data;
+            filteredEmployees = result.data;
+            currentPage = result.pagination.current_page;
+            renderEmployeeTable();
+            updatePagination(result.pagination);
+        } else {
+            showToast(result.message || 'Erreur lors du chargement des employés', 'error');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors du chargement des employés', 'error');
+    }
+}
+
+// =============================================
+// CHARGEMENT DES POSTES
+// =============================================
+async function loadPositions() {
+    try {
+        const response = await fetch('/chef-de-departement/gestion-equipe/positions', {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            const select = document.getElementById('positionFilter');
+            const currentValue = select.value;
+
+            select.innerHTML = '<option value="">Tous les postes</option>';
+
+            result.data.forEach(position => {
+                const option = document.createElement('option');
+                option.value = position;
+                option.textContent = position;
+                select.appendChild(option);
+            });
+
+            select.value = currentValue;
+        }
+    } catch (error) {
+        console.error('Erreur lors du chargement des postes:', error);
+    }
+}
+
+// =============================================
+// RENDU DU TABLEAU
+// =============================================
 function renderEmployeeTable() {
     const tbody = document.getElementById('employeeTableBody');
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const pageEmployees = filteredEmployees.slice(startIndex, endIndex);
 
-    tbody.innerHTML = pageEmployees.map(employee => `
+    if (filteredEmployees.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                    <i class="fas fa-users text-4xl mb-3"></i>
+                    <p class="text-lg">Aucun employé trouvé</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = filteredEmployees.map(employee => `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
             <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                    <img class="h-10 w-10 rounded-full object-cover" src="${employee.photo}" alt="Profile">
+                    ${generatePhotoHTML(employee.photo)}
                     <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900 dark:text-white">${employee.name}</div>
                         <div class="text-sm text-gray-500 dark:text-gray-400">${employee.email}</div>
@@ -311,203 +261,410 @@ function renderEmployeeTable() {
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3"
-                        onclick="viewEmployee('${employee.id}')" title="Voir détails">
-                        <i class="fas fa-eye"></i>
+                        onclick="viewEmployee(${employee.id})" title="Voir détails">
+                    <i class="fas fa-eye"></i>
                 </button>
                 <button class="text-${employee.blocked ? 'green' : 'red'}-600 hover:text-${employee.blocked ? 'green' : 'red'}-900 dark:text-${employee.blocked ? 'green' : 'red'}-400 dark:hover:text-${employee.blocked ? 'green' : 'red'}-300"
-                        onclick="toggleBlockEmployee('${employee.id}')" title="${employee.blocked ? 'Débloquer' : 'Bloquer'}">
-                        <i class="fas fa-${employee.blocked ? 'unlock' : 'lock'}"></i>
+                        onclick="confirmToggleBlock(${employee.id}, '${employee.name}', ${employee.blocked})"
+                        title="${employee.blocked ? 'Débloquer' : 'Bloquer'}">
+                    <i class="fas fa-${employee.blocked ? 'unlock' : 'lock'}"></i>
                 </button>
             </td>
         </tr>
     `).join('');
-
-    updatePagination();
 }
 
-function updatePagination() {
-    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
-    const startItem = (currentPage - 1) * itemsPerPage + 1;
-    const endItem = Math.min(currentPage * itemsPerPage, filteredEmployees.length);
+// =============================================
+// PAGINATION
+// =============================================
+function updatePagination(pagination) {
+    const startItem = ((pagination.current_page - 1) * pagination.per_page) + 1;
+    const endItem = Math.min(pagination.current_page * pagination.per_page, pagination.total);
 
     document.getElementById('paginationInfo').textContent =
-        `Affichage de ${startItem} à ${endItem} sur ${filteredEmployees.length} employés`;
+        `Affichage de ${startItem} à ${endItem} sur ${pagination.total} employés`;
 
     const controls = document.getElementById('paginationControls');
     controls.innerHTML = `
-        <button onclick="changePage(${currentPage - 1})"
-                ${currentPage === 1 ? 'disabled' : ''}
+        <button onclick="changePage(${pagination.current_page - 1})"
+                ${pagination.current_page === 1 ? 'disabled' : ''}
                 class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300
                        dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600
-                       ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}">
+                       ${pagination.current_page === 1 ? 'opacity-50 cursor-not-allowed' : ''}">
             Précédent
         </button>
-        ${Array.from({length: totalPages}, (_, i) => i + 1).map(page => `
+        ${Array.from({length: pagination.total_pages}, (_, i) => i + 1).map(page => `
             <button onclick="changePage(${page})"
                     class="px-3 py-1 text-sm rounded
-                           ${page === currentPage ?
+                           ${page === pagination.current_page ?
                                'bg-blue-500 text-white' :
                                'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'}">
                 ${page}
             </button>
         `).join('')}
-        <button onclick="changePage(${currentPage + 1})"
-                ${currentPage === totalPages ? 'disabled' : ''}
+        <button onclick="changePage(${pagination.current_page + 1})"
+                ${pagination.current_page === pagination.total_pages ? 'disabled' : ''}
                 class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300
                        dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600
-                       ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}">
+                       ${pagination.current_page === pagination.total_pages ? 'opacity-50 cursor-not-allowed' : ''}">
             Suivant
         </button>
     `;
 }
 
 function changePage(page) {
-    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
-    if (page >= 1 && page <= totalPages) {
-        currentPage = page;
-        renderEmployeeTable();
-    }
+    loadEmployees(page);
 }
 
+// =============================================
+// FILTRAGE
+// =============================================
 function filterEmployees() {
-    const searchTerm = document.getElementById('searchEmployee').value.toLowerCase();
-    const positionFilter = document.getElementById('positionFilter').value;
-
-    filteredEmployees = employeesData.filter(emp => {
-        const matchesSearch = emp.name.toLowerCase().includes(searchTerm) ||
-                             emp.email.toLowerCase().includes(searchTerm);
-        const matchesPosition = !positionFilter || emp.position === positionFilter;
-        return matchesSearch && matchesPosition;
-    });
-
-    currentPage = 1;
-    renderEmployeeTable();
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        currentPage = 1;
+        loadEmployees(1);
+    }, 500);
 }
 
-function toggleBlockEmployee(employeeId) {
-    const employee = employeesData.find(emp => emp.id === employeeId);
-    if (employee) {
-        employee.blocked = !employee.blocked;
-        renderEmployeeTable();
-        
-        // Toast notification
-        const status = employee.blocked ? 'bloqué' : 'débloqué';
-        const color = employee.blocked ? 'red' : 'green';
-        showToast(`${employee.name} a été ${status} avec succès`, color);
+// =============================================
+// CONFIRMATION BLOCAGE/DÉBLOCAGE
+// =============================================
+function confirmToggleBlock(employeeId, employeeName, isBlocked) {
+    const action = isBlocked ? 'débloquer' : 'bloquer';
+    const actionCapitalized = isBlocked ? 'Débloquer' : 'Bloquer';
+
+    Swal.fire({
+        title: `${actionCapitalized} l'employé ?`,
+        html: `Voulez-vous vraiment ${action} <strong>${employeeName}</strong> ?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: isBlocked ? '#10b981' : '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: `Oui, ${action}`,
+        cancelButtonText: 'Annuler',
+        background: isDarkMode() ? '#1f2937' : '#ffffff',
+        color: isDarkMode() ? '#f3f4f6' : '#1f2937',
+        customClass: {
+            popup: isDarkMode() ? 'dark-popup' : '',
+            title: isDarkMode() ? 'text-gray-100' : 'text-gray-900',
+            htmlContainer: isDarkMode() ? 'text-gray-300' : 'text-gray-600'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            toggleBlockEmployee(employeeId);
+        }
+    });
+}
+
+// =============================================
+// BLOQUER/DÉBLOQUER EMPLOYÉ
+// =============================================
+async function toggleBlockEmployee(employeeId) {
+    try {
+        const response = await fetch(`/chef-de-departement/gestion-equipe/employee/${employeeId}/toggle-block`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showToast(result.message, result.data.blocked ? 'red' : 'green');
+            // Rafraîchir la page actuelle
+            setTimeout(() => {
+                loadEmployees(currentPage);
+            }, 500);
+        } else {
+            Swal.fire({
+                title: 'Erreur',
+                text: result.message || 'Erreur lors de la modification du statut',
+                icon: 'error',
+                confirmButtonText: "D'accord",
+                confirmButtonColor: '#ef4444',
+                background: isDarkMode() ? '#1f2937' : '#ffffff',
+                color: isDarkMode() ? '#f3f4f6' : '#1f2937',
+                customClass: {
+                    popup: isDarkMode() ? 'dark-popup' : '',
+                    title: isDarkMode() ? 'text-gray-100' : 'text-gray-900',
+                    htmlContainer: isDarkMode() ? 'text-gray-300' : 'text-gray-600'
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        Swal.fire({
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la modification du statut',
+            icon: 'error',
+            confirmButtonText: "D'accord",
+            confirmButtonColor: '#ef4444',
+            background: isDarkMode() ? '#1f2937' : '#ffffff',
+            color: isDarkMode() ? '#f3f4f6' : '#1f2937',
+            customClass: {
+                popup: isDarkMode() ? 'dark-popup' : '',
+                title: isDarkMode() ? 'text-gray-100' : 'text-gray-900',
+                htmlContainer: isDarkMode() ? 'text-gray-300' : 'text-gray-600'
+            }
+        });
     }
 }
 
-function viewEmployee(employeeId) {
-    const employee = employeesData.find(emp => emp.id === employeeId);
-    if (!employee) return;
+// =============================================
+// VOIR DÉTAILS EMPLOYÉ
+// =============================================
+async function viewEmployee(employeeId) {
+    try {
+        const response = await fetch(`/chef-de-departement/gestion-equipe/employee/${employeeId}`, {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        });
 
-    document.getElementById('employeeModalTitle').textContent = `Détails de ${employee.name}`;
+        const result = await response.json();
 
-    const modalContent = document.getElementById('employeeModalContent');
-    modalContent.innerHTML = `
-        <div class="flex flex-col items-center md:items-start">
-            <img src="${employee.photo}" alt="${employee.name}"
-                 class="w-24 h-24 rounded-full object-cover mb-4 border-2 border-blue-500">
-            <div class="text-center md:text-left">
-                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">${employee.name}</h4>
+        if (result.success) {
+            showEmployeeDetails(result.data);
+        } else {
+            Swal.fire({
+                title: 'Erreur',
+                text: result.message || 'Erreur lors du chargement des détails',
+                icon: 'error',
+                confirmButtonText: "D'accord",
+                confirmButtonColor: '#ef4444',
+                background: isDarkMode() ? '#1f2937' : '#ffffff',
+                color: isDarkMode() ? '#f3f4f6' : '#1f2937',
+                customClass: {
+                    popup: isDarkMode() ? 'dark-popup' : '',
+                    title: isDarkMode() ? 'text-gray-100' : 'text-gray-900',
+                    htmlContainer: isDarkMode() ? 'text-gray-300' : 'text-gray-600'
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        Swal.fire({
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors du chargement des détails',
+            icon: 'error',
+            confirmButtonText: "D'accord",
+            confirmButtonColor: '#ef4444',
+            background: isDarkMode() ? '#1f2937' : '#ffffff',
+            color: isDarkMode() ? '#f3f4f6' : '#1f2937',
+            customClass: {
+                popup: isDarkMode() ? 'dark-popup' : '',
+                title: isDarkMode() ? 'text-gray-100' : 'text-gray-900',
+                htmlContainer: isDarkMode() ? 'text-gray-300' : 'text-gray-600'
+            }
+        });
+    }
+}
+
+// =============================================
+// AFFICHER DÉTAILS DANS SWEETALERT
+// =============================================
+function showEmployeeDetails(employee) {
+    const congesHtml = employee.conges && employee.conges.length > 0
+        ? employee.conges.map(conge => {
+            const statusColors = {
+                'En attente': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+                'Approuvé': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+                'Refusé': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+            };
+
+            return `
+                <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 mb-2">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h6 class="font-medium text-gray-900 dark:text-white mb-1">${conge.type}</h6>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <i class="fas fa-calendar mr-1"></i>
+                                ${formatDate(conge.date_debut)} → ${formatDate(conge.date_fin)}
+                            </p>
+                            ${conge.motif ? `<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 italic">${conge.motif}</p>` : ''}
+                        </div>
+                        <div class="ml-3 flex flex-col items-end gap-2">
+                            <span class="px-2 py-1 text-xs rounded-full ${statusColors[conge.statut] || statusColors['En attente']}">
+                                ${conge.statut}
+                            </span>
+                            <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                                ${conge.nb_jours} jour${conge.nb_jours > 1 ? 's' : ''}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('')
+        : '<p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">Aucun congé enregistré</p>';
+
+    const htmlContent = `
+        <div class="text-left space-y-4">
+            <!-- Photo et infos principales -->
+            <div class="flex flex-col items-center pb-4 border-b border-gray-200 dark:border-gray-600">
+                ${generateLargePhotoHTML(employee.photo, employee.name)}
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white">${employee.name}</h4>
                 <p class="text-gray-600 dark:text-gray-400">${employee.positionLabel}</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-4">
-            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <h5 class="font-medium text-gray-900 dark:text-white mb-2">Informations personnelles</h5>
-                <div class="space-y-2">
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Email:</span>
-                        <span class="font-medium text-gray-900 dark:text-white">${employee.email}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Téléphone:</span>
-                        <span class="font-medium text-gray-900 dark:text-white">${employee.phone}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Poste:</span>
-                        <span class="font-medium text-gray-900 dark:text-white">${employee.positionLabel}</span>
-                    </div>
-                </div>
+                <span class="mt-2 px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(employee.blocked)}">
+                    ${getStatusLabel(employee.blocked)}
+                </span>
             </div>
 
+            <!-- Informations personnelles -->
             <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <h5 class="font-medium text-gray-900 dark:text-white mb-2">Congés</h5>
+                <h5 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <i class="fas fa-user mr-2 text-blue-500"></i>
+                    Informations personnelles
+                </h5>
                 <div class="space-y-2">
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Solde restant:</span>
-                        <span class="font-medium text-gray-900 dark:text-white">${employee.remainingLeave} jours</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-600 dark:text-gray-400">Statut:</span>
-                        <span class="px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(employee.blocked)}">
-                            ${getStatusLabel(employee.blocked)}
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
+                        <span class="text-gray-600 dark:text-gray-400 text-sm">
+                            <i class="fas fa-envelope w-5"></i> Email
                         </span>
+                        <span class="font-medium text-gray-900 dark:text-white text-sm">${employee.email}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
+                        <span class="text-gray-600 dark:text-gray-400 text-sm">
+                            <i class="fas fa-phone w-5"></i> Téléphone
+                        </span>
+                        <span class="font-medium text-gray-900 dark:text-white text-sm">${employee.phone}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
+                        <span class="text-gray-600 dark:text-gray-400 text-sm">
+                            <i class="fas fa-id-card w-5"></i> Matricule
+                        </span>
+                        <span class="font-medium text-gray-900 dark:text-white text-sm">${employee.matricule}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-gray-600 dark:text-gray-400 text-sm">
+                            <i class="fas fa-calendar-check w-5"></i> Date d'embauche
+                        </span>
+                        <span class="font-medium text-gray-900 dark:text-white text-sm">${formatDate(employee.date_embauche)}</span>
                     </div>
                 </div>
             </div>
 
+            <!-- Informations congés -->
             <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <h5 class="font-medium text-gray-900 dark:text-white mb-2">Historique des congés</h5>
-                <div class="space-y-3">
-                    ${getEmployeeLeaveHistory(employee.id)}
+                <h5 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <i class="fas fa-umbrella-beach mr-2 text-green-500"></i>
+                    Congés
+                </h5>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg text-center border border-gray-200 dark:border-gray-600">
+                        <p class="text-gray-600 dark:text-gray-400 text-xs mb-1">Solde restant</p>
+                        <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">${employee.solde_conges}</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs">jours</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg text-center border border-gray-200 dark:border-gray-600">
+                        <p class="text-gray-600 dark:text-gray-400 text-xs mb-1">Congés pris</p>
+                        <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">${employee.conges_pris}</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs">jours</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historique des congés -->
+            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h5 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+                    <i class="fas fa-history mr-2 text-purple-500"></i>
+                    Historique des congés
+                </h5>
+                <div class="max-h-64 overflow-y-auto space-y-2">
+                    ${congesHtml}
                 </div>
             </div>
         </div>
     `;
 
-    document.getElementById('employeeModal').classList.remove('hidden');
+    Swal.fire({
+        title: `<span class="${isDarkMode() ? 'text-gray-100' : 'text-gray-900'}">Détails de ${employee.name}</span>`,
+        html: htmlContent,
+        width: '700px',
+        showCloseButton: true,
+        showConfirmButton: false,
+        background: isDarkMode() ? '#1f2937' : '#ffffff',
+        color: isDarkMode() ? '#f3f4f6' : '#1f2937',
+        customClass: {
+            popup: isDarkMode() ? 'dark-popup' : '',
+            closeButton: isDarkMode() ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-800'
+        }
+    });
 }
 
-function getEmployeeLeaveHistory(employeeId) {
-    const employeeLeaves = leaveEvents.filter(event => event.extendedProps.employeeId === employeeId);
-
-    if (employeeLeaves.length === 0) {
-        return '<p class="text-sm text-gray-500 dark:text-gray-400">Aucun congé enregistré.</p>';
-    }
-
-    return employeeLeaves.map(leave => `
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h6 class="font-medium text-gray-900 dark:text-white">${leave.extendedProps.leaveTypeLabel}</h6>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                        ${formatDate(leave.start)} → ${formatDate(leave.end)}
-                    </p>
-                </div>
-                <span class="px-2 py-1 text-xs rounded-full text-white"
-                      style="background-color: ${leave.backgroundColor}">
-                    ${calculateDuration(leave.start, leave.end)} jours
-                </span>
-            </div>
-        </div>
-    `).join('');
-}
-
+// =============================================
+// FERMER MODAL
+// =============================================
 function closeEmployeeModal() {
-    document.getElementById('employeeModal').classList.add('hidden');
+    const modal = document.getElementById('employeeModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+// =============================================
+// DATE ACTUELLE
+// =============================================
+function updateCurrentDate() {
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    const date = new Date().toLocaleDateString('fr-FR', options);
+    const dateElement = document.getElementById('current-date');
+    if (dateElement) {
+        dateElement.textContent = date.charAt(0).toUpperCase() + date.slice(1);
+    }
 }
 
 // =============================================
 // INITIALISATION
 // =============================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation tableau employés
-    renderEmployeeTable();
+    // Mettre à jour la date
+    updateCurrentDate();
 
-    document.getElementById('searchEmployee').addEventListener('input', filterEmployees);
-    document.getElementById('positionFilter').addEventListener('change', filterEmployees);
-    document.getElementById('closeEmployeeModal').addEventListener('click', closeEmployeeModal);
+    // Charger les postes pour le filtre
+    loadPositions();
 
-    document.getElementById('employeeModal').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) closeEmployeeModal();
-    });
+    // Charger les employés
+    loadEmployees(1);
 
+    // Event listeners
+    const searchInput = document.getElementById('searchEmployee');
+    if (searchInput) {
+        searchInput.addEventListener('input', filterEmployees);
+    }
+
+    const positionFilter = document.getElementById('positionFilter');
+    if (positionFilter) {
+        positionFilter.addEventListener('change', filterEmployees);
+    }
+
+    const closeModalBtn = document.getElementById('closeEmployeeModal');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeEmployeeModal);
+    }
+
+    const modal = document.getElementById('employeeModal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeEmployeeModal();
+            }
+        });
+    }
+
+    // Fermer les modals avec Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            if (!document.getElementById('employeeModal').classList.contains('hidden')) {
+            if (modal && !modal.classList.contains('hidden')) {
                 closeEmployeeModal();
             }
         }

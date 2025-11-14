@@ -1010,29 +1010,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     });
 
-    function initTheme() {
-        const theme = localStorage.getItem('theme') || 'light';
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    }
-
-    function toggleTheme() {
-        const html = document.documentElement;
-        const isDark = html.classList.contains('dark');
-
-        if (isDark) {
-            html.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-            notyf.success('Interface basculée en mode clair');
-        } else {
-            html.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-            notyf.success('Interface basculée en mode sombre');
-        }
-    }
 
     function updateDateTime() {
         const now = new Date();
@@ -1046,13 +1023,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            toggleTheme();
-        });
-    }
 
     const toggleSidebar = document.getElementById('toggle-sidebar');
     const closeSidebar = document.getElementById('close-sidebar');

@@ -45,7 +45,7 @@ function closeLogoutModal() {
     }, 200);
 }
 
-// Fonction pour afficher le toast de déconnexion
+// ✅ Fonction pour afficher le toast de déconnexion
 function showLogoutToast(message = 'Déconnexion réussie') {
     const toast = document.getElementById('logoutToast');
     if (!toast) {
@@ -54,11 +54,12 @@ function showLogoutToast(message = 'Déconnexion réussie') {
     }
 
     // Mettre à jour le message si nécessaire
-    const toastMessage = toast.querySelector('.toast-message');
-    if (toastMessage) {
-        toastMessage.textContent = message;
+    const toastTitle = toast.querySelector('p.font-semibold');
+    if (toastTitle && message !== 'Déconnexion réussie') {
+        toastTitle.textContent = message;
     }
 
+    // Afficher le toast avec animation
     toast.classList.remove('translate-x-full');
     toast.classList.add('translate-x-0');
 
@@ -97,10 +98,20 @@ function executeLogout() {
         // Fermer le modal avant la soumission
         closeLogoutModal();
 
-        // Afficher le toast
+        // ✅ Afficher le toast de déconnexion
         setTimeout(() => {
-            showLogoutToast('Déconnexion en cours...');
+            showLogoutToast('Vous êtes déconnecté');
         }, 300);
+
+        // ✅ Nettoyer l'historique et empêcher le retour
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, null, window.location.href);
+
+            // Empêcher le retour arrière
+            window.addEventListener('popstate', function(event) {
+                window.history.pushState(null, null, window.location.href);
+            });
+        }
 
         // Soumettre le formulaire après un court délai
         setTimeout(() => {
@@ -169,6 +180,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeLogoutModal();
             }
         });
+    }
+
+    // ✅ Initialiser le toast de déconnexion
+    const logoutToast = document.getElementById('logoutToast');
+    if (logoutToast) {
+        console.log('✅ Toast de déconnexion initialisé');
+    } else {
+        console.warn('⚠️ Toast de déconnexion (logoutToast) non trouvé dans le DOM');
     }
 });
 

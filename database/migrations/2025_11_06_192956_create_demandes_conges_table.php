@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('validateur_id')->nullable();
             $table->timestamp('date_validation')->nullable();
             $table->text('document_justificatif')->nullable();
+            $table->text('document_de_validation')->nullable();
             $table->timestamps();
 
             $table->index('user_id', 'idx_user_id');
