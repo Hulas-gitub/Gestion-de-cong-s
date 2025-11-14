@@ -1668,20 +1668,3 @@ footer.bg-white\/80.dark\:bg-gray-800\/80 {
             border-color: rgba(59, 130, 246, 0.4);
         }
 
-.swal-wide-popup {
-    max-width: 1200px !important;
-    width: 90% !important;
-}
-
-.swal-wide-popup .swal2-html-container {
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-}
-
-.swal2-popup {
-    padding: 1.5rem !important;
-}
-
-
-

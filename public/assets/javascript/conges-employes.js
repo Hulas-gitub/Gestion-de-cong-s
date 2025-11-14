@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             document.getElementById('demande-id').value = btn.dataset.id;
             document.getElementById('type-conge').value = btn.dataset.typeConge;
-            document.getElementById('type-conge').disabled = true;
+            document.getElementById('type-conge').disable = false;
             document.getElementById('date-debut').value = btn.dataset.dateDebut;
             document.getElementById('date-fin').value = btn.dataset.dateFin;
             document.getElementById('motif').value = btn.dataset.motif || '';

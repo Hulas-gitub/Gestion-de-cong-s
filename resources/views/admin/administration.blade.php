@@ -725,7 +725,7 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $nomComplet }}</p>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($epartements) }}</p>
                                 </div>
                                 @else
                                 <div
