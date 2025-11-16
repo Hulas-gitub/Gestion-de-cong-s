@@ -6,6 +6,8 @@ use App\Http\Controllers\AdministrationControllers;
 use App\Http\Controllers\DemandesEmployesController;
 use App\Http\Controllers\GestionEquipeController;
 use App\Http\Controllers\DemandesEquipeController;
+use App\Http\Controllers\DemandesAdminController;
+use App\Http\Controllers\DashboardAdminController;
 /*
 |--------------------------------------------------------------------------
 | Routes d'authentification (Invités uniquement)
@@ -119,57 +121,102 @@ Route::get('/demandes-equipe/{id}/telecharger-document', [DemandesEquipeControll
 Route::get('/demandes-equipe/{id}/check-document', [DemandesEquipeController::class, 'checkDocument'])->name('demandes-equipe.check-document');
 Route::get('/demandes-equipe/employees', [DemandesEquipeController::class, 'getEmployees'])->name('demandes-equipe.employees');
 });
-    /*
-    |--------------------------------------------------------------------------
-    | Routes pour l'administrateur
-    |--------------------------------------------------------------------------
-    */
-    Route::prefix('admin')->name('admin.')->group(function () {
 
-        // Dashboard
-        Route::get('/dashboard-admin', function () {
-            return view('admin.dashboard-admin');
-        })->name('dashboard-admin');
+/*
+|--------------------------------------------------------------------------
+| Routes pour l'administrateur - Gestion des demandes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->name('admin.')->group(function () {
 
-        // Administration des utilisateurs
-        Route::get('/administration', [AdministrationControllers::class, 'index'])->name('administration');
+     Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('dashboard-admin');
 
-        // Calendrier
-        Route::get('/calendrier-admin', function () {
-            return view('admin.calendrier-admin');
-        })->name('calendrier-admin');
+    // API Routes pour le Dashboard
+    Route::prefix('api/dashboard')->name('api.dashboard.')->group(function () {
+        Route::get('/kpi-stats', [DashboardAdminController::class, 'getKpiStats'])->name('kpi-stats');
+        Route::get('/evolution-conges', [DashboardAdminController::class, 'getEvolutionConges'])->name('evolution-conges');
+        Route::get('/employes-departement', [DashboardAdminController::class, 'getEmployesParDepartement'])->name('employes-departement');
+        Route::get('/types-conges', [DashboardAdminController::class, 'getTypesConges'])->name('types-conges');
+        Route::get('/taux-absenteisme', [DashboardAdminController::class, 'getTauxAbsenteisme'])->name('taux-absenteisme');
+        Route::get('/vue-ensemble', [DashboardAdminController::class, 'getVueEnsemble'])->name('vue-ensemble');
+    });
 
-        // Profil
-        Route::get('/profile', function () {
-            return view('admin.profile');
-        })->name('profile');
+    // Administration des utilisateurs
+    Route::get('/administration', [AdministrationControllers::class, 'index'])->name('administration');
 
-        // API Routes pour la gestion des utilisateurs et départements
-        Route::prefix('api')->name('api.')->group(function () {
+    // Calendrier
+    Route::get('/calendrier-admin', function () {
+        return view('admin.calendrier-admin');
+    })->name('calendrier-admin');
 
-            // Routes pour les utilisateurs
-            Route::prefix('users')->name('users.')->group(function () {
-                Route::get('/', [AdministrationControllers::class, 'getUsers'])->name('index');
-                Route::post('/', [AdministrationControllers::class, 'store'])->name('store');
-                Route::get('/{id}', [AdministrationControllers::class, 'show'])->name('show');
-                Route::put('/{id}', [AdministrationControllers::class, 'update'])->name('update');
-                Route::delete('/{id}', [AdministrationControllers::class, 'destroy'])->name('destroy');
-                Route::post('/{id}/block', [AdministrationControllers::class, 'block'])->name('block');
-                Route::post('/{id}/unblock', [AdministrationControllers::class, 'unblock'])->name('unblock');
-                Route::post('/{id}/resend-activation', [AdministrationControllers::class, 'resendActivation'])->name('resend-activation');
-                Route::post('/generate-matricule', [AdministrationControllers::class, 'generateMatricule'])->name('generate-matricule');
-            });
+    // Profil
+    Route::get('/profile', function () {
+        return view('admin.profile');
+    })->name('profile');
 
-            // Routes pour les départements
-            Route::prefix('departements')->name('departements.')->group(function () {
-                Route::get('/', [AdministrationControllers::class, 'getDepartements'])->name('index');
-                Route::post('/', [AdministrationControllers::class, 'storeDepartement'])->name('store');
-                Route::get('/{id}', [AdministrationControllers::class, 'showDepartement'])->name('show');
-                Route::put('/{id}', [AdministrationControllers::class, 'updateDepartement'])->name('update');
-                Route::delete('/{id}', [AdministrationControllers::class, 'destroyDepartement'])->name('destroy');
-            });
+    // ========== GESTION DES DEMANDES DE CONGÉS ==========
+
+    // Page principale de gestion des demandes
+    Route::get('/demandes-admin', [DemandesAdminController::class, 'index'])->name('demandes-admin');
+
+    // API Routes pour les demandes
+    Route::prefix('api/demandes')->name('api.demandes.')->group(function () {
+
+        // Récupérer toutes les demandes avec filtres
+        Route::get('/', [DemandesAdminController::class, 'getDemandes'])->name('index');
+
+        // Récupérer tous les départements
+        Route::get('/departements', [DemandesAdminController::class, 'getAllDepartements'])->name('departements');
+
+        // Récupérer les employés par département
+        Route::get('/departements/{id}/employees', [DemandesAdminController::class, 'getEmployeesByDepartement'])->name('employees');
+
+        // Récupérer les détails d'une demande
+        Route::get('/{id}', [DemandesAdminController::class, 'getDemandeDetails'])->name('show');
+
+        // Actions individuelles
+        Route::post('/{id}/approuver', [DemandesAdminController::class, 'approuverDemande'])->name('approve');
+        Route::post('/{id}/refuser', [DemandesAdminController::class, 'refuserDemande'])->name('reject');
+        Route::post('/{id}/revalider', [DemandesAdminController::class, 'revaliderDemande'])->name('revalidate');
+        Route::delete('/{id}', [DemandesAdminController::class, 'supprimerDemande'])->name('destroy');
+
+        // Actions groupées
+        Route::post('/approuver-multiples', [DemandesAdminController::class, 'approuverMultiples'])->name('approve-multiple');
+        Route::post('/refuser-multiples', [DemandesAdminController::class, 'refuserMultiples'])->name('reject-multiple');
+
+        // Gestion des documents
+        Route::post('/{id}/upload-attestation', [DemandesAdminController::class, 'uploadAttestation'])->name('upload-attestation');
+        Route::get('/{id}/telecharger-document', [DemandesAdminController::class, 'telechargerDocument'])->name('download-document');
+        Route::get('/{id}/visualiser-document', [DemandesAdminController::class, 'visualiserDocument'])->name('view-document');
+        Route::get('/{id}/check-document', [DemandesAdminController::class, 'checkDocument'])->name('check-document');
+    });
+
+    // API Routes pour la gestion des utilisateurs et départements
+    Route::prefix('api')->name('api.')->group(function () {
+
+        // Routes pour les utilisateurs
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [AdministrationControllers::class, 'getUsers'])->name('index');
+            Route::post('/', [AdministrationControllers::class, 'store'])->name('store');
+            Route::get('/{id}', [AdministrationControllers::class, 'show'])->name('show');
+            Route::put('/{id}', [AdministrationControllers::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdministrationControllers::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/block', [AdministrationControllers::class, 'block'])->name('block');
+            Route::post('/{id}/unblock', [AdministrationControllers::class, 'unblock'])->name('unblock');
+            Route::post('/{id}/resend-activation', [AdministrationControllers::class, 'resendActivation'])->name('resend-activation');
+            Route::post('/generate-matricule', [AdministrationControllers::class, 'generateMatricule'])->name('generate-matricule');
+        });
+
+        // Routes pour les départements
+        Route::prefix('departements')->name('departements.')->group(function () {
+            Route::get('/', [AdministrationControllers::class, 'getDepartements'])->name('index');
+            Route::post('/', [AdministrationControllers::class, 'storeDepartement'])->name('store');
+            Route::get('/{id}', [AdministrationControllers::class, 'showDepartement'])->name('show');
+            Route::put('/{id}', [AdministrationControllers::class, 'updateDepartement'])->name('update');
+            Route::delete('/{id}', [AdministrationControllers::class, 'destroyDepartement'])->name('destroy');
         });
     });
+});
 });
 
 /*

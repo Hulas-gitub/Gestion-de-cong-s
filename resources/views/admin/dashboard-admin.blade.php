@@ -221,211 +221,110 @@
                         <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full">
                             <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
 
-    <!-- Stats Cards (à fleur) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full animate-slide-up" style="animation-delay: 0.2s;">
-        <!-- Employés actifs -->
-        <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-users text-2xl"></i>
-                    </div>
-                    <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Actifs</span>
+<!-- Stats Cards (KPIs) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full animate-slide-up" style="animation-delay: 0.2s;">
+    <!-- Employés actifs -->
+    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-users text-2xl"></i>
                 </div>
-                <div class="text-4xl font-bold mb-2">248</div>
-                <div class="text-sm opacity-90">Employés actifs</div>
+                <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Actifs</span>
             </div>
-        </div>
-
-        <!-- Départements -->
-        <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-building text-2xl"></i>
-                    </div>
-                    <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Total</span>
-                </div>
-                <div class="text-4xl font-bold mb-2">12</div>
-                <div class="text-sm opacity-90">Départements</div>
-            </div>
-        </div>
-
-        <!-- Managers -->
-        <div class="bg-gradient-to-br from-pink-500 to-pink-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-user-tie text-2xl"></i>
-                    </div>
-                    <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Managers</span>
-                </div>
-                <div class="text-4xl font-bold mb-2">12</div>
-                <div class="text-sm opacity-90">Chefs de département</div>
-            </div>
-        </div>
-
-        <!-- Taux d'occupation -->
-        <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-chart-line text-2xl"></i>
-                    </div>
-                    <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Présence</span>
-                </div>
-                <div class="text-4xl font-bold mb-2">94%</div>
-                <div class="text-sm opacity-90">Taux d'occupation</div>
-            </div>
-        </div>
-
-        <!-- Demandes en attente -->
-        <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-clock text-2xl"></i>
-                    </div>
-                    <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Urgent</span>
-                </div>
-                <div class="text-4xl font-bold mb-2">12</div>
-                <div class="text-sm opacity-90">Demandes en attente</div>
-            </div>
+            <div id="kpi-employes-actifs" class="text-4xl font-bold mb-2">-</div>
+            <div class="text-sm opacity-90">Employés actifs</div>
         </div>
     </div>
 
-    <!-- Graphiques Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full animate-slide-up" style="animation-delay: 0.3s;">
-        <!-- Évolution des congés -->
-        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
-            <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Évolution des congés</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">12 derniers mois</p>
+    <!-- Départements -->
+    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-building text-2xl"></i>
+                </div>
+                <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Total</span>
             </div>
-            <div class="p-6">
-                <canvas id="congesChart" class="w-full" height="300"></canvas>
-            </div>
-        </div>
-
-        <!-- Répartition par département -->
-        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
-            <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Répartition par département</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Congés ce mois-ci</p>
-            </div>
-            <div class="p-6 flex items-center justify-center">
-                <canvas id="departmentChart" class="w-full" height="300"></canvas>
-            </div>
+            <div id="kpi-departements" class="text-4xl font-bold mb-2">-</div>
+            <div class="text-sm opacity-90">Départements</div>
         </div>
     </div>
 
+    <!-- Managers -->
+    <div class="bg-gradient-to-br from-pink-500 to-pink-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-user-tie text-2xl"></i>
+                </div>
+                <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Managers</span>
+            </div>
+            <div id="kpi-chefs" class="text-4xl font-bold mb-2">-</div>
+            <div class="text-sm opacity-90">Chefs de département</div>
+        </div>
+    </div>
 
-<script>
-const congesCtx = document.getElementById('congesChart').getContext('2d');
-const congesChart = new Chart(congesCtx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
-        datasets: [{
-            label: 'Congés approuvés',
-            data: [45, 52, 48, 65, 85, 120, 125, 95, 60, 55, 50, 42],
-            borderColor: 'rgb(59, 130, 246)',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            pointBackgroundColor: 'rgb(59, 130, 246)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#374151',
-                    font: {
-                        size: 12
-                    }
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: 'rgba(156, 163, 175, 0.1)'
-                },
-                ticks: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#6B7280'
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#6B7280'
-                }
-            }
-        }
-    }
-});
+    <!-- Employés en congé -->
+    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-umbrella-beach text-2xl"></i>
+                </div>
+                <span class="text-xs bg-white/20 px-3 py-1 rounded-full">En cours</span>
+            </div>
+            <div id="kpi-en-conge" class="text-4xl font-bold mb-2">-</div>
+            <div class="text-sm opacity-90">Employés en congé</div>
+        </div>
+    </div>
 
-// Données pour le graphique en donut
-const departmentCtx = document.getElementById('departmentChart').getContext('2d');
-const departmentChart = new Chart(departmentCtx, {
-    type: 'doughnut',
-    data: {
-        labels: ['IT', 'Finance', 'RH', 'Marketing', 'Ventes'],
-        datasets: [{
-            data: [35, 20, 15, 18, 12],
-            backgroundColor: [
-                'rgb(59, 130, 246)',   // Bleu
-                'rgb(168, 85, 247)',   // Violet
-                'rgb(236, 72, 153)',   // Rose
-                'rgb(34, 197, 94)',    // Vert
-                'rgb(249, 115, 22)'    // Orange
-            ],
-            borderWidth: 3,
-            borderColor: '#fff',
-            hoverOffset: 10
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'right',
-                labels: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#374151',
-                    padding: 15,
-                    font: {
-                        size: 12
-                    },
-                    usePointStyle: true,
-                    pointStyle: 'rect'
-                }
-            }
-        },
-        cutout: '70%'
-    }
-});
-</script>
+    <!-- Demandes en attente -->
+    <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover-lift click-scale relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-clock text-2xl"></i>
+                </div>
+                <span class="text-xs bg-white/20 px-3 py-1 rounded-full">Urgent</span>
+            </div>
+            <div id="kpi-en-attente" class="text-4xl font-bold mb-2">-</div>
+            <div class="text-sm opacity-90">Demandes en attente</div>
+        </div>
+    </div>
+</div>
 
-     <!-- Graphiques Statistiques -->
+<!-- Graphiques Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full animate-slide-up" style="animation-delay: 0.3s;">
+    <!-- Évolution des congés -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+        <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Évolution des congés</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">12 derniers mois</p>
+        </div>
+        <div class="p-6">
+            <canvas id="congesChart" class="w-full" height="300"></canvas>
+        </div>
+    </div>
+
+    <!-- Répartition par département -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+        <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Répartition par département</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Nombre d'employés</p>
+        </div>
+        <div class="p-6 flex items-center justify-center">
+            <canvas id="departmentChart" class="w-full" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Graphiques Statistiques -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full animate-slide-up" style="animation-delay: 0.5s;">
     <!-- Types de congés -->
     <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
@@ -458,18 +357,18 @@ const departmentChart = new Chart(departmentCtx, {
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Vue d'ensemble par département</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Statistiques détaillées</p>
             </div>
-            <div class="flex items-center gap-3">
-                <!-- Filtres -->
-                <select id="periodeFilter" class="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition-all">
-                    <option value="mois">Ce mois</option>
-                    <option value="trimestre">Ce trimestre</option>
-                    <option value="annee">Cette année</option>
-                </select>
-                <button class="gradient-bg text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 hover-lift click-scale flex items-center gap-2">
-                    <i class="fas fa-download"></i>
-                    <span class="text-sm font-semibold">Exporter</span>
-                </button>
-            </div>
+    <div class="flex items-center gap-3">
+    <!-- Filtres -->
+    <select id="periodeFilter" class="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition-all">
+        <option value="mois">Ce mois</option>
+        <option value="trimestre">Ce trimestre</option>
+        <option value="annee">Cette année</option>
+    </select>
+    <button id="export-btn" class="gradient-bg text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 hover-lift click-scale flex items-center gap-2">
+        <i class="fas fa-download"></i>
+        <span class="text-sm font-semibold">Exporter</span>
+    </button>
+</div>
         </div>
     </div>
     <div class="overflow-x-auto">
@@ -485,275 +384,14 @@ const departmentChart = new Chart(departmentCtx, {
                     <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Taux absence</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200/50 dark:divide-gray-700/50">
-                <!-- IT -->
-                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                                <i class="fas fa-laptop-code text-blue-500"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-gray-900 dark:text-white">IT</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">Technologie</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Marc Durand</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold">35</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 font-semibold">3</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold">2</span>
-                    </td>
-                    <td class="px-6 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">18.5j</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-500/10 text-green-600 dark:text-green-400">5.2%</span>
-                    </td>
-                </tr>
-
-                <!-- Finance -->
-                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                                <i class="fas fa-chart-line text-purple-500"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-gray-900 dark:text-white">Finance</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">Comptabilité</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Jean Martin</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold">28</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 font-semibold">2</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold">3</span>
-                    </td>
-                    <td class="px-6 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">20.2j</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-500/10 text-green-600 dark:text-green-400">4.8%</span>
-                    </td>
-                </tr>
-
-                <!-- RH -->
-                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
-                                <i class="fas fa-users text-pink-500"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-gray-900 dark:text-white">RH</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">Ressources Humaines</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Sophie Bernard</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold">18</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 font-semibold">1</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold">1</span>
-                    </td>
-                    <td class="px-6 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">22.0j</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-500/10 text-green-600 dark:text-green-400">3.5%</span>
-                    </td>
-                </tr>
-
-                <!-- Marketing -->
-                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
-                                <i class="fas fa-bullhorn text-yellow-500"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-gray-900 dark:text-white">Marketing</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">Communication</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Claire Dubois</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold">22</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 font-semibold">5</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold">4</span>
-                    </td>
-                    <td class="px-6 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">15.8j</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-yellow-500/10 text-yellow-600 dark:text-yellow-400">8.3%</span>
-                    </td>
-                </tr>
-
-                <!-- Ventes -->
-                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
-                                <i class="fas fa-shopping-cart text-orange-500"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-gray-900 dark:text-white">Ventes</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">Commercial</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Paul Lefèvre</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold">30</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 font-semibold">4</span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold">2</span>
-                    </td>
-                    <td class="px-6 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">19.2j</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-500/10 text-green-600 dark:text-green-400">6.1%</span>
-                    </td>
-                </tr>
+            <tbody id="tableau-vue-ensemble" class="divide-y divide-gray-200/50 dark:divide-gray-700/50">
+                <!-- Données chargées dynamiquement -->
             </tbody>
         </table>
     </div>
+    <!-- Conteneur de pagination -->
+    <div id="pagination-container"></div>
 </div>
-
-<!-- Scripts pour les nouveaux graphiques -->
-<script>
-// Graphique Types de congés (Horizontal Bar)
-const typesCongesCtx = document.getElementById('typesCongesChart').getContext('2d');
-const typesCongesChart = new Chart(typesCongesCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Congé annuel', 'Maladie', 'Maternité', 'Sans solde', 'Formation'],
-        datasets: [{
-            label: 'Nombre de demandes',
-            data: [155, 42, 8, 25, 32],
-            backgroundColor: [
-                'rgba(59, 130, 246, 0.8)',   // Bleu
-                'rgba(239, 68, 68, 0.8)',    // Rouge
-                'rgba(168, 85, 247, 0.8)',   // Violet
-                'rgba(234, 179, 8, 0.8)',    // Jaune
-                'rgba(34, 197, 94, 0.8)'     // Vert
-            ],
-            borderRadius: 8,
-            borderWidth: 0
-        }]
-    },
-    options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                beginAtZero: true,
-                grid: {
-                    color: 'rgba(156, 163, 175, 0.1)'
-                },
-                ticks: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#6B7280'
-                }
-            },
-            y: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#374151',
-                    font: {
-                        size: 12
-                    }
-                }
-            }
-        }
-    }
-});
-
-// Graphique Taux d'absentéisme (Bar verticales)
-const absenteismeCtx = document.getElementById('absenteismeChart').getContext('2d');
-const absenteismeChart = new Chart(absenteismeCtx, {
-    type: 'bar',
-    data: {
-        labels: ['IT', 'Finance', 'RH', 'Marketing', 'Ventes'],
-        datasets: [{
-            label: "Taux d'absence (%)",
-            data: [5.2, 4.8, 3.5, 8.3, 6.1],
-            backgroundColor: [
-                'rgba(34, 197, 94, 0.8)',    // Vert (faible)
-                'rgba(34, 197, 94, 0.8)',    // Vert (faible)
-                'rgba(34, 197, 94, 0.8)',    // Vert (faible)
-                'rgba(234, 179, 8, 0.8)',    // Jaune (élevé)
-                'rgba(34, 197, 94, 0.8)'     // Vert (moyen)
-            ],
-            borderRadius: 8,
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 10,
-                grid: {
-                    color: 'rgba(156, 163, 175, 0.1)'
-                },
-                ticks: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#6B7280',
-                    callback: function(value) {
-                        return value + '%';
-                    }
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') || '#374151',
-                    font: {
-                        size: 12
-                    }
-                }
-            }
-        }
-    }
-});
-
-// Gestion du filtre de période
-document.getElementById('periodeFilter').addEventListener('change', function(e) {
-    console.log('Période sélectionnée:', e.target.value);
-    // Ici vous pouvez ajouter la logique pour filtrer les données du tableau
-});
-</script>
                             </div>
                         </div>
                     </div>
@@ -895,9 +533,14 @@ document.getElementById('periodeFilter').addEventListener('change', function(e) 
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
-```
+
+ <script src="{{asset ('assets/javascript/dashboard-admin.js') }}"></script>
        <script src="{{ asset('assets/javascript/config.js') }}"></script>
     <script src="{{ asset('assets/javascript/dashboard-manager.js') }}"></script>
   <script src="{{ asset('assets/javascript/logout.js') }}"></script>
+  <!-- Bibliothèques pour l'export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
