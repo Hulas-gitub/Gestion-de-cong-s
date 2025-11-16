@@ -243,16 +243,22 @@ class DashboardAdminController extends Controller
             $dateActuelle = Carbon::now();
             $dateActuelleStr = $dateActuelle->format('Y-m-d');
 
-            // Déterminer la plage de dates selon la période
+            // Déterminer la plage de dates selon la période DE L'ANNÉE EN COURS
             switch ($periode) {
                 case 'trimestre':
-                    $dateDebut = $dateActuelle->copy()->subMonths(3);
+                    // 3 derniers mois de l'année en cours
+                    $dateDebut = $dateActuelle->copy()->subMonths(3)->startOfMonth();
+                    $dateFin = $dateActuelle->copy()->endOfMonth();
                     break;
                 case 'annee':
+                    // Toute l'année en cours (du 1er janvier à aujourd'hui)
                     $dateDebut = $dateActuelle->copy()->startOfYear();
+                    $dateFin = $dateActuelle->copy()->endOfDay();
                     break;
                 default: // mois
+                    // Mois en cours (du 1er du mois à aujourd'hui)
                     $dateDebut = $dateActuelle->copy()->startOfMonth();
+                    $dateFin = $dateActuelle->copy()->endOfDay();
                     break;
             }
 
@@ -261,7 +267,7 @@ class DashboardAdminController extends Controller
                     $query->where('actif', 1);
                 }])
                 ->get()
-                ->map(function($dept) use ($dateDebut, $dateActuelle, $dateActuelleStr) {
+                ->map(function($dept) use ($dateDebut, $dateFin, $dateActuelleStr) {
                     $employes = $dept->employes;
                     $totalEmployes = $employes->count();
 
@@ -274,13 +280,13 @@ class DashboardAdminController extends Controller
                         ->distinct('user_id')
                         ->count('user_id');
 
-                    // Nombre de demandes sur la période
+                    // Nombre de demandes sur la période SÉLECTIONNÉE
                     $demandes = DemandeConge::whereIn('user_id', $employes->pluck('id_user'))
-                        ->whereBetween('created_at', [$dateDebut, $dateActuelle])
+                        ->whereBetween('created_at', [$dateDebut, $dateFin])
                         ->count();
 
-                    // Calcul du solde moyen selon dates début/fin
-                    $soldeMoyen = $this->calculerSoldeMoyen($employes, $dateDebut, $dateActuelle);
+                    // Calcul du solde moyen selon dates début/fin de la période
+                    $soldeMoyen = $this->calculerSoldeMoyen($employes, $dateDebut, $dateFin);
 
                     // Taux d'absence
                     $tauxAbsence = $totalEmployes > 0 ? ($employesEnConge / $totalEmployes) * 100 : 0;

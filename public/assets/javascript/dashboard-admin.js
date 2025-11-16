@@ -280,17 +280,79 @@ async function loadTauxAbsenteisme() {
 async function loadVueEnsemble(periode = 'mois') {
     try {
         currentPeriode = periode;
+
+        // Afficher un loader pendant le chargement
+        const tbody = document.getElementById('tableau-vue-ensemble');
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="px-6 py-12 text-center">
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+                        <p class="text-gray-600 dark:text-gray-400">Chargement des données...</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+
         const response = await fetch(`/admin/api/dashboard/vue-ensemble?periode=${periode}`);
         const result = await response.json();
 
         if (result.success) {
             allDepartements = result.data;
             currentPage = 1;
+
+            // Vérifier si des données existent
+            if (allDepartements.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                            <div class="flex flex-col items-center gap-3">
+                                <i class="fas fa-inbox text-5xl opacity-50"></i>
+                                <p class="text-lg font-semibold">Aucune donnée disponible</p>
+                                <p class="text-sm">Aucun département trouvé pour la période sélectionnée.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('pagination-container').innerHTML = '';
+                return;
+            }
+
             renderTablePage();
             renderPagination();
+        } else {
+            // Afficher un message d'erreur
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-12 text-center text-red-500 dark:text-red-400">
+                        <div class="flex flex-col items-center gap-3">
+                            <i class="fas fa-exclamation-triangle text-5xl opacity-50"></i>
+                            <p class="text-lg font-semibold">Erreur de chargement</p>
+                            <p class="text-sm">${result.message || 'Une erreur est survenue'}</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            document.getElementById('pagination-container').innerHTML = '';
         }
     } catch (error) {
         console.error('Erreur lors du chargement de la vue d\'ensemble:', error);
+        const tbody = document.getElementById('tableau-vue-ensemble');
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="px-6 py-12 text-center text-red-500 dark:text-red-400">
+                    <div class="flex flex-col items-center gap-3">
+                        <i class="fas fa-exclamation-circle text-5xl opacity-50"></i>
+                        <p class="text-lg font-semibold">Erreur de connexion</p>
+                        <p class="text-sm">Impossible de récupérer les données. Veuillez réessayer.</p>
+                        <button onclick="loadVueEnsemble('${currentPeriode}')" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all">
+                            <i class="fas fa-redo mr-2"></i>Réessayer
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+        document.getElementById('pagination-container').innerHTML = '';
     }
 }
 
@@ -304,11 +366,17 @@ function renderTablePage() {
     const pageData = allDepartements.slice(startIndex, endIndex);
 
     if (pageData.length === 0) {
+        const periodeText = currentPeriode === 'mois' ? 'ce mois-ci' :
+                           currentPeriode === 'trimestre' ? 'ce trimestre' : 'cette année';
         tbody.innerHTML = `
             <tr>
-                <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
-                    <i class="fas fa-inbox text-4xl mb-2"></i>
-                    <p>Aucune donnée disponible</p>
+                <td colspan="7" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                    <div class="flex flex-col items-center gap-3">
+                        <i class="fas fa-calendar-times text-5xl opacity-50"></i>
+                        <p class="text-lg font-semibold">Aucune donnée disponible</p>
+                        <p class="text-sm">Aucune demande trouvée pour <strong>${periodeText}</strong>.</p>
+                        <p class="text-xs text-gray-400 dark:text-gray-500">Essayez de sélectionner une autre période.</p>
+                    </div>
                 </td>
             </tr>
         `;

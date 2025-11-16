@@ -397,21 +397,6 @@
                     </div>
                 </div>
 
-<!-- Toast de notification -->
-<div id="toast" class="fixed top-4 right-4 bg-white dark:bg-gray-800 border-l-4 border-green-500 rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50 min-w-80">
-    <div class="flex items-start space-x-3">
-        <div id="toastIcon" class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-            <i class="fas fa-check text-green-500"></i>
-        </div>
-        <div class="flex-1">
-            <h4 id="toastTitle" class="font-semibold text-gray-900 dark:text-white text-sm">Action réussie</h4>
-            <p id="toastMessage" class="text-sm text-gray-500 dark:text-gray-400">L'action a été effectuée avec succès</p>
-        </div>
-        <button onclick="document.getElementById('toast').style.transform = 'translateX(100%)'" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-</div>
 
               <!-- Footer -->
             <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
@@ -434,20 +419,7 @@
 
     </div>
 
-    <!-- Toast notification -->
-    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 max-w-sm">
-            <div class="flex items-center space-x-3">
-                <div id="toastIcon" class="w-8 h-8 rounded-full flex items-center justify-center">
-                    <i class="fas fa-check"></i>
-                </div>
-                <div>
-                    <p id="toastTitle" class="font-semibold text-gray-900 dark:text-white">Action réussie</p>
-                    <p id="toastMessage" class="text-sm text-gray-600 dark:text-gray-400">L'action a été effectuée avec succès.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Modal de confirmation de déconnexion -->
 <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
     <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
