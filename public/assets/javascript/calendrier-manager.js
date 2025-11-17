@@ -197,7 +197,7 @@ function showToast(message, type = 'success') {
     const toastId = 'toast-' + Date.now();
     toast.id = toastId;
     toast.className = `${colors[type] || colors.success} text-white px-6 py-4 rounded-lg shadow-2xl flex items-center space-x-3 min-w-[320px] transform transition-all duration-300 ease-in-out translate-x-[400px]`;
-    
+
     toast.innerHTML = `
         <i class="fas ${icons[type] || icons.success} text-xl"></i>
         <span class="flex-1 font-medium">${message}</span>
@@ -300,7 +300,7 @@ function filterLeaves() {
 
 function renderLeavesList() {
     const container = document.getElementById('leavesContainer');
-    
+
     if (filteredLeaves.length === 0) {
         container.innerHTML = `
             <div class="text-center py-12">
@@ -384,7 +384,7 @@ function changeLeavesPage(page) {
 function createLeaveCardGrid(leave) {
     const props = leave.extendedProps;
     const duration = calculateDuration(leave.start, leave.end);
-    
+
     return `
         <div id="leave-${leave.id}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer border-l-4" style="border-left-color: ${leave.backgroundColor};">
             <div class="p-4">
@@ -423,7 +423,7 @@ function createLeaveCardGrid(leave) {
 function createLeaveCardList(leave) {
     const props = leave.extendedProps;
     const duration = calculateDuration(leave.start, leave.end);
-    
+
     return `
         <div id="leave-${leave.id}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer border-l-4" style="border-left-color: ${leave.backgroundColor};">
             <div class="p-4">
@@ -674,7 +674,7 @@ function toggleBlockEmployee(employeeId) {
     if (employee) {
         employee.blocked = !employee.blocked;
         renderEmployeeTable();
-        
+
         // Toast notification
         const status = employee.blocked ? 'bloqué' : 'débloqué';
         const color = employee.blocked ? 'red' : 'green';
@@ -783,7 +783,7 @@ document.addEventListener('DOMContentLoaded', function() {
     populateEmployeeFilter();
     setupEventListeners();
     renderLeavesList();
-    
+
     // Initialisation tableau employés
     renderEmployeeTable();
 

@@ -75,22 +75,22 @@
                 </nav>
 
          <!-- User Profile -->
-<div class="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
+    <div class="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
     <div class="flex items-center space-x-4 mb-4">
         @auth
             @php
-                // Récupérer les initiales de l'utilisateur
+                // Récupérer les informations de l'utilisateur
                 $prenom = Auth::user()->prenom ?? '';
                 $nom = Auth::user()->nom ?? '';
-                $initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
-
-                // Nom complet
-                $nomComplet = trim($prenom . ' ' . $nom);
-
-                // Rôle de l'utilisateur
+                $initiales = strtoupper(substr($nom, 0, 1) . substr($prenom, 0, 1));
+                $nomComplet = trim($nom. ' ' . $prenom);
                 $role = Auth::user()->role->nom_role ?? 'Utilisateur';
 
-                // Couleurs aléatoires basées sur le nom (pour cohérence)
+                // Vérifier si une photo existe
+                $photoUrl = Auth::user()->photo_url;
+                $hasPhoto = $photoUrl && Storage::disk('public')->exists($photoUrl);
+
+                // Couleurs aléatoires pour les initiales
                 $colors = [
                     'from-purple-400 to-pink-400',
                     'from-blue-400 to-indigo-400',
@@ -103,10 +103,21 @@
                 $gradient = $colors[$colorIndex];
             @endphp
 
-            <div class="w-12 h-12 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-lg animate-float">
-                {{ $initiales }}
-            </div>
-            <div class="flex-2">
+            @if($hasPhoto)
+                <!-- Photo de profil -->
+                <img
+                    src="{{ asset('storage/' . $photoUrl) }}"
+                    alt="Photo de profil"
+                    class="w-12 h-12 rounded-full object-cover animate-float ring-2 ring-white dark:ring-gray-700 shadow-lg"
+                >
+            @else
+                <!-- Initiales si pas de photo -->
+                <div class="w-12 h-12 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-lg animate-float shadow-lg">
+                    {{ $initiales }}
+                </div>
+            @endif
+
+            <div class="flex-1">
                 <p class="font-semibold text-gray-900 dark:text-white">{{ $nomComplet }}</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
             </div>
@@ -114,7 +125,7 @@
             <div class="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-lg animate-float">
                 ?
             </div>
-            <div class="flex-2">
+            <div class="flex-1">
                 <p class="font-semibold text-gray-900 dark:text-white">Utilisateur</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">Non connecté</p>
             </div>
@@ -122,7 +133,6 @@
 
         <a href="#" id="logoutBtn" class="flex items-center space-x-3 text-red-600 hover:text-red-700 dark:text-red-400 text-sm hover-lift transition-all duration-200 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20">
             <i class="fas fa-sign-out-alt w-4 h-4"></i>
-            <span></span>
         </a>
     </div>
 </div>
@@ -429,106 +439,101 @@
         </div>
     </div>
 </div>
-
-
-        <!-- Modal de confirmation de déconnexion -->
-        <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
-            <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
-            <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
-                    <!-- Header -->
-                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center space-x-3">
-                            <div
-                                class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                                <i class="fas fa-sign-out-alt text-xl text-red-600 dark:text-red-400"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation de déconnexion
-                            </h3>
-                        </div>
+<!-- Modal de confirmation de déconnexion -->
+<div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">
+    <div class="backdrop absolute inset-0 bg-black bg-opacity-50" onclick="closeLogoutModal()"></div>
+    <div class="modal relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                        <i class="fas fa-sign-out-alt text-xl text-red-600 dark:text-red-400"></i>
                     </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmation de déconnexion</h3>
+                </div>
+            </div>
 
-                    <!-- Content -->
-                    <div class="p-6">
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir vous déconnecter ?
-                        </p>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                            <div class="flex items-center space-x-3">
-                                @auth
-                                    @php
-                                        // Récupérer les initiales de l'utilisateur
-$prenom = Auth::user()->prenom ?? '';
-$nom = Auth::user()->nom ?? '';
-$initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+            <!-- Content -->
+            <div class="p-6">
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Êtes-vous sûr de vouloir vous déconnecter ?</p>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        @auth
+                            @php
+                                // Récupérer les informations de l'utilisateur
+                                $prenom = Auth::user()->prenom ?? '';
+                                $nom = Auth::user()->nom ?? '';
+                                $initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+                                $nomComplet = trim($prenom . ' ' . $nom);
+                                $role = Auth::user()->role->nom_role ?? 'Utilisateur';
 
-// Nom complet
-$nomComplet = trim($prenom . ' ' . $nom);
+                                // Vérifier si une photo existe
+                                $photoUrl = Auth::user()->photo_url;
+                                $hasPhoto = $photoUrl && Storage::disk('public')->exists($photoUrl);
 
-// Rôle de l'utilisateur
-                                        $role = Auth::user()->role->nom_role ?? 'Utilisateur';
+                                // Couleurs aléatoires pour les initiales
+                                $colors = [
+                                    'from-purple-400 to-pink-400',
+                                    'from-blue-400 to-indigo-400',
+                                    'from-green-400 to-teal-400',
+                                    'from-orange-400 to-red-400',
+                                    'from-yellow-400 to-orange-400',
+                                    'from-pink-400 to-rose-400',
+                                ];
+                                $colorIndex = strlen($nomComplet) % count($colors);
+                                $gradient = $colors[$colorIndex];
+                            @endphp
 
-                                        // Couleurs aléatoires basées sur le nom (pour cohérence)
-                                        $colors = [
-                                            'from-purple-400 to-pink-400',
-                                            'from-blue-400 to-indigo-400',
-                                            'from-green-400 to-teal-400',
-                                            'from-orange-400 to-red-400',
-                                            'from-yellow-400 to-orange-400',
-                                            'from-pink-400 to-rose-400',
-                                        ];
-                                        $colorIndex = strlen($nomComplet) % count($colors);
-                                        $gradient = $colors[$colorIndex];
-                                    @endphp
+                            @if($hasPhoto)
+                                <!-- Photo de profil -->
+                                <img
+                                    src="{{ asset('storage/' . $photoUrl) }}"
+                                    alt="Photo de profil"
+                                    class="w-10 h-10 rounded-full object-cover ring-2 ring-white dark:ring-gray-600 shadow-md"
+                                >
+                            @else
+                                <!-- Initiales si pas de photo -->
+                                <div class="w-10 h-10 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
+                                    {{ $initiales }}
+                                </div>
+                            @endif
 
-                                    <div
-                                        class="w-10 h-10 bg-gradient-to-r {{ $gradient }} rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                        {{ $initiales }}
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $nomComplet }}
-                                        </p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
-                                    </div>
-                                @else
-                                    <div
-                                        class="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                        ?
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Utilisateur</p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">Non connecté</p>
-                                    </div>
-                                @endauth
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $nomComplet }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ ucfirst($role) }}</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Actions -->
-                    <div
-                        class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
-                        <button type="button"
-                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                            onclick="closeLogoutModal()">
-                            <i class="fas fa-times mr-2"></i>
-                            Annuler
-                        </button>
-                        <button type="button"
-                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                            onclick="executeLogout()">
-                            <i class="fas fa-sign-out-alt mr-2"></i>
-                            Se déconnecter
-                        </button>
+                        @else
+                            <div class="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                ?
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Utilisateur</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Non connecté</p>
+                            </div>
+                        @endauth
                     </div>
                 </div>
             </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+                <button type="button"
+                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                    onclick="closeLogoutModal()">
+                    <i class="fas fa-times mr-2"></i>
+                    Annuler
+                </button>
+                <button type="button"
+                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                    onclick="executeLogout()">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    Se déconnecter
+                </button>
+            </div>
         </div>
-
-        <!-- Formulaire de déconnexion caché -->
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-
+    </div>
+</div>
 <!-- Toast notification de déconnexion -->
 <div id="logoutToast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
     <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
