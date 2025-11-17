@@ -369,7 +369,7 @@
         <span class="text-sm font-semibold">Exporter</span>
     </button>
 </div>
-        </div>
+ </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full">
@@ -390,8 +390,10 @@
         </table>
     </div>
     <!-- Conteneur de pagination -->
-    <div id="pagination-container"></div>
+    <div id="pagination-container">
+    </div>
 </div>
+
                             </div>
                         </div>
                     </div>
@@ -500,6 +502,23 @@
         </div>
     </div>
 </div>
+
+        <!-- Toast notification de déconnexion -->
+        <div id="logoutToast"
+            class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                        <i class="fas fa-check text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900 dark:text-white">Déconnexion réussie</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Vous allez être redirigé...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <!-- Formulaire de déconnexion caché -->
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

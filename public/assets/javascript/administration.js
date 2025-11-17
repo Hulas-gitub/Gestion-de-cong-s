@@ -242,6 +242,11 @@ function renderDepartementsTable() {
     `).join('') : '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">Aucun département trouvé</td></tr>';
 }
 
+function renderTypeCongestsTable() {
+    const tbody = document.querySelector('#Typeconges-tab tbody');
+    if (!tbody) return;
+}
+
 // =============================================
 // ACTIONS UTILISATEURS AVEC SWEETALERT2
 // =============================================
@@ -1089,14 +1094,7 @@ function showLoader() {
         loader = document.createElement('div');
         loader.id = 'global-loader';
         loader.innerHTML = `
-            <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl">
-                    <div class="flex items-center space-x-3">
-                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                        <span class="text-gray-900 dark:text-white font-medium">Chargement...</span>
-                    </div>
-                </div>
-            </div>
+
         `;
         document.body.appendChild(loader);
     }
@@ -1180,36 +1178,3 @@ window.editDepartement = editDepartement;
 window.deleteDepartement = deleteDepartement;
 window.closeModal = closeModal;
 window.closeInfoModal = closeInfoModal;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

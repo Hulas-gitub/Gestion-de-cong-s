@@ -11,8 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Vos fichiers existants -->
@@ -21,7 +20,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/demandes.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="icon" type="image/png" href="{{asset('assets/images/logo.png')}}">
-
+  <script src="{{ asset('assets/javascript/TypeConge.js') }}"></script>
  <!-- Scripts -->
  <!-- SweetAlert2 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -263,14 +262,187 @@
             </div>
 <!-- Dashboard Content -->
  <div class="p-0 md:p-0 space-y-6 w-full">
+ <!-- Conteneur principal avec Alpine.js -->
+<div x-data="congeModal()">
+    <!-- Vue d'ensemble par type de congé-->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.6s;">
+        <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-indigo-500/5 to-purple-500/5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex justify-between items-center w-full">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Types de Congé</h1>
 
+                    <!-- Bouton Ajouter - reste à sa place -->
+                    <button
+                        @click="openModal()"
+                        type="button"
+                        class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 flex items-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        <span class="text-sm font-semibold">Ajouter un congé</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tableau -->
+        <div class="p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-gray-700">
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Nom du congé</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Couleur du calendrier</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBodyConges" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Lignes dynamiques générées par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL (en dehors de la div principale, mais toujours dans x-data) -->
+    <div
+        x-show="isOpen"
+        x-cloak
+        @keydown.escape.window="closeModal()"
+        class="fixed inset-0 z-50 overflow-y-auto"
+        aria-labelledby="modal-title"
+        role="dialog"
+        aria-modal="true">
+
+        <!-- Overlay/Backdrop -->
+        <div
+            x-show="isOpen"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            @click="closeModal()"
+            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        </div>
+
+        <!-- Modal Container -->
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+                x-show="isOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                @click.stop
+                class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                            <i class="fas fa-calendar-plus text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <h3 x-text="modalTitle" class="text-lg font-semibold text-gray-900 dark:text-white"></h3>
+                    </div>
+                    <button
+                        @click="closeModal()"
+                        type="button"
+                        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="px-6 py-5 space-y-4">
+                    <input type="hidden" x-model="formData.id">
+
+                    <!-- Nom du type de congé -->
+                    <div>
+                        <label for="inputNomType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Nom du type de congé <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="inputNomType"
+                            x-model="formData.nom"
+                            @input="updatePreview()"
+                            placeholder="Ex: Congé payé"
+                            class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        >
+                    </div>
+
+                    <!-- Couleur du calendrier -->
+                    <div>
+                        <label for="inputCouleur" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Couleur du calendrier <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex items-center space-x-3">
+                            <input
+                                type="color"
+                                id="inputCouleur"
+                                x-model="formData.couleur"
+                                @input="updatePreview()"
+                                class="h-12 w-20 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer"
+                            >
+                            <input
+                                type="text"
+                                x-model="formData.couleur"
+                                readonly
+                                class="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white font-mono text-sm"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Aperçu -->
+                    <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Aperçu</p>
+                        <div class="flex items-center space-x-3">
+                            <div
+                                :style="`background-color: ${formData.couleur}`"
+                                class="w-12 h-12 rounded-lg shadow-sm">
+                            </div>
+                            <span
+                                x-text="formData.nom || 'Nom du congé'"
+                                class="text-base font-semibold text-gray-900 dark:text-white">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                    <button
+                        @click="closeModal()"
+                        type="button"
+                        class="px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                    >
+                        Annuler
+                    </button>
+                    <button
+                        @click="saveConge()"
+                        type="button"
+                        class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm hover:shadow transition-all"
+                    >
+                        Enregistrer
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin du conteneur Alpine.js -->
+
+
+
+    <br><br>
     <!-- Section principale avec filtres -->
     <div id="mainSection" class="grid grid-cols-1 gap-0 w-full mb-6">
-        <div class="w-full">
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
-                    <div class="container mx-auto px-4 py-8">
-                        <div class="mb-8">
+  <div class="mb-8">
                             <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Gestion des utilisateurs</h1>
                             <p class="text-gray-600 dark:text-gray-400">Gérer les employés, chefs de département et départements</p>
                         </div>
@@ -396,10 +568,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -761,7 +929,8 @@
             </div>
         </div>
 
-        <!-- Toast notification de déconnexion -->
+
+      <!-- Toast notification de déconnexion -->
         <div id="logoutToast"
             class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
             <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
@@ -778,6 +947,129 @@
             </div>
         </div>
 
+
+<!-- NOUVEAU MODAL -->
+<div id="modalConge" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <!-- Overlay/Backdrop -->
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModal()"></div>
+
+    <!-- Modal Container -->
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center space-x-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calendar-plus text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 id="modalTitleConge" class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Ajouter un type de congé
+                    </h3>
+                </div>
+                <button type="button" onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-6 py-5 space-y-4">
+                <input type="hidden" id="inputCongeId">
+
+                <!-- Nom du type de congé -->
+                <div>
+                    <label for="inputNomType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Nom du type de congé <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="inputNomType"
+                        placeholder="Ex: Congé payé"
+                        class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    >
+                </div>
+
+                <!-- Couleur du calendrier -->
+                <div>
+                    <label for="inputCouleur" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Couleur du calendrier <span class="text-red-500">*</span>
+                    </label>
+                    <div class="flex items-center space-x-3">
+                        <input
+                            type="color"
+                            id="inputCouleur"
+                            value="#10b981"
+                            class="h-12 w-20 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer"
+                        >
+                        <input
+                            type="text"
+                            id="inputCouleurHex"
+                            value="#10b981"
+                            readonly
+                            class="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white font-mono text-sm"
+                        >
+                    </div>
+                </div>
+
+                <!-- Aperçu -->
+                <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Aperçu</p>
+                    <div class="flex items-center space-x-3">
+                        <div id="previewCouleur" class="w-12 h-12 rounded-lg shadow-sm" style="background-color: #10b981;"></div>
+                        <span id="previewNom" class="text-base font-semibold text-gray-900 dark:text-white">Nom du congé</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <button
+                    type="button"
+                    onclick="closeModal()"
+                    class="px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                >
+                    Annuler
+                </button>
+                <button
+                    type="button"
+                    onclick="saveConge()"
+                    class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm hover:shadow transition-all"
+                >
+                    Enregistrer
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <!-- Toast de succès -->
+    <div id="toastSuccess" class="fixed top-4 right-4 z-[60] transform translate-x-full transition-transform duration-300">
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-green-500 max-w-sm">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-green-600 dark:text-green-400"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-900 dark:text-white" id="toastSuccessTitle">Succès</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400" id="toastSuccessMessage">Opération réussie</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Toast notification de succès -->
+<div id="congeToast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-l-green-500 max-w-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <i class="fas fa-check text-green-600 dark:text-green-400"></i>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-900 dark:text-white" id="toastTitle">Succès</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400" id="toastMessage">Opération réussie</p>
+            </div>
+        </div>
+    </div>
+</div>
         <script src="{{asset('assets/javascript/administration.js')}}"></script>
         <script src="{{asset('assets/javascript/logout.js')}}"></script>
         <script src="{{asset('assets/javascript/config.js')}}"></script>

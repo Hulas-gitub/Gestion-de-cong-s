@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Graxel Tech - Informations</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -253,120 +253,13 @@
                         </tr>
                     </thead>
                     <tbody id="notesTableBody" class="bg-white dark:bg-gray-800/50 divide-y divide-gray-200 dark:divide-gray-700">
-                        <!-- Note 1 -->
-                        <tr class="note-row hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors" data-id="1">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center mr-3">
-                                        <i class="fas fa-file-pdf text-white text-sm"></i>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Politique de congés 2025</div>
+                        <!-- Les notes seront chargées dynamiquement ici via JavaScript -->
+                        <tr>
+                            <td colspan="4" class="px-6 py-12 text-center">
+                                <div class="flex flex-col items-center justify-center">
+                                    <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-3"></i>
+                                    <p class="text-gray-600 dark:text-gray-400">Chargement des notes...</p>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/09/2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">PDF</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <button onclick="downloadNote(1)" class="text-blue-500 hover:text-blue-700 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors" title="Télécharger">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button onclick="viewNote(1)" class="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" title="Visualiser">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="editNote(1)" class="text-orange-500 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors" title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteNote(1)" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors" title="Supprimer">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Note 2 -->
-                        <tr class="note-row hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors" data-id="2">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg flex items-center justify-center mr-3">
-                                        <i class="fas fa-file-excel text-white text-sm"></i>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Planning été 2025</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">10/09/2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">XLSX</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <button onclick="downloadNote(2)" class="text-blue-500 hover:text-blue-700 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors" title="Télécharger">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button onclick="viewNote(2)" class="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" title="Visualiser">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="editNote(2)" class="text-orange-500 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors" title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteNote(2)" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors" title="Supprimer">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Note 3 -->
-                        <tr class="note-row hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors" data-id="3">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center mr-3">
-                                        <i class="fas fa-sticky-note text-white text-sm"></i>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Réunion équipe - Septembre</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">08/09/2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">NOTE</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <button onclick="viewNote(3)" class="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" title="Visualiser">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="editNote(3)" class="text-orange-500 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors" title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteNote(3)" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors" title="Supprimer">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Note 4 -->
-                        <tr class="note-row hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors" data-id="4">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mr-3">
-                                        <i class="fas fa-file-image text-white text-sm"></i>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Organigramme 2025</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">05/09/2025</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">PNG</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <button onclick="downloadNote(4)" class="text-blue-500 hover:text-blue-700 p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors" title="Télécharger">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button onclick="viewNote(4)" class="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" title="Visualiser">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="editNote(4)" class="text-orange-500 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors" title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteNote(4)" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors" title="Supprimer">
-                                    <i class="fas fa-trash"></i>
-                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -375,6 +268,44 @@
         </div>
     </div>
 </div>
+
+    </div>
+<br><br><br><br><br><br><br><br>
+
+          <!-- Footer -->
+            <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div class="col-span-1 md:col-span-2">
+                            <div class="flex items-center space-x-4 mb-4">
+
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                                © 2025 Graxel Technologies. Tous droits réservés. <br> Une solution dédiée aux chefs de département pour une gestion optimale des congés et des ressources humaines.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </footer>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 max-w-sm">
+            <div class="flex items-center space-x-3">
+                <div id="toastIcon" class="w-8 h-8 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div>
+                    <p id="toastTitle" class="font-semibold text-gray-900 dark:text-white">Action réussie</p>
+                    <p id="toastMessage" class="text-sm text-gray-600 dark:text-gray-400">L'action a été effectuée avec succès.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 <!-- Modal de publication de note -->
 <div id="publishModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
@@ -410,7 +341,7 @@
                         <input type="text" id="noteTitle" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Entrez le titre de la note" required>
                     </div>
 
-                    <!-- Zone de téléversement (masquée par défaut) -->
+                    <!-- Zone de téléversement -->
                     <div id="fileUploadSection" class="mb-4 hidden">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Téléverser un document</label>
                         <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors cursor-pointer" onclick="document.getElementById('fileInput').click()">
@@ -499,104 +430,6 @@
     </div>
 </div>
 
-<!-- Modal de confirmation -->
-<div id="confirmModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
-    <div class="backdrop flex items-center justify-center min-h-screen px-4 py-6 bg-black bg-opacity-50 transition-opacity duration-300">
-        <div class="modal bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95 opacity-0">
-            <div class="p-6">
-                <div class="flex items-center justify-center mb-4">
-                    <div id="confirmIcon" class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                        <i class="fas fa-check text-green-500"></i>
-                    </div>
-                </div>
-                <h3 id="confirmTitle" class="text-lg font-semibold text-gray-900 dark:text-white text-center mb-2">Approuver la demande</h3>
-                <p id="confirmMessage" class="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">Êtes-vous sûr de vouloir approuver cette demande de congés ?</p>
-                <div class="text-center mb-6">
-                    <p id="confirmDetails" class="font-medium text-gray-900 dark:text-white">Jean Martin - Congés payés</p>
-                    <p id="confirmDates" class="text-sm text-gray-500 dark:text-gray-400">15/09/2025 - 20/09/2025 (5 jours)</p>
-                </div>
-                <div class="flex space-x-3">
-                    <button onclick="closeModal('confirmModal')" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                        Annuler
-                    </button>
-                    <button id="confirmActionBtn" onclick="executeAction()" class="flex-1 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
-                        <i class="fas fa-check mr-2"></i>Approuver
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Toast de notification -->
-<div id="toast" class="fixed top-4 right-4 bg-white dark:bg-gray-800 border-l-4 border-green-500 rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50 min-w-80">
-    <div class="flex items-start space-x-3">
-        <div id="toastIcon" class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-            <i class="fas fa-check text-green-500"></i>
-        </div>
-        <div class="flex-1">
-            <h4 id="toastTitle" class="font-semibold text-gray-900 dark:text-white text-sm">Action réussie</h4>
-            <p id="toastMessage" class="text-sm text-gray-500 dark:text-gray-400">L'action a été effectuée avec succès</p>
-        </div>
-        <button onclick="document.getElementById('toast').style.transform = 'translateX(100%)'" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-</div>
-
-    </div>
-
-            <!-- Footer -->
-            <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
-                <div class="max-w-7xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div class="col-span-1 md:col-span-2">
-                            <div class="flex items-center space-x-4 mb-4">
-
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                                © 2025 Graxel Technologies. Tous droits réservés. <br> Une solution dédiée aux chefs de département pour une gestion optimale des congés et des ressources humaines.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
-            </footer>
-        </div>
-    </div>
-
-    <!-- Toast notification -->
-    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 max-w-sm">
-            <div class="flex items-center space-x-3">
-                <div id="toastIcon" class="w-8 h-8 rounded-full flex items-center justify-center">
-                    <i class="fas fa-check"></i>
-                </div>
-                <div>
-                    <p id="toastTitle" class="font-semibold text-gray-900 dark:text-white">Action réussie</p>
-                    <p id="toastMessage" class="text-sm text-gray-600 dark:text-gray-400">L'action a été effectuée avec succès.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-<!-- Toast de notification -->
-<div id="toast" class="fixed top-4 right-4 bg-white dark:bg-gray-800 border-l-4 border-green-500 rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50 min-w-80">
-    <div class="flex items-start space-x-3">
-        <div id="toastIcon" class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-            <i class="fas fa-check text-green-500"></i>
-        </div>
-        <div class="flex-1">
-            <h4 id="toastTitle" class="font-semibold text-gray-900 dark:text-white text-sm">Action réussie</h4>
-            <p id="toastMessage" class="text-sm text-gray-500 dark:text-gray-400">L'action a été effectuée avec succès</p>
-        </div>
-        <button onclick="document.getElementById('toast').style.transform = 'translateX(100%)'" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-</div>
 
         <!-- Modal de confirmation de déconnexion -->
         <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden">

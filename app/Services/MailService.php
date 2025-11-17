@@ -377,140 +377,6 @@ class MailService
         ";
     }
 
-    /**
-     * Envoyer email pour activation de compte (ANCIENNE MÉTHODE - CONSERVÉE POUR COMPATIBILITÉ)
-     */
-    public function envoyerActivationCompte($destinataire, $nom, $prenom, $tokenActivation)
-    {
-        try {
-            $this->mailer->clearAddresses();
-            $this->mailer->addAddress($destinataire, "$prenom $nom");
-            $this->mailer->isHTML(true);
-            $this->mailer->Subject = '🎉 Bienvenue chez Graxel - Activez votre compte';
-            $lienActivation = url("/activation-compte/{$tokenActivation}");
-            $this->mailer->Body = $this->templateActivationCompte($nom, $prenom, $lienActivation);
-            $result = $this->mailer->send();
-            if ($result) {
-                Log::info('Email d\'activation envoyé avec succès', [
-                    'destinataire' => $destinataire,
-                    'nom' => $nom,
-                    'prenom' => $prenom
-                ]);
-            }
-            return $result;
-        } catch (Exception $e) {
-            Log::error('Erreur envoi email activation: ' . $e->getMessage(), [
-                'destinataire' => $destinataire
-            ]);
-            return false;
-        }
-    }
-
-    private function templateActivationCompte($nom, $prenom, $lienActivation)
-    {
-        return "
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <style>
-                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; margin: 0; padding: 0; }
-                .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; text-align: center; }
-                .header img { max-width: 150px; margin-bottom: 15px; }
-                .header h1 { margin: 0; font-size: 28px; font-weight: 600; }
-                .header p { margin: 10px 0 0; opacity: 0.9; font-size: 14px; }
-                .content { padding: 40px 30px; }
-                .content h2 { color: #333; font-size: 24px; margin: 0 0 20px; }
-                .content p { color: #666; margin: 15px 0; line-height: 1.8; font-size: 15px; }
-                .welcome-box { background: #f0f4ff; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0; border-radius: 5px; }
-                .welcome-box p { margin: 5px 0; color: #333; }
-                .button-container { text-align: center; margin: 35px 0; }
-                .button { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white !important; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 16px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
-                .button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
-                .link-section { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 25px 0; }
-                .link-section p { margin: 5px 0; font-size: 13px; color: #666; }
-                .link-text { word-break: break-all; color: #667eea; background: white; padding: 12px; border-radius: 5px; font-size: 13px; margin: 10px 0; border: 1px solid #e9ecef; }
-                .info-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin: 25px 0; border-radius: 5px; }
-                .info-box strong { color: #856404; display: block; margin-bottom: 10px; font-size: 16px; }
-                .info-box ul { margin: 10px 0; padding-left: 20px; color: #856404; }
-                .info-box li { margin: 8px 0; }
-                .features { background: #f8f9fa; padding: 25px; margin: 25px 0; border-radius: 5px; }
-                .features h3 { color: #333; font-size: 18px; margin: 0 0 15px; }
-                .features ul { margin: 0; padding-left: 20px; }
-                .features li { margin: 10px 0; color: #666; }
-                .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }
-                .footer p { margin: 5px 0; color: #6c757d; font-size: 13px; }
-                .footer strong { color: #333; font-size: 15px; }
-                .footer a { color: #667eea; text-decoration: none; }
-                .icon { font-size: 64px; margin-bottom: 15px; }
-                .divider { height: 1px; background: #e9ecef; margin: 30px 0; }
-            </style>
-        </head>
-        <body>
-            <div class='container'>
-                <div class='header'>
-                    <div class='icon'>🎉</div>
-                    <h1>Bienvenue dans l'équipe !</h1>
-                    <p>Système de Gestion des Congés</p>
-                </div>
-                <div class='content'>
-                    <h2>Bonjour {$prenom} {$nom},</h2>
-                    <p>Félicitations ! Votre compte a été créé avec succès sur la plateforme <strong>Graxel Congés</strong>.</p>
-                    <div class='welcome-box'>
-                        <p><strong>👤 Votre profil :</strong></p>
-                        <p>Nom complet : <strong>{$prenom} {$nom}</strong></p>
-                        <p>Vous faites maintenant partie de notre système de gestion des congés.</p>
-                    </div>
-                    <p>Pour commencer à utiliser votre compte, vous devez d'abord <strong>l'activer</strong> et <strong>définir votre mot de passe</strong>.</p>
-                    <div class='button-container'>
-                        <a href='{$lienActivation}' class='button'>🔓 Activer mon compte</a>
-                    </div>
-                    <div class='link-section'>
-                        <p><strong>Le bouton ne fonctionne pas ?</strong></p>
-                        <p>Copiez et collez ce lien dans votre navigateur :</p>
-                        <div class='link-text'>{$lienActivation}</div>
-                    </div>
-                    <div class='info-box'>
-                        <strong>⏰ Important - Délai d'activation</strong>
-                        <ul>
-                            <li>Ce lien est valable pendant <strong>48 heures</strong></li>
-                            <li>Après ce délai, vous devrez contacter l'administrateur</li>
-                            <li>Lors de l'activation, choisissez un mot de passe sécurisé</li>
-                        </ul>
-                    </div>
-                    <div class='features'>
-                        <h3>📋 Ce que vous pourrez faire :</h3>
-                        <ul>
-                            <li>✅ Soumettre des demandes de congés</li>
-                            <li>📅 Consulter le calendrier des absences</li>
-                            <li>📊 Suivre votre solde de congés</li>
-                            <li>🔔 Recevoir des notifications en temps réel</li>
-                            <li>👤 Gérer votre profil</li>
-                        </ul>
-                    </div>
-                    <div class='divider'></div>
-                    <p style='margin-top: 30px; font-size: 14px; color: #666;'>
-                        <strong>Besoin d'aide ?</strong><br>
-                        Si vous rencontrez des difficultés lors de l'activation, n'hésitez pas à contacter le support technique ou l'administrateur système.
-                    </p>
-                </div>
-                <div class='footer'>
-                    <p><strong>Graxel Technologies</strong></p>
-                    <p>Système de Gestion des Congés</p>
-                    <p style='margin-top: 15px;'>
-                        <a href='mailto:" . env('MAIL_FROM_ADDRESS') . "'>📧 " . env('MAIL_FROM_ADDRESS') . "</a>
-                    </p>
-                    <p style='margin-top: 10px; color: #adb5bd; font-size: 12px;'>
-                        © 2025 Graxel Technologies. Tous droits réservés.
-                    </p>
-                </div>
-            </div>
-        </body>
-        </html>
-        ";
-    }
 
     private function templateNouvelleDemande($demande, $employe)
     {
@@ -545,7 +411,7 @@ class MailService
                         <p><strong>📝 Motif :</strong> {$demande->motif}</p>
                     </div>
                     <p style='text-align: center;'>
-                        <a href='" . url('/demandes-conges') . "' class='button'>Voir la demande</a>
+                        <a href='" . url('/chef-de-departement/demandes-equipe') . "' class='button'>Voir la demande</a>
                     </p>
                 </div>
                 <div class='footer'>
@@ -700,4 +566,115 @@ class MailService
             return false;
         }
     }
+/**
+ * Envoyer une notification de nouvelle note d'information aux employés
+ */
+public function envoyerNouvelleNoteInformation($destinataire, $nom, $prenom, $nomChef, $titre, $message, $hasDocument, $lienInformations)
+{
+    try {
+        $this->mailer->clearAddresses();
+        $this->mailer->addAddress($destinataire, "$prenom $nom");
+        $this->mailer->isHTML(true);
+        $this->mailer->Subject = '📢 Nouvelle note d\'information - ' . $titre;
+        $this->mailer->Body = $this->templateNouvelleNoteInformation($nom, $prenom, $nomChef, $titre, $message, $hasDocument, $lienInformations);
+
+        $result = $this->mailer->send();
+
+        if ($result) {
+            Log::info('Email note d\'information envoyé avec succès', [
+                'destinataire' => $destinataire,
+                'titre' => $titre
+            ]);
+        }
+
+        return $result;
+    } catch (Exception $e) {
+        Log::error('Erreur envoi email note information: ' . $e->getMessage(), [
+            'destinataire' => $destinataire
+        ]);
+        return false;
+    }
+}
+
+/**
+ * Template pour nouvelle note d'information
+ */
+private function templateNouvelleNoteInformation($nom, $prenom, $nomChef, $titre, $message, $hasDocument, $lienInformations)
+{
+    $documentBadge = $hasDocument ? "
+        <div style='background: #dbeafe; padding: 10px 15px; border-radius: 5px; display: inline-block; margin-top: 10px;'>
+            <span style='color: #1e40af; font-size: 14px;'>📎 Fichier joint disponible</span>
+        </div>
+    " : "";
+
+    $messageContent = !empty($message) ? "
+        <div class='info-item'>
+            <label>💬 Message</label>
+            <div class='value' style='font-weight: normal; white-space: pre-wrap;'>" . nl2br(htmlspecialchars($message)) . "</div>
+        </div>
+    " : "";
+
+    return "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; margin: 0; padding: 0; }
+            .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            .header { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 40px 20px; text-align: center; }
+            .header h1 { margin: 0; font-size: 28px; font-weight: 600; }
+            .header p { margin: 10px 0 0; opacity: 0.9; font-size: 14px; }
+            .content { padding: 40px 30px; }
+            .content h2 { color: #333; font-size: 24px; margin: 0 0 20px; }
+            .content p { color: #666; margin: 15px 0; line-height: 1.8; font-size: 15px; }
+            .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 5px; }
+            .info-box p { margin: 5px 0; color: #1e40af; }
+            .info-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #e9ecef; }
+            .info-item label { display: block; color: #666; font-size: 12px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+            .info-item .value { font-size: 16px; font-weight: 600; color: #333; }
+            .icon { font-size: 64px; margin-bottom: 15px; }
+            .button-container { text-align: center; margin: 35px 0; }
+            .button { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white !important; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 16px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+            .button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6); }
+            .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }
+            .footer p { margin: 5px 0; color: #6c757d; font-size: 13px; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <div class='icon'>📢</div>
+                <h1>Nouvelle note d'information</h1>
+                <p>Communication interne</p>
+            </div>
+            <div class='content'>
+                <h2>Bonjour {$prenom} {$nom},</h2>
+                <p><strong>{$nomChef}</strong> a publié une nouvelle note d'information pour votre département.</p>
+                <div class='info-box'>
+                    <p><strong>📋 Titre de la note</strong></p>
+                    <p style='font-size: 18px; margin-top: 10px;'>{$titre}</p>
+                    {$documentBadge}
+                </div>
+                {$messageContent}
+                <div class='button-container'>
+                    <a href='{$lienInformations}' class='button'>📖 Consulter la note complète</a>
+                </div>
+                <p style='margin-top: 30px; font-size: 14px; color: #666;'>
+                    Cliquez sur le bouton ci-dessus pour accéder à la plateforme et consulter tous les détails de cette note.
+                </p>
+            </div>
+            <div class='footer'>
+                <p><strong>Graxel Technologies</strong></p>
+                <p>Système de Gestion des Congés</p>
+                <p style='margin-top: 10px; color: #adb5bd; font-size: 12px;'>
+                    © 2025 Graxel Technologies. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>
+    ";
+}
 }

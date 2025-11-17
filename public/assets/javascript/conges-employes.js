@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <div><i class="fas fa-clock mr-2 text-blue-500"></i><span class="font-medium">Durée:</span> ${demande.nb_jours} jour(s)</div>
                                 </div>
                                 <div class="space-y-1">
-                                    <div><i class="fas fa-calendar-plus mr-2 text-purple-500"></i><span class="font-medium">Créé le:</span> ${new Date(demande.created_at).toLocaleDateString('fr-FR')}</div>
                                     ${demande.validateur ? `<div><i class="fas fa-user-check mr-2 text-green-500"></i><span class="font-medium">Validé par:</span> ${demande.validateur.nom}</div>` : ''}
                                     ${demande.motif ? `<div><i class="fas fa-comment mr-2 text-orange-500"></i><span class="font-medium">Motif:</span> ${demande.motif.substring(0, 30)}...</div>` : ''}
                                 </div>

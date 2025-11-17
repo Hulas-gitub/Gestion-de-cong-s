@@ -310,7 +310,9 @@
 </div>
 
     </div>
-        <!-- Footer -->
+<br>
+        </div>
+               <!-- Footer -->
             <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
                 <div class="max-w-7xl mx-auto">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -327,7 +329,6 @@
 
                 </div>
             </footer>
-        </div>
     </div>
 
     <!-- Toast notification -->
