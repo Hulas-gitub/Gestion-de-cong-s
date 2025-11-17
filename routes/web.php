@@ -109,20 +109,24 @@ Route::middleware(['auth', 'check.status'])->group(function () {
         });
 
     // ========== AUTRES PAGES ==========
-    Route::get('/calendrier-employers', function () {
-        return view('employes.calendrier-employers');
-    })->name('calendrier-employers');
-// Route pour afficher la page du calendrier
-Route::get('/calendrier-employers', [CalendrierEmployesController::class, 'index'])
-    ->name('calendrier-employers');
+  Route::get('/calendrier-employers', function () {
+    return view('employes.calendrier-employers');
+})->name('calendrier-employers');
 
-// Route AJAX pour récupérer les données du calendrier
-Route::get('/calendrier-employers/data', [CalendrierEmployesController::class, 'getData'])
-    ->name('calendrier-employers.data');
+Route::get('/employe/calendrier', [CalendrierEmployesController::class, 'index'])
+    ->name('employe.calendrier');
 
-// Route optionnelle pour les statistiques détaillées
-Route::get('/calendrier-employers/statistiques', [CalendrierEmployesController::class, 'getStatistiques'])
-    ->name('calendrier-employers.statistiques');
+// API pour récupérer les données de congés
+Route::get('/api/employe/conges-data', [CalendrierEmployesController::class, 'getEmployeeLeaveData'])
+    ->name('api.employe.conges-data');
+
+// API pour récupérer les détails d'un congé
+Route::get('/api/employe/conges/{id}', [CalendrierEmployesController::class, 'getLeaveDetails'])
+    ->name('api.employe.conges.details');
+
+// API pour récupérer les congés d'un mois spécifique
+Route::get('/api/employe/conges-mois', [CalendrierEmployesController::class, 'getLeavesByMonth'])
+    ->name('api.employe.conges.mois');
 
     // ========== GESTION DU PROFIL EMPLOYÉ ==========
     Route::get('/profile', [ProfileUsersController::class, 'index'])->name('profile');

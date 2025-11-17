@@ -1,6 +1,4 @@
-
-
-// Jours fériés du Gabon pour 2025-2026
+// Jours fériés du Gabon pour 2025-2030
 const gabonHolidays = {
     // 2025
     '2025-01-01': 'Jour de l\'An',
@@ -115,357 +113,154 @@ const gabonHolidays = {
     '2030-11-01': 'Toussaint',
     '2030-12-25': 'Noël',
     '2030-12-31': 'Réveillon du Nouvel An',
-
-    // 2031
-    '2031-01-01': 'Jour de l\'An',
-    '2031-02-14': 'Saint-Valentin',
-    '2031-03-08': 'Journée Internationale de la Femme',
-    '2031-03-12': 'Fête de la Rénovation',
-    '2031-04-11': 'Vendredi Saint',
-    '2031-04-14': 'Lundi de Pâques',
-    '2031-05-01': 'Fête du Travail',
-    '2031-05-11': 'Fête des Mères',
-    '2031-05-22': 'Ascension',
-    '2031-06-02': 'Lundi de Pentecôte',
-    '2031-06-15': 'Fête des Pères',
-    '2031-08-15': 'Assomption',
-    '2031-08-17': 'Fête de l\'Indépendance',
-    '2031-10-31': 'Halloween',
-    '2031-11-01': 'Toussaint',
-    '2031-12-25': 'Noël',
-    '2031-12-31': 'Réveillon du Nouvel An',
-
-    // 2032
-    '2032-01-01': 'Jour de l\'An',
-    '2032-02-14': 'Saint-Valentin',
-    '2032-03-08': 'Journée Internationale de la Femme',
-    '2032-03-12': 'Fête de la Rénovation',
-    '2032-03-26': 'Vendredi Saint',
-    '2032-03-29': 'Lundi de Pâques',
-    '2032-05-01': 'Fête du Travail',
-    '2032-05-06': 'Ascension',
-    '2032-05-09': 'Fête des Mères',
-    '2032-05-17': 'Lundi de Pentecôte',
-    '2032-06-20': 'Fête des Pères',
-    '2032-08-15': 'Assomption',
-    '2032-08-17': 'Fête de l\'Indépendance',
-    '2032-10-31': 'Halloween',
-    '2032-11-01': 'Toussaint',
-    '2032-12-25': 'Noël',
-    '2032-12-31': 'Réveillon du Nouvel An',
-
-    // 2033
-    '2033-01-01': 'Jour de l\'An',
-    '2033-02-14': 'Saint-Valentin',
-    '2033-03-08': 'Journée Internationale de la Femme',
-    '2033-03-12': 'Fête de la Rénovation',
-    '2033-04-15': 'Vendredi Saint',
-    '2033-04-18': 'Lundi de Pâques',
-    '2033-05-01': 'Fête du Travail',
-    '2033-05-08': 'Fête des Mères',
-    '2033-05-26': 'Ascension',
-    '2033-06-06': 'Lundi de Pentecôte',
-    '2033-06-19': 'Fête des Pères',
-    '2033-08-15': 'Assomption',
-    '2033-08-17': 'Fête de l\'Indépendance',
-    '2033-10-31': 'Halloween',
-    '2033-11-01': 'Toussaint',
-    '2033-12-25': 'Noël',
-    '2033-12-31': 'Réveillon du Nouvel An',
-
-    // 2034
-    '2034-01-01': 'Jour de l\'An',
-    '2034-02-14': 'Saint-Valentin',
-    '2034-03-08': 'Journée Internationale de la Femme',
-    '2034-03-12': 'Fête de la Rénovation',
-    '2034-04-07': 'Vendredi Saint',
-    '2034-04-10': 'Lundi de Pâques',
-    '2034-05-01': 'Fête du Travail',
-    '2034-05-14': 'Fête des Mères',
-    '2034-05-18': 'Ascension',
-    '2034-05-29': 'Lundi de Pentecôte',
-    '2034-06-18': 'Fête des Pères',
-    '2034-08-15': 'Assomption',
-    '2034-08-17': 'Fête de l\'Indépendance',
-    '2034-10-31': 'Halloween',
-    '2034-11-01': 'Toussaint',
-    '2034-12-25': 'Noël',
-    '2034-12-31': 'Réveillon du Nouvel An',
-
-    // 2035
-    '2035-01-01': 'Jour de l\'An',
-    '2035-02-14': 'Saint-Valentin',
-    '2035-03-08': 'Journée Internationale de la Femme',
-    '2035-03-12': 'Fête de la Rénovation',
-    '2035-03-23': 'Vendredi Saint',
-    '2035-03-26': 'Lundi de Pâques',
-    '2035-05-01': 'Fête du Travail',
-    '2035-05-03': 'Ascension',
-    '2035-05-13': 'Fête des Mères',
-    '2035-05-14': 'Lundi de Pentecôte',
-    '2035-06-17': 'Fête des Pères',
-    '2035-08-15': 'Assomption',
-    '2035-08-17': 'Fête de l\'Indépendance',
-    '2035-10-31': 'Halloween',
-    '2035-11-01': 'Toussaint',
-    '2035-12-25': 'Noël',
-    '2035-12-31': 'Réveillon du Nouvel An',
-
-    // 2036
-    '2036-01-01': 'Jour de l\'An',
-    '2036-02-14': 'Saint-Valentin',
-    '2036-03-08': 'Journée Internationale de la Femme',
-    '2036-03-12': 'Fête de la Rénovation',
-    '2036-04-11': 'Vendredi Saint',
-    '2036-04-14': 'Lundi de Pâques',
-    '2036-05-01': 'Fête du Travail',
-    '2036-05-11': 'Fête des Mères',
-    '2036-05-22': 'Ascension',
-    '2036-06-02': 'Lundi de Pentecôte',
-    '2036-06-15': 'Fête des Pères',
-    '2036-08-15': 'Assomption',
-    '2036-08-17': 'Fête de l\'Indépendance',
-    '2036-10-31': 'Halloween',
-    '2036-11-01': 'Toussaint',
-    '2036-12-25': 'Noël',
-    '2036-12-31': 'Réveillon du Nouvel An',
-
-    // 2037
-    '2037-01-01': 'Jour de l\'An',
-    '2037-02-14': 'Saint-Valentin',
-    '2037-03-08': 'Journée Internationale de la Femme',
-    '2037-03-12': 'Fête de la Rénovation',
-    '2037-04-03': 'Vendredi Saint',
-    '2037-04-06': 'Lundi de Pâques',
-    '2037-05-01': 'Fête du Travail',
-    '2037-05-10': 'Fête des Mères',
-    '2037-05-14': 'Ascension',
-    '2037-05-25': 'Lundi de Pentecôte',
-    '2037-06-21': 'Fête des Pères',
-    '2037-08-15': 'Assomption',
-    '2037-08-17': 'Fête de l\'Indépendance',
-    '2037-10-31': 'Halloween',
-    '2037-11-01': 'Toussaint',
-    '2037-12-25': 'Noël',
-    '2037-12-31': 'Réveillon du Nouvel An',
-
-    // 2038
-    '2038-01-01': 'Jour de l\'An',
-    '2038-02-14': 'Saint-Valentin',
-    '2038-03-08': 'Journée Internationale de la Femme',
-    '2038-03-12': 'Fête de la Rénovation',
-    '2038-04-23': 'Vendredi Saint',
-    '2038-04-26': 'Lundi de Pâques',
-    '2038-05-01': 'Fête du Travail',
-    '2038-05-30': 'Fête des Mères',
-    '2038-06-03': 'Ascension',
-    '2038-06-14': 'Lundi de Pentecôte',
-    '2038-06-20': 'Fête des Pères',
-    '2038-08-15': 'Assomption',
-    '2038-08-17': 'Fête de l\'Indépendance',
-    '2038-10-31': 'Halloween',
-    '2038-11-01': 'Toussaint',
-    '2038-12-25': 'Noël',
-    '2038-12-31': 'Réveillon du Nouvel An',
-
-    // 2039
-    '2039-01-01': 'Jour de l\'An',
-    '2039-02-14': 'Saint-Valentin',
-    '2039-03-08': 'Journée Internationale de la Femme',
-    '2039-03-12': 'Fête de la Rénovation',
-    '2039-04-08': 'Vendredi Saint',
-    '2039-04-11': 'Lundi de Pâques',
-    '2039-05-01': 'Fête du Travail',
-    '2039-05-15': 'Fête des Mères',
-    '2039-05-19': 'Ascension',
-    '2039-05-30': 'Lundi de Pentecôte',
-    '2039-06-19': 'Fête des Pères',
-    '2039-08-15': 'Assomption',
-    '2039-08-17': 'Fête de l\'Indépendance',
-    '2039-10-31': 'Halloween',
-    '2039-11-01': 'Toussaint',
-    '2039-12-25': 'Noël',
-    '2039-12-31': 'Réveillon du Nouvel An',
-
-    // 2040
-    '2040-01-01': 'Jour de l\'An',
-    '2040-02-14': 'Saint-Valentin',
-    '2040-03-08': 'Journée Internationale de la Femme',
-    '2040-03-12': 'Fête de la Rénovation',
-    '2040-03-30': 'Vendredi Saint',
-    '2040-04-02': 'Lundi de Pâques',
-    '2040-05-01': 'Fête du Travail',
-    '2040-05-10': 'Ascension',
-    '2040-05-13': 'Fête des Mères',
-    '2040-05-21': 'Lundi de Pentecôte',
-    '2040-06-17': 'Fête des Pères',
-    '2040-08-15': 'Assomption',
-    '2040-08-17': 'Fête de l\'Indépendance',
-    '2040-10-31': 'Halloween',
-    '2040-11-01': 'Toussaint',
-    '2040-12-25': 'Noël',
-    '2040-12-31': 'Réveillon du Nouvel An',
-
-    // 2041
-    '2041-01-01': 'Jour de l\'An',
-    '2041-02-14': 'Saint-Valentin',
-    '2041-03-08': 'Journée Internationale de la Femme',
-    '2041-03-12': 'Fête de la Rénovation',
-    '2041-04-19': 'Vendredi Saint',
-    '2041-04-22': 'Lundi de Pâques',
-    '2041-05-01': 'Fête du Travail',
-    '2041-05-12': 'Fête des Mères',
-    '2041-05-30': 'Ascension',
-    '2041-06-10': 'Lundi de Pentecôte',
-    '2041-06-16': 'Fête des Pères',
-    '2041-08-15': 'Assomption',
-    '2041-08-17': 'Fête de l\'Indépendance',
-    '2041-10-31': 'Halloween',
-    '2041-11-01': 'Toussaint',
-    '2041-12-25': 'Noël',
-    '2041-12-31': 'Réveillon du Nouvel An',
-
-    // 2042
-    '2042-01-01': 'Jour de l\'An',
-    '2042-02-14': 'Saint-Valentin',
-    '2042-03-08': 'Journée Internationale de la Femme',
-    '2042-03-12': 'Fête de la Rénovation',
-    '2042-04-04': 'Vendredi Saint',
-    '2042-04-07': 'Lundi de Pâques',
-    '2042-05-01': 'Fête du Travail',
-    '2042-05-11': 'Fête des Mères',
-    '2042-05-15': 'Ascension',
-    '2042-05-26': 'Lundi de Pentecôte',
-    '2042-06-15': 'Fête des Pères',
-    '2042-08-15': 'Assomption',
-    '2042-08-17': 'Fête de l\'Indépendance',
-    '2042-10-31': 'Halloween',
-    '2042-11-01': 'Toussaint',
-    '2042-12-25': 'Noël',
-    '2042-12-31': 'Réveillon du Nouvel An',
-
-    // 2043
-    '2043-01-01': 'Jour de l\'An',
-    '2043-02-14': 'Saint-Valentin',
-    '2043-03-08': 'Journée Internationale de la Femme',
-    '2043-03-12': 'Fête de la Rénovation',
-    '2043-03-27': 'Vendredi Saint',
-    '2043-03-30': 'Lundi de Pâques',
-    '2043-05-01': 'Fête du Travail',
-    '2043-05-07': 'Ascension',
-    '2043-05-10': 'Fête des Mères',
-    '2043-05-18': 'Lundi de Pentecôte',
-    '2043-06-21': 'Fête des Pères',
-    '2043-08-15': 'Assomption',
-    '2043-08-17': 'Fête de l\'Indépendance',
-    '2043-10-31': 'Halloween',
-    '2043-11-01': 'Toussaint',
-    '2043-12-25': 'Noël',
-    '2043-12-31': 'Réveillon du Nouvel An',
-
-    // 2044
-    '2044-01-01': 'Jour de l\'An',
-    '2044-02-14': 'Saint-Valentin',
-    '2044-03-08': 'Journée Internationale de la Femme',
-    '2044-03-12': 'Fête de la Rénovation',
-    '2044-04-15': 'Vendredi Saint',
-    '2044-04-18': 'Lundi de Pâques',
-    '2044-05-01': 'Fête du Travail',
-    '2044-05-08': 'Fête des Mères',
-    '2044-05-26': 'Ascension',
-    '2044-06-06': 'Lundi de Pentecôte',
-    '2044-06-19': 'Fête des Pères',
-    '2044-08-15': 'Assomption',
-    '2044-08-17': 'Fête de l\'Indépendance',
-    '2044-10-31': 'Halloween',
-    '2044-11-01': 'Toussaint',
-    '2044-12-25': 'Noël',
-    '2044-12-31': 'Réveillon du Nouvel An',
-
-    // 2045
-    '2045-01-01': 'Jour de l\'An',
-    '2045-02-14': 'Saint-Valentin',
-    '2045-03-08': 'Journée Internationale de la Femme',
-    '2045-03-12': 'Fête de la Rénovation',
-    '2045-04-07': 'Vendredi Saint',
-    '2045-04-10': 'Lundi de Pâques',
-    '2045-05-01': 'Fête du Travail',
-    '2045-05-14': 'Fête des Mères',
-    '2045-05-18': 'Ascension',
-    '2045-05-29': 'Lundi de Pentecôte',
-    '2045-06-18': 'Fête des Pères',
-    '2045-08-15': 'Assomption',
-    '2045-08-17': 'Fête de l\'Indépendance',
-    '2045-10-31': 'Halloween',
-    '2045-11-01': 'Toussaint',
-    '2045-12-25': 'Noël',
-    '2045-12-31': 'Réveillon du Nouvel An',
-
-    // 2046
-    '2046-01-01': 'Jour de l\'An',
-    '2046-02-14': 'Saint-Valentin',
-    '2046-03-08': 'Journée Internationale de la Femme',
-    '2046-03-12': 'Fête de la Rénovation',
-    '2046-03-23': 'Vendredi Saint',
-    '2046-03-26': 'Lundi de Pâques',
-    '2046-05-01': 'Fête du Travail',
-    '2046-05-03': 'Ascension',
-    '2046-05-13': 'Fête des Mères',
-    '2046-05-14': 'Lundi de Pentecôte',
-    '2046-06-17': 'Fête des Pères',
-    '2046-08-15': 'Assomption',
-    '2046-08-17': 'Fête de l\'Indépendance',
-    '2046-10-31': 'Halloween',
-    '2046-11-01': 'Toussaint',
-    '2046-12-25': 'Noël',
-    '2046-12-31': 'Réveillon du Nouvel An',
-
-    // 2047
-    '2047-01-01': 'Jour de l\'An',
-    '2047-02-14': 'Saint-Valentin',
-    '2047-03-08': 'Journée Internationale de la Femme',
-    '2047-03-12': 'Fête de la Rénovation',
-    '2047-04-12': 'Vendredi Saint',
-    '2047-04-15': 'Lundi de Pâques',
-    '2047-05-01': 'Fête du Travail',
-    '2047-05-12': 'Fête des Mères',
-    '2047-05-23': 'Ascension',
-    '2047-06-03': 'Lundi de Pentecôte',
-    '2047-06-16': 'Fête des Pères',
-    '2047-08-15': 'Assomption',
-    '2047-08-17': 'Fête de l\'Indépendance',
-    '2047-10-31': 'Halloween',
-    '2047-11-01': 'Toussaint',
-    '2047-12-25': 'Noël',
-    '2047-12-31': 'Réveillon du Nouvel An',
-
-    // 2048
-    '2048-01-01': 'Jour de l\'An',
-    '2048-02-14': 'Saint-Valentin',
-    '2048-03-08': 'Journée Internationale de la Femme',
-    '2048-03-12': 'Fête de la Rénovation',
-    '2048-04-03': 'Vendredi Saint',
-    '2048-04-06': 'Lundi de Pâques',
-    '2048-05-01': 'Fête du Travail',
-    '2048-05-10': 'Fête des Mères',
-    '2048-05-14': 'Ascension',
-    '2048-05-25': 'Lundi de Pentecôte',
-    '2048-06-21': 'Fête des Pères',
-    '2048-08-15': 'Assomption',
-    '2048-08-17': 'Fête de l\'Indépendance',
-    '2048-10-31': 'Halloween',
-    '2048-11-01': 'Toussaint',
-    '2048-12-25': 'Noël',
-    '2048-12-31': 'Réveillon du Nouvel An',
-};
-// Configuration de l'employé
-const employeeConfig = {
-    name: 'Jean Martin',
-    hireDate: new Date(2024, 9, 1), // 1er octobre 2024
-    userId: 'jean-martin'
 };
 
-// Utility Functions
+// Variables globales pour les données du backend
+let employeeData = null;
+let typesConges = [];
+let congesApprouves = [];
+let statistiquesParType = [];
+
+// Configuration du calendrier
+const calendarData = {
+    currentDate: new Date(),
+    currentMonth: new Date().getMonth(),
+    currentYear: new Date().getFullYear(),
+};
+
+// Initialisation de Notyf
+const notyf = new Notyf({
+    duration: 3000,
+    position: { x: 'right', y: 'top' }
+});
+
+// ====== FONCTIONS DE RÉCUPÉRATION DES DONNÉES DEPUIS LE BACKEND ======
+
+/**
+ * Charge toutes les données de congés depuis le backend
+ */
+async function chargerDonneesConges() {
+    try {
+        const response = await fetch('/employes/api/employe/conges-data', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des données');
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+            employeeData = result.data.employe;
+            typesConges = result.data.types_conges;
+            congesApprouves = result.data.conges;
+            statistiquesParType = result.data.statistiques;
+
+            console.log('✅ Données chargées:', result.data);
+            console.log('📊 Congés approuvés:', congesApprouves);
+
+            // Mettre à jour l'interface
+            afficherStatistiquesConges();
+            renderCalendar();
+            afficherLegende();
+
+            notyf.success('Calendrier chargé avec succès');
+        } else {
+            throw new Error(result.message);
+        }
+    } catch (error) {
+        console.error('❌ Erreur:', error);
+        notyf.error('Erreur lors du chargement des données');
+    }
+}
+
+// ====== FONCTIONS D'AFFICHAGE DES STATISTIQUES ======
+
+/**
+ * Affiche les statistiques de congés par type dans les cartes
+ */
+function afficherStatistiquesConges() {
+    const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-1.gap-6');
+    if (!container) return;
+
+    // Vider le conteneur
+    container.innerHTML = '';
+
+    // Créer une carte pour chaque type de congé qui a des jours
+    statistiquesParType.forEach((stat, index) => {
+        if (stat.total_jours > 0) {
+            const card = creerCarteStatistique(stat, index);
+            container.appendChild(card);
+        }
+    });
+}
+
+/**
+ * Crée une carte HTML pour un type de congé
+ */
+function creerCarteStatistique(stat, index) {
+    const card = document.createElement('div');
+    card.className = 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 animate-slide-up hover-lift';
+    card.style.animationDelay = `${index * 0.1}s`;
+
+    const icones = {
+        'Congé maladie': 'fa-briefcase-medical',
+        'Congé maternité': 'fa-baby',
+        'Congés payés': 'fa-umbrella-beach',
+        'CongÃ© maladie': 'fa-briefcase-medical',
+        'CongÃ© maternitÃ©': 'fa-baby',
+        'CongÃ©s payÃ©s': 'fa-umbrella-beach',
+        'RTT': 'fa-clock',
+        'Sans solde': 'fa-money-bill-wave',
+        'Congé paternité': 'fa-user-tie',
+        'CongÃ© paternitÃ©': 'fa-user-tie',
+        'Congé autre': 'fa-calendar',
+        'CongÃ© autre': 'fa-calendar',
+        'Autre': 'fa-calendar'
+    };
+
+    const icone = icones[stat.type_nom] || 'fa-calendar';
+
+    card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: ${stat.couleur}20;">
+                    <i class="fas ${icone} text-xl" style="color: ${stat.couleur};"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">${stat.type_nom}</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">${stat.total_jours} jours</p>
+                </div>
+            </div>
+        </div>
+        <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600 dark:text-gray-400">Consommés</span>
+                <span class="font-semibold text-gray-900 dark:text-white">${stat.jours_ecoules} / ${stat.total_jours} jours</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: ${stat.pourcentage}%; background: ${stat.couleur};"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                <span>Restant: ${stat.jours_restants} jours</span>
+                <span>${stat.pourcentage}%</span>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+// ====== FONCTIONS CALENDRIER ======
+
+/**
+ * Utility Functions
+ */
 function updateDateTime() {
     const now = new Date();
     const options = {
@@ -477,7 +272,10 @@ function updateDateTime() {
         minute: '2-digit',
         second: '2-digit'
     };
-    document.getElementById('current-date').textContent = now.toLocaleDateString('fr-FR', options);
+    const dateElement = document.getElementById('current-date');
+    if (dateElement) {
+        dateElement.textContent = now.toLocaleDateString('fr-FR', options);
+    }
 }
 
 function initTheme() {
@@ -518,215 +316,39 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
-function isDateInRange(date, startDate, endDate) {
-    const dateStr = formatDate(date);
-    return dateStr >= startDate && dateStr <= endDate;
-}
-
 function isWeekend(date) {
     const day = date.getDay();
     return day === 0 || day === 6;
 }
 
 function isHoliday(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const dateStr = `${year}-${month}-${day}`;
+    const dateStr = formatDate(date);
     return gabonHolidays[dateStr];
 }
 
+/**
+ * ✅ CORRIGÉ : Récupère le congé pour une date donnée
+ * Gère correctement le format des dates du backend (avec ou sans heure)
+ */
 function getLeaveForDate(date) {
     const dateStr = formatDate(date);
-    return calendarData.leaves.find(leave =>
-        leave.userId === employeeConfig.userId &&
-        isDateInRange(date, leave.startDate, leave.endDate) &&
-        leave.status === 'approved'
-    );
-}
 
-function countBusinessDays(startDate, endDate) {
-    let count = 0;
-    let currentDate = new Date(startDate);
-    const end = new Date(endDate);
+    return congesApprouves.find(leave => {
+        // Extraire uniquement la partie date (enlever l'heure si présente)
+        const debut = leave.date_debut.split(' ')[0];
+        const fin = leave.date_fin.split(' ')[0];
 
-    while (currentDate <= end) {
-        if (!isWeekend(currentDate) && !isHoliday(currentDate)) {
-            count++;
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return count;
-}
-
-// Calcul des mois complets travaillés
-function calculateCompleteMonthsWorked() {
-    const today = new Date();
-    const hireDate = employeeConfig.hireDate;
-
-    let months = (today.getFullYear() - hireDate.getFullYear()) * 12;
-    months -= hireDate.getMonth();
-    months += today.getMonth();
-
-    if (today.getDate() < hireDate.getDate()) {
-        months--;
-    }
-
-    return Math.max(0, months);
-}
-
-// Calcul du solde de congés
-function calculateLeaveBalance() {
-    const monthsWorked = calculateCompleteMonthsWorked();
-    const accumulatedLeave = monthsWorked * 2;
-
-    // Compter uniquement les congés DÉDUCTIBLES (paid, rtt, unpaid)
-    const deductibleTypes = ['paid', 'rtt', 'unpaid'];
-    const consumedLeave = calendarData.leaves.filter(leave =>
-        leave.userId === employeeConfig.userId &&
-        leave.status === 'approved' &&
-        deductibleTypes.includes(leave.type)
-    ).reduce((total, leave) => {
-        const days = countBusinessDays(leave.startDate, leave.endDate);
-        return total + days;
-    }, 0);
-
-    const availableBalance = accumulatedLeave - consumedLeave;
-
-    return {
-        monthsWorked,
-        accumulatedLeave,
-        consumedLeave,
-        availableBalance
-    };
-}
-
-// Mettre à jour l'affichage du solde de congés
-function updateLeaveBalanceUI() {
-    const balance = calculateLeaveBalance();
-
-    document.getElementById('months-worked').textContent = `${balance.monthsWorked} mois`;
-    document.getElementById('months-multiplier').textContent = balance.monthsWorked;
-    document.getElementById('accumulated-leave').textContent = `${balance.accumulatedLeave} jours`;
-    document.getElementById('consumed-leave').textContent = `${balance.consumedLeave} jours`;
-    document.getElementById('available-balance').textContent = `${balance.availableBalance} jours`;
-}
-
-// Fonction pour générer les congés maladie
-function generateSickLeaveSchedule() {
-    const startDate = new Date(2025, 9, 20);
-    const sickLeaveBalance = 20;
-    let daysAdded = 0;
-    let currentDate = new Date(startDate);
-    const leaves = [];
-
-    while (daysAdded < sickLeaveBalance) {
-        if (!isWeekend(currentDate) && !isHoliday(currentDate)) {
-            leaves.push({
-                id: leaves.length + 1,
-                userId: employeeConfig.userId,
-                type: 'sick',
-                startDate: formatDate(currentDate),
-                endDate: formatDate(currentDate),
-                status: 'approved',
-                reason: 'Congé maladie'
-            });
-            daysAdded++;
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return leaves;
-}
-
-// Ajouter quelques congés déductibles pour l'exemple
-function generateSampleLeaves() {
-    const leaves = generateSickLeaveSchedule();
-
-    // Ajouter 3 jours de congés payés (déductibles)
-    leaves.push({
-        id: leaves.length + 1,
-        userId: employeeConfig.userId,
-        type: 'paid',
-        startDate: '2025-11-10',
-        endDate: '2025-11-12',
-        status: 'approved',
-        reason: 'Congés annuels'
+        // Vérifier si la date est dans la période du congé (inclusif)
+        return dateStr >= debut && dateStr <= fin;
     });
-
-    // Ajouter 2 jours RTT (déductibles)
-    leaves.push({
-        id: leaves.length + 1,
-        userId: employeeConfig.userId,
-        type: 'rtt',
-        startDate: '2025-11-25',
-        endDate: '2025-11-26',
-        status: 'approved',
-        reason: 'RTT'
-    });
-
-    // Ajouter congé maternité (NON déductible)
-    leaves.push({
-        id: leaves.length + 1,
-        userId: employeeConfig.userId,
-        type: 'maternity',
-        startDate: '2025-12-01',
-        endDate: '2025-12-15',
-        status: 'approved',
-        reason: 'Congé maternité'
-    });
-
-    return leaves;
-}
-
-// Calendar Data
-const calendarData = {
-    currentDate: new Date(),
-    currentMonth: new Date().getMonth(),
-    currentYear: new Date().getFullYear(),
-    leaves: [],
-    sickLeaveBalance: 20,
-    sickLeaveUsed: 0
-};
-
-function updateSickLeaveUI() {
-    const sickLeaveUsedElement = document.getElementById('sick-leave-used');
-    const sickLeaveBalanceElement = document.getElementById('sick-leave-balance');
-    const sickLeaveRemainingElement = document.getElementById('sick-leave-remaining');
-    const sickLeavePercentageElement = document.getElementById('sick-leave-percentage');
-    const sickLeaveProgressElement = document.getElementById('sick-leave-progress');
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const sickLeaves = calendarData.leaves.filter(leave => {
-        if (leave.type !== 'sick' || leave.userId !== employeeConfig.userId || leave.status !== 'approved') {
-            return false;
-        }
-        const leaveDate = new Date(leave.startDate);
-        leaveDate.setHours(0, 0, 0, 0);
-        return leaveDate <= today;
-    });
-
-    const used = sickLeaves.length;
-    const balance = calendarData.sickLeaveBalance;
-    const remaining = balance - used;
-    const percentage = Math.round((used / balance) * 100);
-
-    calendarData.sickLeaveUsed = used;
-
-    sickLeaveUsedElement.textContent = `${used} / ${balance} jours`;
-    sickLeaveBalanceElement.textContent = `${balance} jours`;
-    sickLeaveRemainingElement.textContent = `Restant: ${remaining} jours`;
-    sickLeavePercentageElement.textContent = `${percentage}%`;
-    sickLeaveProgressElement.style.width = `${percentage}%`;
 }
 
 function renderCalendar() {
     const grid = document.getElementById('calendar-grid');
     const monthElement = document.getElementById('current-month');
     const yearElement = document.getElementById('current-year');
+
+    if (!grid) return;
 
     monthElement.textContent = getMonthName(calendarData.currentMonth);
     yearElement.textContent = calendarData.currentYear.toString();
@@ -737,6 +359,7 @@ function renderCalendar() {
     const firstDay = getFirstDayOfMonth(calendarData.currentMonth, calendarData.currentYear);
     const today = new Date();
 
+    // Jours du mois précédent (grille vide)
     for (let i = 0; i < firstDay; i++) {
         const emptyDay = document.createElement('div');
         emptyDay.className = 'calendar-day text-gray-300 dark:text-gray-600';
@@ -747,6 +370,7 @@ function renderCalendar() {
         grid.appendChild(emptyDay);
     }
 
+    // Jours du mois actuel
     for (let day = 1; day <= daysInMonth; day++) {
         const dayElement = document.createElement('div');
         const currentDate = new Date(calendarData.currentYear, calendarData.currentMonth, day);
@@ -757,10 +381,12 @@ function renderCalendar() {
         dayNumber.textContent = day;
         dayElement.appendChild(dayNumber);
 
+        // Marquer aujourd'hui
         if (currentDate.toDateString() === today.toDateString()) {
             dayElement.classList.add('today');
         }
 
+        // Vérifier si c'est un jour férié
         const holidayName = isHoliday(currentDate);
         if (holidayName) {
             dayElement.classList.add('holiday');
@@ -770,64 +396,42 @@ function renderCalendar() {
             badge.title = holidayName;
             dayElement.appendChild(badge);
 
-            const holidayLabel = document.createElement('div');
-            holidayLabel.className = 'text-xs text-blue-900 dark:text-blue-300 font-semibold mt-1 truncate holiday-label';
-            holidayLabel.textContent = holidayName.length > 15 ? holidayName.substring(0, 15) + '...' : holidayName;
-            holidayLabel.title = holidayName;
-            dayElement.appendChild(holidayLabel);
-
             dayElement.addEventListener('click', (e) => {
                 e.stopPropagation();
-                let tooltip = dayElement.querySelector('.holiday-tooltip');
-                if (!tooltip) {
-                    tooltip = document.createElement('div');
-                    tooltip.className = 'holiday-tooltip';
-                    tooltip.textContent = holidayName;
-                    dayElement.appendChild(tooltip);
-                    tooltip.style.display = 'block';
-                    setTimeout(() => {
-                        tooltip.style.display = 'none';
-                    }, 2000);
-                }
+                notyf.open({
+                    type: 'info',
+                    message: `🎉 ${holidayName}`,
+                    duration: 3000
+                });
             });
 
             dayElement.title = holidayName;
         } else {
+            // Vérifier si c'est un jour de congé (excluant les weekends pour l'affichage)
             const leave = getLeaveForDate(currentDate);
-            if (leave && !isWeekend(currentDate)) {
-                dayElement.classList.add('has-leave', `leave-${leave.type}`);
-                if (leave.type === 'sick') {
-                    dayElement.classList.add('sick-leave');
-                }
-                const leaveTypeNames = {
-                    'sick': 'Congé maladie',
-                    'paid': 'Congés payés',
-                    'maternity': 'Congé maternité',
-                    'rtt': 'RTT',
-                    'unpaid': 'Sans solde',
-                    'paternity': 'Congé paternité'
-                };
-                dayElement.title = `${leaveTypeNames[leave.type]}: ${leave.reason}`;
+            if (leave) {
+                dayElement.classList.add('has-leave');
+                dayElement.style.backgroundColor = leave.couleur + '40';
+                dayElement.style.borderColor = leave.couleur;
+                dayElement.style.borderWidth = '2px';
+                dayElement.style.borderStyle = 'solid';
+
+                // Titre pour le survol
+                dayElement.title = `${leave.type_nom}: ${leave.motif || 'Pas de motif'}`;
+
+                // Au clic, afficher les détails complets
+                dayElement.style.cursor = 'pointer';
             }
         }
 
+        // Gestionnaire de clic
         dayElement.addEventListener('click', () => {
-            if (holidayName) {
-                notyf.info(`🎉 Jour férié: ${holidayName}`);
-            } else {
+            if (!holidayName) {
                 const leave = getLeaveForDate(currentDate);
                 if (leave) {
-                    const leaveTypeNames = {
-                        'sick': 'Congé maladie',
-                        'paid': 'Congés payés',
-                        'maternity': 'Congé maternité',
-                        'rtt': 'RTT',
-                        'unpaid': 'Sans solde',
-                        'paternity': 'Congé paternité'
-                    };
-                    notyf.info(`${leaveTypeNames[leave.type]} - ${leave.reason}`);
+                    afficherDetailsConge(leave);
                 } else {
-                    notyf.info(`${day} ${getMonthName(calendarData.currentMonth)}`);
+                    notyf.info(`${day} ${getMonthName(calendarData.currentMonth)} ${calendarData.currentYear}`);
                 }
             }
         });
@@ -835,6 +439,7 @@ function renderCalendar() {
         grid.appendChild(dayElement);
     }
 
+    // Jours du mois suivant (grille complète)
     const totalCells = Math.ceil((daysInMonth + firstDay) / 7) * 7;
     const remainingCells = totalCells - (daysInMonth + firstDay);
 
@@ -844,6 +449,103 @@ function renderCalendar() {
         emptyDay.textContent = i;
         grid.appendChild(emptyDay);
     }
+}
+
+/**
+ * ✅ AMÉLIORÉ : Affiche les détails d'un congé dans un toast plus lisible
+ */
+function afficherDetailsConge(conge) {
+    const dateDebut = new Date(conge.date_debut).toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    const dateFin = new Date(conge.date_fin).toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    // Créer un message HTML formaté pour le toast
+    const messageHTML = `
+        <div style="text-align: left; line-height: 1.6;">
+            <div style="font-size: 18px; font-weight: bold; margin-bottom: 12px; color: ${conge.couleur}; border-bottom: 2px solid ${conge.couleur}; padding-bottom: 8px;">
+                📋 ${conge.type_nom}
+            </div>
+            <div style="font-size: 14px; margin-bottom: 8px;">
+                <strong>🗓️ Période:</strong><br/>
+                <span style="margin-left: 20px;">Du ${dateDebut}</span><br/>
+                <span style="margin-left: 20px;">Au ${dateFin}</span>
+            </div>
+            <div style="font-size: 14px; margin-bottom: 8px;">
+                <strong>⏱️ Durée totale:</strong> <span style="font-weight: bold; color: ${conge.couleur};">${conge.nb_jours} jour(s)</span>
+            </div>
+            <div style="font-size: 14px; margin-bottom: 8px;">
+                <strong>📊 Progression:</strong> ${conge.jours_ecoules} / ${conge.nb_jours} jours
+                <span style="background: ${conge.couleur}; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; margin-left: 5px;">${conge.pourcentage}%</span>
+            </div>
+            <div style="font-size: 13px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.1);">
+                <strong>💬 Motif:</strong><br/>
+                <span style="margin-left: 20px; font-style: italic; color: #666;">${conge.motif || 'Aucun motif spécifié'}</span>
+            </div>
+        </div>
+    `;
+
+    // Afficher un toast personnalisé avec une durée plus longue
+    notyf.open({
+        type: 'success',
+        message: messageHTML,
+        duration: 10000, // 10 secondes pour laisser le temps de lire
+        ripple: true,
+        dismissible: true,
+        position: { x: 'right', y: 'top' }
+    });
+}
+
+/**
+ * ✅ CORRIGÉ : Affiche la légende avec les types de congés utilisés
+ */
+function afficherLegende() {
+    const legendContainer = document.querySelector('.grid.grid-cols-2.md\\:grid-cols-3.lg\\:grid-cols-7.gap-4');
+    if (!legendContainer) return;
+
+    legendContainer.innerHTML = '';
+
+    // Jour férié
+    const holidayItem = document.createElement('div');
+    holidayItem.className = 'legend-item flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:shadow-md transition-shadow';
+    holidayItem.innerHTML = `
+        <div class="w-4 h-4 bg-red-500 rounded-full shadow-sm"></div>
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Jour férié</span>
+    `;
+    legendContainer.appendChild(holidayItem);
+
+    // Types de congés - Récupérer depuis les congés approuvés
+    const typesUtilises = new Map();
+
+    congesApprouves.forEach(conge => {
+        if (!typesUtilises.has(conge.type_id)) {
+            typesUtilises.set(conge.type_id, {
+                nom: conge.type_nom,
+                couleur: conge.couleur
+            });
+        }
+    });
+
+    console.log('📊 Types de congés utilisés:', Array.from(typesUtilises.entries()));
+
+    // Créer les items de légende
+    typesUtilises.forEach((type, typeId) => {
+        const item = document.createElement('div');
+        item.className = 'legend-item flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:shadow-md transition-shadow';
+        item.innerHTML = `
+            <div class="w-4 h-4 rounded-full shadow-sm" style="background-color: ${type.couleur};"></div>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${type.nom}</span>
+        `;
+        legendContainer.appendChild(item);
+    });
 }
 
 function navigateMonth(direction) {
@@ -871,93 +573,147 @@ function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
 
-    sidebar.classList.toggle('show');
-    overlay.classList.toggle('show');
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('show');
+        overlay.classList.toggle('show');
+    }
 }
 
 function closeSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
 
-    sidebar.classList.remove('show');
-    overlay.classList.remove('show');
+    if (sidebar && overlay) {
+        sidebar.classList.remove('show');
+        overlay.classList.remove('show');
+    }
 }
 
 // Notifications Management
 function toggleNotifications() {
     const dropdown = document.getElementById('notifications-dropdown');
-    dropdown.classList.toggle('show');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
 }
 
 // Event Listeners
-document.addEventListener('DOMContentLoaded', function() {
-    calendarData.leaves = generateSampleLeaves();
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('🚀 Initialisation du calendrier...');
+
+    // Charger les données depuis le backend
+    await chargerDonneesConges();
 
     initTheme();
     updateDateTime();
     setInterval(updateDateTime, 1000);
-    renderCalendar();
-    updateSickLeaveUI();
-    updateLeaveBalanceUI();
 
     setTimeout(() => {
         notyf.success('Calendrier des congés initialisé');
     }, 1000);
 
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-    document.getElementById('toggle-sidebar').addEventListener('click', toggleSidebar);
-    document.getElementById('close-sidebar').addEventListener('click', closeSidebar);
-    document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
-    document.getElementById('prev-month').addEventListener('click', () => navigateMonth('prev'));
-    document.getElementById('next-month').addEventListener('click', () => navigateMonth('next'));
-    document.getElementById('notifications-btn').addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleNotifications();
-    });
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+    if (toggleSidebarBtn) {
+        toggleSidebarBtn.addEventListener('click', toggleSidebar);
+    }
+
+    const closeSidebarBtn = document.getElementById('close-sidebar');
+    if (closeSidebarBtn) {
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+    }
+
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebar);
+    }
+
+    const prevMonthBtn = document.getElementById('prev-month');
+    if (prevMonthBtn) {
+        prevMonthBtn.addEventListener('click', () => navigateMonth('prev'));
+    }
+
+    const nextMonthBtn = document.getElementById('next-month');
+    if (nextMonthBtn) {
+        nextMonthBtn.addEventListener('click', () => navigateMonth('next'));
+    }
+
+    const notificationsBtn = document.getElementById('notifications-btn');
+    if (notificationsBtn) {
+        notificationsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleNotifications();
+        });
+    }
 
     document.addEventListener('click', function(e) {
         const dropdown = document.getElementById('notifications-dropdown');
         const btn = document.getElementById('notifications-btn');
 
-        if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+        if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
             dropdown.classList.remove('show');
         }
     });
 
+    // Raccourcis clavier
     document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + D : Toggle Dark Mode
         if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
             e.preventDefault();
             toggleTheme();
         }
 
+        // Ctrl + Flèche Gauche : Mois précédent
         if (e.key === 'ArrowLeft' && e.ctrlKey) {
             e.preventDefault();
             navigateMonth('prev');
         }
 
+        // Ctrl + Flèche Droite : Mois suivant
         if (e.key === 'ArrowRight' && e.ctrlKey) {
             e.preventDefault();
             navigateMonth('next');
         }
 
+        // Escape : Fermer sidebar et notifications
         if (e.key === 'Escape') {
             closeSidebar();
-            document.getElementById('notifications-dropdown').classList.remove('show');
+            const dropdown = document.getElementById('notifications-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
         }
     });
 
-    console.log('🗓️ Graxel Tech Calendar initialized successfully with Gabon holidays!');
-    console.log('💼 Employee:', employeeConfig.name);
-    console.log('📅 Hire Date:', employeeConfig.hireDate.toLocaleDateString('fr-FR'));
-    console.log('📊 Leave Balance:', calculateLeaveBalance());
+    console.log('✅ Calendrier des congés initialisé avec succès!');
+    console.log('📅 Jours fériés du Gabon chargés');
+    console.log('🎨 Raccourcis clavier disponibles:');
+    console.log('   - Ctrl/Cmd + D : Mode sombre/clair');
+    console.log('   - Ctrl + ← : Mois précédent');
+    console.log('   - Ctrl + → : Mois suivant');
+    console.log('   - Escape : Fermer les menus');
 });
 
+// Gestion du redimensionnement de la fenêtre
 window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
 
-    if (window.innerWidth >= 768) {
+    // Fermer la sidebar automatiquement sur grand écran
+    if (sidebar && overlay && window.innerWidth >= 768) {
         sidebar.classList.remove('show');
         overlay.classList.remove('show');
     }
 });
+
+console.log('🗓️ Graxel Tech Calendar Module Loaded - Version 2.0');
+console.log('📍 Jours fériés du Gabon 2025-2030 inclus');
+console.log('✨ Améliorations:');
+console.log('   ✅ Correction affichage des jours de congé (tous les jours inclusifs)');
+console.log('   ✅ Légende dynamique basée sur les congés réels');
+console.log('   ✅ Tooltip amélioré avec détails complets');
+console.log('   ✅ Gestion correcte des dates backend (avec/sans heure)');

@@ -352,61 +352,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Mois Travaillés -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
-                            <div class="flex items-center space-x-3 mb-3">
-                                <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-calendar-check text-green-600 dark:text-green-400"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">Mois Travaillés</h3>
-                            </div>
-                            <p class="text-3xl font-bold text-gray-900 dark:text-white mb-2" id="months-worked">12 mois</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Période complète de travail</p>
-                        </div>
-
-                        <!-- Congés Cumulés -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
-                            <div class="flex items-center space-x-3 mb-3">
-                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-plus-circle text-blue-600 dark:text-blue-400"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">Congés Cumulés</h3>
-                            </div>
-                            <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2" id="accumulated-leave">24 jours</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">2 jours × <span id="months-multiplier">12</span> mois</p>
-                        </div>
-
-                        <!-- Congés Consommés -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
-                            <div class="flex items-center space-x-3 mb-3">
-                                <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-minus-circle text-orange-600 dark:text-orange-400"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">Congés Consommés</h3>
-                            </div>
-                            <p class="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2" id="consumed-leave">5 jours</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Congés déductibles uniquement</p>
-                        </div>
                     </div>
-
-                 <!-- Solde Disponible (Grande carte en bas) -->
-<div class="mt-6 bg-gradient-to-r from-blue-400 to-purple-600 rounded-xl p-8 shadow-2xl">
-    <div class="flex items-center justify-between">
-        <div>
-            <p class="text-white/80 text-sm font-medium mb-2">SOLDE DISPONIBLE</p>
-            <p class="text-5xl font-bold text-white mb-2" id="available-balance">19 jours</p>
-            <p class="text-white/90 text-sm">
-                <i class="fas fa-info-circle mr-2"></i>
-                Vous pouvez effectuer une demande dans la limite de ce solde
-            </p>
-        </div>
-        <div class="hidden md:block">
-            <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center">
-                <i class="fas fa-umbrella-beach text-white text-4xl"></i>
-            </div>
-        </div>
-    </div>
-</div>
 
                     <!-- Détails des congés non déductibles -->
                     <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
