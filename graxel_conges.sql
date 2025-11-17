@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 14 nov. 2025 à 10:05
+-- Généré le : lun. 17 nov. 2025 à 11:36
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -84,6 +84,7 @@ CREATE TABLE `demandes_conges` (
   `validateur_id` bigint(20) UNSIGNED DEFAULT NULL,
   `date_validation` timestamp NULL DEFAULT NULL,
   `document_justificatif` text DEFAULT NULL,
+  `document_de_validation` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -92,8 +93,9 @@ CREATE TABLE `demandes_conges` (
 -- Déchargement des données de la table `demandes_conges`
 --
 
-INSERT INTO `demandes_conges` (`id_demande`, `user_id`, `type_conge_id`, `date_debut`, `date_fin`, `nb_jours`, `motif`, `statut`, `commentaire_refus`, `validateur_id`, `date_validation`, `document_justificatif`, `created_at`, `updated_at`) VALUES
-(3, 23, 6, '2025-11-20', '2025-11-22', 2, 'Moirt de mon oncle', 'En attente', NULL, NULL, NULL, 'uploads/justificatifs/1763079777_EMP008_1763069575_EMP008_6_1762414988_4762566e54c692c6.pdf', NULL, '2025-11-13 23:23:32');
+INSERT INTO `demandes_conges` (`id_demande`, `user_id`, `type_conge_id`, `date_debut`, `date_fin`, `nb_jours`, `motif`, `statut`, `commentaire_refus`, `validateur_id`, `date_validation`, `document_justificatif`, `document_de_validation`, `created_at`, `updated_at`) VALUES
+(3, 23, 6, '2025-11-20', '2025-11-22', 2, 'Moirt de mon oncle', 'Approuvé', NULL, 2, '2025-11-15 14:42:51', 'uploads/justificatifs/1763079777_EMP008_1763069575_EMP008_6_1762414988_4762566e54c692c6.pdf', '', NULL, '2025-11-15 14:42:51'),
+(10, 29, 2, '2025-11-20', '2025-11-24', 3, 'Je suis malade', 'En attente', NULL, NULL, NULL, 'uploads/justificatifs/1763133389_EMP012_1763069575_EMP008_6_1762414988_4762566e54c692c6.pdf', NULL, '2025-11-14 14:02:19', '2025-11-15 15:24:07');
 
 -- --------------------------------------------------------
 
@@ -118,7 +120,7 @@ CREATE TABLE `departements` (
 INSERT INTO `departements` (`id_departement`, `nom_departement`, `description`, `chef_departement_id`, `couleur_calendrier`, `actif`, `created_at`) VALUES
 (1, 'Développement Logiciel', 'Le service développement conçoit et réalise les solutions informatiques sur mesure. Il transforme les besoins clients en applications web et mobile fonctionnelles, en assurant l\'intégration avec les systèmes existants et la maintenance évolutive des solutions déployées.', 22, '#3b82f6', 1, '2025-11-10 12:29:27'),
 (4, 'Resource Humaines', 'kkg', 28, '#3b82f6', 1, '2025-11-12 08:59:50'),
-(6, 'Communication', 'informations légitimes', 28, '#3b82f6', 1, '2025-11-12 12:42:09');
+(6, 'Communication', 'informations légitimes', 32, '#3b82f6', 1, '2025-11-12 12:42:09');
 
 -- --------------------------------------------------------
 
@@ -199,7 +201,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2025_11_06_192957_create_sessions_table', 1),
 (10, '2025_11_06_212256_create_sessions_table', 2),
 (11, '2025_11_06_213356_create_password_resets_table', 3),
-(12, '2025_11_10_113304_create_account_activations_table', 4);
+(12, '2025_11_10_113304_create_account_activations_table', 4),
+(13, '2025_11_14_124244_create_password_resets_table', 5),
+(14, '2025_11_14_124444_create_password_resets_table', 6);
 
 -- --------------------------------------------------------
 
@@ -219,6 +223,15 @@ CREATE TABLE `notifications` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `notifications`
+--
+
+INSERT INTO `notifications` (`id_notification`, `user_id`, `titre`, `message`, `type_notification`, `lu`, `url_action`, `document_info`, `created_at`) VALUES
+(6, 22, 'Note d\'information très importante', 'Mardi réunion de la plus haute importance à 17h', 'info', 1, NULL, '{\"nom_fichier\":\"vue_ensemble_mois_1763303203557 (1).xlsx\",\"chemin\":\"uploads\\/informations\\/1763341854_vue_ensemble_mois_1763303203557 (1).xlsx\",\"type\":\"xlsx\",\"taille\":17000}', '2025-11-17 01:10:54'),
+(8, 22, 'Assemblée générale', 'à 8h00 dans la salle de réunion', 'info', 1, NULL, '{\"nom_fichier\":\"DJYEMBI (1).pdf\",\"chemin\":\"uploads\\/informations\\/1763342396_DJYEMBI (1).pdf\",\"type\":\"pdf\",\"taille\":342011}', '2025-11-17 01:15:20'),
+(16, 22, 'Réunion hebdomadaire', '8h00', 'info', 0, NULL, '{\"nom_fichier\":\"vue_ensemble_mois_1763303200037.pdf\",\"chemin\":\"uploads\\/informations\\/1763343296_vue_ensemble_mois_1763303200037.pdf\",\"type\":\"pdf\",\"taille\":9914}', '2025-11-17 01:34:56');
+
 -- --------------------------------------------------------
 
 --
@@ -226,9 +239,9 @@ CREATE TABLE `notifications` (
 --
 
 CREATE TABLE `password_resets` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -290,11 +303,11 @@ CREATE TABLE `types_conges` (
 --
 
 INSERT INTO `types_conges` (`id_type`, `nom_type`, `couleur_calendrier`, `duree_max_jours`, `necessite_justificatif`, `actif`, `created_at`) VALUES
-(1, 'Congés payés', 'vert', NULL, 0, 1, '2025-11-13 13:03:03'),
-(2, 'Congé maladie', 'rouge', NULL, 0, 1, '2025-11-13 13:03:03'),
-(3, 'Congé maternité', 'Jaune', NULL, 0, 1, '2025-11-13 13:04:40'),
-(5, 'Congé paternité', 'Bleu ci', NULL, 0, 1, '2025-11-13 13:06:52'),
-(6, 'Congé autre', 'Violine', NULL, 0, 1, '2025-11-13 13:06:52');
+(1, 'Congés payés', '#e184de', NULL, 0, 1, '2025-11-13 13:03:03'),
+(2, 'Congé maladie', '#f05c5c', NULL, 0, 1, '2025-11-13 13:03:03'),
+(3, 'Congé maternité', '#e8e35e', NULL, 0, 1, '2025-11-13 13:04:40'),
+(5, 'Congé paternité', '#61bee5', NULL, 0, 1, '2025-11-13 13:06:52'),
+(6, 'Congé autre', '#84ac53', NULL, 0, 1, '2025-11-13 13:06:52');
 
 -- --------------------------------------------------------
 
@@ -327,18 +340,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `nom`, `prenom`, `email`, `password`, `telephone`, `profession`, `photo_url`, `matricule`, `date_embauche`, `role_id`, `departement_id`, `solde_conges_annuel`, `conges_pris`, `actif`, `created_at`, `updated_at`) VALUES
-(2, 'OBAME', 'Cédric', 'cedricmoussavou25@gmail.com', '$2y$12$5bKp/LIPfzt61gkgx/SWGuTp8kpg5g0rwapHx5vy47Xdjx4LTjxFC', '+241556982', 'Dévéloppeur', NULL, 'ADM001', '2025-04-15', 1, NULL, 25, 0, 1, NULL, NULL),
-(20, 'BOUSSOUSGOU', 'Hulas', 'prefnachacha@gmail.com', '$2y$12$e0iYlqZrcJ9NMFQPENlrhuSu9Ear2c3LLp5BbApHoNLsUxuCPNoS2', '+24177521772', 'Cybersécurité', NULL, 'EMP007', '2025-11-12', 2, 1, 30, 0, 1, '2025-11-12 09:17:06', '2025-11-12 09:18:48'),
-(22, 'MARANGA', 'Boris', 'cedrickmougaingui@gmail.com', '$2y$12$W15xDyCiv0DP6KG7rqQ1mONwqgDmnyIJ8Aw4kiJaXgISxrGUayPBu', '+241778986', 'Gestion de projet', NULL, 'MGR004', '2025-04-12', 3, 4, 30, 0, 1, '2025-11-12 09:45:24', '2025-11-13 08:33:50'),
-(23, 'ZEDIANE', 'Sophia', 'hulassanders@gmail.com', '$2y$12$.0k6Kv/GNm062ccoa2wGBe2eKox6ofSVMoW9QtpLNpLthX6QH1ZBm', '+24174809526', 'Agent de recrutement', NULL, 'EMP008', '2025-08-12', 2, 4, 30, 0, 1, '2025-07-09 09:54:26', '2025-11-12 11:17:56'),
-(24, 'NANG NGUEMA', 'Brenn Tendresse', 'nangnguema222@gmail.com', '$2y$12$PomvRRBD3MBguuWlvB0tLuFH0H0g1D8eO0nSep.lki78F8joG.RW.', '+24174936536', 'Community manager', NULL, 'EMP009', '2025-11-13', 2, 1, 30, 0, 1, '2025-11-12 11:25:14', '2025-11-13 20:50:11'),
-(25, 'MABIKA', 'Fallys', 'andymoukassa2000@gmail.com', '$2y$12$TiTfpqftWUKnNwRjgXav2e6ELwlGyZfFM5IWjZArIzIJabXiXNDaa', '+24174026220', 'Marketineur', NULL, 'EMP010', '2025-11-12', 2, 4, 30, 0, 1, '2025-11-12 11:28:30', '2025-11-12 11:29:22'),
-(26, 'AJDABA', 'Vanessa', 'andymoukassa20@gmail.com', '$2y$12$5MeG3vFipd/4s75vZbMhS.XiQ.UNXrjAYRbuxHlCvclJ61Jqdm8Ve', '+241627934836', 'Controleur', NULL, 'MGR005', '2025-11-07', 3, 4, 30, 0, 1, '2025-11-12 11:30:21', '2025-11-12 11:34:46'),
-(27, 'MENGUE', 'Dorcas.L', 'meguedorcas@gmail.com', '$2y$12$eEFu9Q9jtIxoRgp4JwYFj.m2u.cDNatqH9A04zOqSuq3Gzb8cD1nq', '+2417756958', 'Community manager', NULL, 'EMP011', '2025-11-12', 2, 4, 30, 0, 1, '2025-11-12 11:38:20', '2025-11-12 11:43:26'),
-(28, 'MENGUE', 'Gertude', 'nangnguema22@gmail.com', '$2y$12$MIdW3LFvBBBuE13Budix2e6iKzSTOV7Py1FrnlTxFug33r9KQh3G6', '+24166898750', 'Sécretaire du RH', NULL, 'MGR006', '2025-07-25', 3, 4, 30, 0, 1, '2025-11-12 11:40:17', '2025-11-13 20:56:43'),
-(29, 'BAYOS', 'Akimi', 'bayosakimi@gmail.com', '$2y$12$O/VLefwmMU9RYD1W0xolJe2QbA2KVuiryzQSvr0fwBenGYpd4WX26', '+24166986500', 'Agent de recrutement', NULL, 'EMP012', '2025-11-12', 2, 4, 30, 0, 1, '2025-11-12 11:44:32', '2025-11-12 11:44:32'),
-(30, 'BOUSSOUSGOU', 'Solange', 'andymoukassasolange@gmail.com', '$2y$12$ZegVIB0DV1T/C9H.OLfaxeY4WqLQ7VHruJT76WrhWGxB0o5rUS6yK', '+2419989756', 'formateur client', NULL, 'EMP013', '2025-11-12', 2, 1, 30, 0, 1, '2025-11-12 12:00:57', '2025-11-12 12:02:05'),
-(31, 'Massouga', 'Felicité', 'hdjyembi@gmail.com', '$2y$12$nSYArHg9OY0YUeQzrEvmX.CkYFllDzyne3Zipr7KqbcFhBoWvxVEa', '+24174026220', 'Community manager', NULL, 'EMP014', '2025-11-13', 2, 6, 30, 0, 1, '2025-11-13 11:26:48', '2025-11-13 11:26:48');
+(2, 'Hulas', 'Brily', 'cedricmoussavou25@gmail.com', '$2y$12$UFLyDLDDYGZ5yAIwZTiq9OLSuaeWyCQxfmSK/aMzsMGVjyBYFhnUi', '+241556982', 'Dévéloppeur', NULL, 'ADM001', '2025-04-15', 1, NULL, 0, 0, 1, NULL, '2025-11-17 02:14:39'),
+(20, 'BOUSSOUSGOU', 'Hulas', 'prefnachacha@gmail.com', '$2y$12$e0iYlqZrcJ9NMFQPENlrhuSu9Ear2c3LLp5BbApHoNLsUxuCPNoS2', '+24177521772', 'Cybersécurité', NULL, 'EMP007', '2025-11-12', 2, 1, 0, 0, 1, '2025-11-12 09:17:06', '2025-11-12 09:18:48'),
+(22, 'MARANGA', 'Boris', 'cedrickmougaingui@gmail.com', '$2y$12$W15xDyCiv0DP6KG7rqQ1mONwqgDmnyIJ8Aw4kiJaXgISxrGUayPBu', '+241778986', 'Gestion de projet', NULL, 'MGR004', '2025-04-12', 3, 4, 0, 0, 1, '2025-11-12 09:45:24', '2025-11-13 08:33:50'),
+(23, 'Sophia', 'Zdiane', 'hulassanders@gmail.com', '$2y$12$.0k6Kv/GNm062ccoa2wGBe2eKox6ofSVMoW9QtpLNpLthX6QH1ZBm', '+24174809526', 'Agent de recrutement', 'uploads/profile/1763369626_EMP008.jpg', 'EMP008', '2025-08-12', 2, 4, 0, 6, 1, '2025-07-09 09:54:26', '2025-11-17 07:53:49'),
+(24, 'NANG NGUEMA', 'Brenn Tendresse', 'nangnguema222@gmail.com', '$2y$12$PomvRRBD3MBguuWlvB0tLuFH0H0g1D8eO0nSep.lki78F8joG.RW.', '+24174936536', 'Community manager', NULL, 'EMP009', '2025-11-13', 2, 1, 0, 0, 1, '2025-11-12 11:25:14', '2025-11-13 20:50:11'),
+(25, 'MABIKA', 'Fallys', 'andymoukassa2000@gmail.com', '$2y$12$TiTfpqftWUKnNwRjgXav2e6ELwlGyZfFM5IWjZArIzIJabXiXNDaa', '+24174026220', 'Marketineur', NULL, 'EMP010', '2025-11-12', 2, 4, 0, 0, 1, '2025-11-12 11:28:30', '2025-11-12 11:29:22'),
+(26, 'AJDABA', 'Vanessa', 'andymoukassa20@gmail.com', '$2y$12$5MeG3vFipd/4s75vZbMhS.XiQ.UNXrjAYRbuxHlCvclJ61Jqdm8Ve', '+241627934836', 'Controleur', NULL, 'MGR005', '2025-11-07', 3, 4, 0, 0, 1, '2025-11-12 11:30:21', '2025-11-14 15:13:57'),
+(27, 'MBUEGUE', 'Dorcas.L', 'meguedorcas@gmail.com', '$2y$12$eEFu9Q9jtIxoRgp4JwYFj.m2u.cDNatqH9A04zOqSuq3Gzb8cD1nq', '+2417756958', 'Community manager', NULL, 'EMP011', '2025-11-16', 2, 4, 30, 0, 1, '2025-11-12 11:38:20', '2025-11-16 13:56:50'),
+(28, 'MENGUE', 'Gertude', 'nangnguema22@gmail.com', '$2y$12$IEJm7wW.3cIO3I5ln9BT0.zIewh.OL3lRFCndGS7Oe0lnFtFJJhRW', '+24166898750', 'Sécretaire du RH', 'uploads/profile/1763374196_MGR006.jpg', 'MGR006', '2025-07-25', 3, 4, 0, 0, 1, '2025-11-12 11:40:17', '2025-11-17 09:10:50'),
+(29, 'BAYOS', 'Akimi', 'balonzitbayos@gmail.com', '$2y$12$O/VLefwmMU9RYD1W0xolJe2QbA2KVuiryzQSvr0fwBenGYpd4WX26', '+24166986500', 'Agent de recrutement', NULL, 'EMP012', '2025-11-12', 2, 4, 0, 3, 1, '2024-11-14 11:44:32', '2025-11-12 11:44:32'),
+(30, 'BOUSSOUSGOU', 'Solange', 'andymoukassasolange@gmail.com', '$2y$12$ZegVIB0DV1T/C9H.OLfaxeY4WqLQ7VHruJT76WrhWGxB0o5rUS6yK', '+2419989756', 'formateur client', NULL, 'EMP013', '2025-11-12', 2, 1, 0, 0, 1, '2025-11-12 12:00:57', '2025-11-12 12:02:05'),
+(31, 'Massouga', 'Felicité', 'hdjyembi@gmail.com', '$2y$12$nSYArHg9OY0YUeQzrEvmX.CkYFllDzyne3Zipr7KqbcFhBoWvxVEa', '+24174026220', 'Community manager', NULL, 'EMP014', '2025-11-17', 2, 6, 30, 0, 1, '2025-11-13 11:26:48', '2025-11-17 00:53:39'),
+(32, 'Grell', 'Harcale', 'graxeltechnologies228@gmail.com', '$2y$12$J247QdmM0EwBe8stN9EXceVrSusX.n1QWI/0oiOwsCeBge7jkko36', '+24166377167', 'Marketeur', NULL, 'MGR007', '2025-06-14', 3, 6, 0, 0, 1, '2025-11-14 13:37:20', '2025-11-14 13:37:20');
 
 --
 -- Index pour les tables déchargées
@@ -417,7 +431,7 @@ ALTER TABLE `notifications`
 -- Index pour la table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Index pour la table `roles`
@@ -466,7 +480,7 @@ ALTER TABLE `account_activations`
 -- AUTO_INCREMENT pour la table `demandes_conges`
 --
 ALTER TABLE `demandes_conges`
-  MODIFY `id_demande` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_demande` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `departements`
@@ -490,19 +504,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id_notification` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `password_resets`
---
-ALTER TABLE `password_resets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_notification` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `roles`
@@ -514,13 +522,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT pour la table `types_conges`
 --
 ALTER TABLE `types_conges`
-  MODIFY `id_type` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_type` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_user` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Contraintes pour les tables déchargées

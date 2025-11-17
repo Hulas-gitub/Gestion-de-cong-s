@@ -148,7 +148,6 @@
                             <p class="text-gray-600 dark:text-gray-400 mt-1">
                                 <i class="fas fa-users mr-2"></i>
                                 <span id="current-date"></span>
-                                <span>| Département Finance</span>
                             </p>
                         </div>
                     </div>
@@ -271,7 +270,7 @@
                         @php
                             $prenom = Auth::user()->prenom ?? '';
                             $nom = Auth::user()->nom ?? '';
-                            $initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+                            $initiales = strtoupper(substr($nom, 0, 1) . substr($prenom, 0, 1));
                             $photoUrl = Auth::user()->photo_url;
                             $hasPhoto = $photoUrl && Storage::disk('public')->exists($photoUrl);
 

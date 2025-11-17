@@ -231,44 +231,38 @@
 
             <div class="p-4 md:p-8 space-y-8">
                    <!-- Section pour le filtre par employé (à ajouter avant les boutons de filtre) -->
-<!-- Container principal avec bon espacement -->
-<div class="p-4 md:p-6">
+<div id="employeeFilterContainer" class="mb-6">
+    <!-- Le contenu sera généré dynamiquement par JavaScript -->
+</div>
 
-    <!-- Filtre par employé - Collapsible sur mobile -->
-    <div id="employeeFilterContainer" class="mb-4 relative" style="z-index: 10;">
-        <!-- Contenu généré dynamiquement -->
+<!-- Boutons de filtre -->
+<div class="flex space-x-2 overflow-x-auto pb-4">
+    <div class="flex items-center space-x-4">
+        <button class="filter-button active bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg px-6 py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale" data-filter="all">
+            <i class="fas fa-list mr-2"></i>
+            Tous
+        </button>
+
+        <button class="filter-button bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale" data-filter="pending">
+            <i class="fas fa-hourglass-half mr-2"></i>
+            En attentes
+        </button>
+
+        <button class="filter-button bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale" data-filter="approved">
+            <i class="fas fa-check-circle mr-2"></i>
+            Employés en congé
+        </button>
+
+        <button class="filter-button bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale" data-filter="rejected">
+            <i class="fas fa-times-circle mr-2"></i>
+            Réfusées
+        </button>
     </div>
+</div>
 
-    <!-- Boutons de filtre avec scroll horizontal -->
-    <div class="mb-4 sm:mb-6 relative" style="z-index: 5;">
-        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-2 px-2 sm:mx-0 sm:px-0">
-            <button class="filter-button active bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg px-3 sm:px-6 py-2 sm:py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale whitespace-nowrap flex-shrink-0 text-sm sm:text-base" data-filter="all">
-                <i class="fas fa-list mr-1 sm:mr-2"></i>
-                <span>Tous</span>
-            </button>
-
-            <button class="filter-button bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 sm:px-6 py-2 sm:py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale whitespace-nowrap flex-shrink-0 text-sm sm:text-base" data-filter="pending">
-                <i class="fas fa-hourglass-half mr-1 sm:mr-2"></i>
-                <span>En attente</span>
-            </button>
-
-            <button class="filter-button bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 sm:px-6 py-2 sm:py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale whitespace-nowrap flex-shrink-0 text-sm sm:text-base" data-filter="approved">
-                <i class="fas fa-check-circle mr-1 sm:mr-2"></i>
-                <span class="hidden sm:inline">Employés en congé</span>
-                <span class="sm:hidden">En congé</span>
-            </button>
-
-            <button class="filter-button bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 sm:px-6 py-2 sm:py-3 font-medium rounded-xl transition-all duration-300 hover-lift click-scale whitespace-nowrap flex-shrink-0 text-sm sm:text-base" data-filter="rejected">
-                <i class="fas fa-times-circle mr-1 sm:mr-2"></i>
-                <span>Refusées</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Contenu dynamique -->
-    <div id="dynamicContent" class="relative" style="z-index: 1;">
-        <!-- Le contenu change selon le filtre sélectionné -->
-    </div>
+<!-- Contenu dynamique selon le filtre -->
+<div id="dynamicContent">
+    <!-- Le contenu change selon le filtre sélectionné -->
 </div>
 
 
@@ -609,7 +603,6 @@
 </div>
 
 <script src="{{ asset('assets/javascript/demandes.js') }}"></script>
-    <script src="{{ asset('assets/javascript/dashboard-manager.js') }}"></script>
 <script src="{{ asset('assets/javascript/logout.js') }}"></script>
 <script src="{{ asset('assets/javascript/config.js') }}"></script>
 

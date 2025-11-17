@@ -73,7 +73,7 @@
                 // Récupérer les informations de l'utilisateur
                 $prenom = Auth::user()->prenom ?? '';
                 $nom = Auth::user()->nom ?? '';
-                $initiales = strtoupper(substr($nom, 0, 1) . substr($prenom, 0, 1));
+                 $initiales = strtoupper(substr($nom, 0, 1) . substr($prenom, 0, 1));
                 $nomComplet = trim($nom. ' ' . $prenom);
                 $role = Auth::user()->role->nom_role ?? 'Utilisateur';
 
@@ -266,7 +266,7 @@
                         @php
                             $prenom = Auth::user()->prenom ?? '';
                             $nom = Auth::user()->nom ?? '';
-                            $initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
+                            $initiales = strtoupper(substr($nom, 0, 1) . substr($prenom, 0, 1));
                             $photoUrl = Auth::user()->photo_url;
                             $hasPhoto = $photoUrl && Storage::disk('public')->exists($photoUrl);
 
@@ -715,8 +715,8 @@
                                 // Récupérer les informations de l'utilisateur
                                 $prenom = Auth::user()->prenom ?? '';
                                 $nom = Auth::user()->nom ?? '';
-                                $initiales = strtoupper(substr($prenom, 0, 1) . substr($nom, 0, 1));
-                                $nomComplet = trim($prenom . ' ' . $nom);
+                                $initiales = strtoupper(substr($nom, 0, 1) . substr($prenom, 0, 1));
+                                $nomComplet = trim($nom . ' ' . $prenom);
                                 $role = Auth::user()->role->nom_role ?? 'Utilisateur';
 
                                 // Vérifier si une photo existe

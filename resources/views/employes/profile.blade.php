@@ -56,7 +56,7 @@
                 <nav class="space-y-3 flex-1">
                     <a href="{{ url('employes/tableau-de-bord-employers') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
                         <i class="fas fa-chart-pie w-5 h-5 text-lg"></i>
-                        <span>Tableau de bord</span>
+                        <span>Vue d'ensemble</span>
                     </a>
                     <a href="{{ url('employes/conges-employers') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
                         <i class="fas fa-clipboard-list w-5 h-5 text-lg"></i>
@@ -65,10 +65,6 @@
                      <a href="{{ url('employes/calendrier-employers') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
                      <i class="fas fa-umbrella-beach w-5 h-5 text-lg"></i>
                         <span>Calendrier de congé</span>
-                    </a>
-                      <a href="{{ url('employes/informations') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
-                        <i class="fas fa-circle-info w-5 h-5 text-lg"></i>
-                      <span class="font-medium">Informations</span>
                     </a>
                      <a href="#" class="nav-item flex items-center space-x-4 px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover-lift transition-all duration-300 click-scale shadow-lg">
                       <i class="fas fa-user w-5 h-5 text-lg"></i>

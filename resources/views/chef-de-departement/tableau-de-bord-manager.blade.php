@@ -144,12 +144,13 @@
                         </button>
                 <div>
     <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-        Gestion de l'équipe
+        Tableau de bord
     </h1>
     <p class="text-gray-600 dark:text-gray-400 mt-1">
         <i class="fas fa-users mr-2"></i>
         <span id="current-date"></span>
-        <span>| Département <span id="departement-name">{{ $departement->nom_departement ?? 'N/A' }}</span></span>
+       <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Département <span id="kpi-nom-departement" class="font-bold text-orange-600"></span></p>
+
     </p>
 </div>
                     </div>
@@ -231,101 +232,118 @@
             </div>
 
             <div class="p-4 md:p-8 space-y-8">
-
-        <!-- Stats Cards (à fleur) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 w-full">
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
-                <div class="relative flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Demandes en attente</p>
-                        <p class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">12</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">à valider</p>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg animate-float">
-                        <i class="fas fa-hourglass-half text-white text-2xl"></i>
-                    </div>
-                </div>
+<!-- Stats Cards (à fleur) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 w-full">
+    <!-- Demandes en attente -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Demandes en attente</p>
+                <p id="kpi-demandes-attente" class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                    <i class="fas fa-spinner fa-spin text-2xl"></i>
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">à valider</p>
             </div>
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.1s;">
-                <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 pointer-events-none"></div>
-                <div class="relative flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Employés du département Finance</p>
-                        <p class="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">5</p>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.5s;">
-                        <i class="fas fa-users text-white text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.2s;">
-                <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-teal-500/10 pointer-events-none"></div>
-                <div class="relative flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Demandes validées</p>
-                        <p class="text-4xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">47</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">ce mois</p>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.6s;">
-                        <i class="fas fa-check-circle text-white text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.3s;">
-                <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 pointer-events-none"></div>
-                <div class="relative flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Demandes refusées</p>
-                        <p class="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent mb-2">3</p>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.7s;">
-                        <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
-                    </div>
-                </div>
+            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg animate-float">
+                <i class="fas fa-hourglass-half text-white text-2xl"></i>
             </div>
         </div>
+    </div>
 
-        <!-- Graphiques (à fleur) -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-6 w-full">
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up w-full">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Évolution des demandes</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Demandes de congés par mois</p>
-                </div>
-                <div class="p-6">
-                    <div class="chart-container-large w-full">
-                        <canvas id="demandesChart"></canvas>
-                    </div>
-                </div>
+    <!-- Employés du département -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.1s;">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 pointer-events-none"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Employés du département <span id="kpi-nom-departement" class="font-bold text-orange-600"></span></p>
+                <p id="kpi-total-employes" class="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">
+                    <i class="fas fa-spinner fa-spin text-2xl"></i>
+                </p>
             </div>
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up w-full">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-green-500/5 to-blue-500/5">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Types de congés</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Répartition par catégorie</p>
-                </div>
-                <div class="p-6">
-                    <div class="chart-container-large w-full">
-                        <canvas id="typesChart"></canvas>
-                    </div>
-                </div>
+            <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.5s;">
+                <i class="fas fa-users text-white text-2xl"></i>
             </div>
         </div>
+    </div>
 
-        <!-- Analyse temporelle (à fleur) -->
-        <div class="grid grid-cols-1 lg:grid-cols-1 gap-0 mb-6 w-full">
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up w-full">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Taux d'approbation</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">6 derniers mois</p>
-                </div>
-                <div class="p-6">
-                    <div class="chart-container w-full">
-                        <canvas id="approvalChart"></canvas>
-                    </div>
-                </div>
+    <!-- Demandes validées ce mois -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.2s;">
+        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-teal-500/10 pointer-events-none"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Demandes validées</p>
+                <p id="kpi-demandes-validees" class="text-4xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">
+                    <i class="fas fa-spinner fa-spin text-2xl"></i>
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">ce mois</p>
+            </div>
+            <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.6s;">
+                <i class="fas fa-check-circle text-white text-2xl"></i>
             </div>
         </div>
+    </div>
+
+    <!-- Demandes refusées -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.3s;">
+        <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 pointer-events-none"></div>
+        <div class="relative flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Demandes refusées</p>
+                <p id="kpi-demandes-refusees" class="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent mb-2">
+                    <i class="fas fa-spinner fa-spin text-2xl"></i>
+                </p>
+            </div>
+            <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.7s;">
+                <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Graphiques (à fleur) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-6 w-full mt-6">
+    <!-- Évolution des demandes par employé -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up w-full">
+        <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Évolution des demandes par employé</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Demandes approuvées sur 12 mois</p>
+        </div>
+        <div class="p-6">
+            <div class="chart-container-large w-full">
+                <canvas id="demandesChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Types de congés -->
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up w-full">
+        <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-green-500/5 to-blue-500/5">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Types de congés</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Répartition par catégorie</p>
+        </div>
+        <div class="p-6">
+            <div class="chart-container-large w-full">
+                <canvas id="typesChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Taux d'approbation (à fleur) -->
+<div class="grid grid-cols-1 lg:grid-cols-1 gap-0 mb-6 w-full">
+    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up w-full">
+        <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Taux d'approbation</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">12 derniers mois</p>
+        </div>
+        <div class="p-6">
+            <div class="chart-container w-full">
+                <canvas id="approvalChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- Footer -->
             <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
                 <div class="max-w-7xl mx-auto">

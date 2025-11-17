@@ -65,12 +65,25 @@ const fileTypeConfig = {
 };
 
 // ============================================
+// DÉTECTION AUTOMATIQUE DU PRÉFIXE DE ROUTE
+// ============================================
+
+// Détecter automatiquement le préfixe de route (chef-de-departement, employes, admin, etc.)
+function getRoutePrefix() {
+    const path = window.location.pathname;
+    const match = path.match(/\/(chef-de-departement|employes|admin)/);
+    return match ? match[1] : 'chef-de-departement';
+}
+
+const ROUTE_PREFIX = getRoutePrefix();
+
+// ============================================
 // CHARGEMENT DES NOTES
 // ============================================
 
 async function loadNotes() {
     try {
-        const response = await fetch('/chef-de-departement/informations/get-notes', {
+        const response = await fetch(`/${ROUTE_PREFIX}/informations/get-notes`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -86,6 +99,7 @@ async function loadNotes() {
 
         if (data.success) {
             notesData = data.notes || [];
+            console.log('Notes chargées:', notesData); // Pour déboguer
             renderNotes();
         } else {
             console.error('Erreur API:', data.message);
@@ -274,7 +288,6 @@ function removeFile() {
 // SOUMISSION DU FORMULAIRE
 // ============================================
 
-// Gestionnaire de soumission du formulaire
 function initFormHandler() {
     const form = document.getElementById('noteForm');
     if (form) {
@@ -291,10 +304,10 @@ function initFormHandler() {
             }
 
             try {
-                let url = '/chef-de-departement/informations/store';
+                let url = `/${ROUTE_PREFIX}/informations/store`;
 
                 if (currentNoteId) {
-                    url = `/chef-de-departement/informations/update/${currentNoteId}`;
+                    url = `/${ROUTE_PREFIX}/informations/update/${currentNoteId}`;
                     formData.append('_method', 'POST');
                 }
 
@@ -329,7 +342,7 @@ function initFormHandler() {
 
 async function viewNote(id) {
     try {
-        const response = await fetch(`/chef-de-departement/informations/show/${id}`, {
+        const response = await fetch(`/${ROUTE_PREFIX}/informations/show/${id}`, {
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             }
@@ -351,7 +364,7 @@ async function viewNote(id) {
 
 async function editNote(id) {
     try {
-        const response = await fetch(`/chef-de-departement/informations/show/${id}`, {
+        const response = await fetch(`/${ROUTE_PREFIX}/informations/show/${id}`, {
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             }
@@ -392,7 +405,7 @@ async function confirmDelete() {
     if (!currentNoteId) return;
 
     try {
-        const response = await fetch(`/chef-de-departement/informations/delete/${currentNoteId}`, {
+        const response = await fetch(`/${ROUTE_PREFIX}/informations/delete/${currentNoteId}`, {
             method: 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -416,7 +429,7 @@ async function confirmDelete() {
 }
 
 function downloadNote(id) {
-    window.location.href = `/chef-de-departement/informations/download/${id}`;
+    window.location.href = `/${ROUTE_PREFIX}/informations/download/${id}`;
 }
 
 // ============================================
@@ -457,7 +470,7 @@ function showNotification(message, type = 'info') {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Module Notes d\'information chargé');
+    console.log('Module Notes d\'information chargé - Préfixe route:', ROUTE_PREFIX);
 
     // Charger les notes au démarrage
     loadNotes();

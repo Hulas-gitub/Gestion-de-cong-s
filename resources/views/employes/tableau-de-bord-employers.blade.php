@@ -4,7 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graxel Tech - Tableau de bord Employer</title>
+    <title>Graxel Tech - Vue d'ensemble </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -61,7 +61,7 @@
                 <nav class="space-y-3 flex-1">
                     <a href="#" class="nav-item flex items-center space-x-4 px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover-lift transition-all duration-300 click-scale shadow-lg">
                         <i class="fas fa-chart-pie w-5 h-5 text-lg"></i>
-                        <span class="font-medium">Tableau de bord</span>
+                        <span class="font-medium">Vue d'ensemble</span>
                     </a>
                     <a href=" {{ url('employes/conges-employers') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
                         <i class="fas fa-clipboard-list w-5 h-5 text-lg"></i>
@@ -70,14 +70,6 @@
                     <a href="{{ url('employes/calendrier-employers') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
                         <i class="fas fa-calendar-alt w-5 h-5 text-lg"></i>
                         <span>Calendrier</span>
-                    </a>
-                      <a href="{{ url('employes/calendrier-employers') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
-                        <i class="fas fa-calendar-alt w-5 h-5 text-lg"></i>
-                        <span>Calendrier</span>
-                    </a>
-                      <a href="{{ url('employes/informations') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
-                        <i class="fas fa-circle-info w-5 h-5 text-lg"></i>
-                      <span class="font-medium">Informations</span>
                     </a>
                     <a href="{{ url('employes/profile') }}" class="nav-item flex items-center space-x-4 px-4 py-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl hover-lift transition-all duration-300 click-scale">
                         <i class="fas fa-user w-5 h-5 text-lg"></i>
@@ -159,10 +151,13 @@
                     <i class="fas fa-bars text-gray-600 dark:text-gray-400"></i>
                 </button>
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Tableau de bord Gestion de congés</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Vue d'ensemble</h1>
                     <p class="text-gray-600 dark:text-gray-400 mt-1">
                         <i class="fas fa-calendar-day mr-2"></i>
                         <span id="current-date"></span>
+
+       <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Département  ressources Humaines<span id="kpi-nom-departement" class="font-bold text-orange-600"></span></p>
+
                     </p>
                 </div>
             </div>
@@ -214,329 +209,213 @@
 
     <!-- Dashboard Content (à fleur) -->
     <div class="w-full p-0 space-y-6">
-        <!-- Stats Cards (à fleur) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-0 w-full">
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
-                <div class="relative flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Congés restants</p>
-                        <p class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">25</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">jours disponibles</p>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg animate-float">
-                        <i class="fas fa-calendar-check text-white text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-6 hover-lift transition-all duration-500 animate-slide-up overflow-hidden relative w-full" style="animation-delay: 0.1s;">
-                <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 pointer-events-none"></div>
-                <div class="relative flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Congés pris</p>
-                        <p class="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">5</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">jours cette année</p>
-                    </div>
-                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg animate-float" style="animation-delay: 0.5s;">
-                        <i class="fas fa-clock text-white text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Main Grid (à fleur) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 w-full">
-            <!-- Mes demandes récentes -->
-            <div class="lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.2s;">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Mes demandes récentes</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Vos dernières demandes de congés</p>
-                        </div>
-                        <!-- Filtres -->
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
-                                Tous
-                            </button>
-                            <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                Approuvé
-                            </button>
-                            <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                En attente
-                            </button>
-                            <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                Refusé
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6 space-y-4">
-                    <!-- Demande 1 -->
-                    <div class="demand-item flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-none hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer hover-lift w-full">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-umbrella-beach text-white"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-2">
-                                    <h4 class="font-semibold text-gray-900 dark:text-white">Congés payés</h4>
-                                    <span class="text-yellow-500">🟡</span>
-                                </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">2024-01-15 - 2024-01-19 (5 jours)</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Créé le 10 Jan 2024</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-xs font-semibold rounded-full">En attente</span>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Demande 2 -->
-                    <div class="demand-item flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 rounded-none hover:bg-green-100 dark:hover:bg-green-900/30 transition-all duration-300 cursor-pointer hover-lift w-full">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-notes-medical text-white"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-2">
-                                    <h4 class="font-semibold text-gray-900 dark:text-white">Congé maladie</h4>
-                                    <span class="text-green-500">🟢</span>
-                                </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">2024-01-10 - 2024-01-12 (3 jours)</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Créé le 08 Jan 2024</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-4 py-2 bg-green-500 text-white text-xs font-semibold rounded-full">Validé</span>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Demande 3 -->
-                    <div class="demand-item flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20 rounded-none hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-300 cursor-pointer hover-lift w-full">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-business-time text-white"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-2">
-                                    <h4 class="font-semibold text-gray-900 dark:text-white">RTT</h4>
-                                    <span class="text-red-500">🔴</span>
-                                </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">2024-01-08 - 2024-01-08 (1 jour)</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Créé le 05 Jan 2024</p>
-                                <p class="text-xs text-red-500 dark:text-red-400 font-medium">Motif: Surcharge de travail</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-4 py-2 bg-red-500 text-white text-xs font-semibold rounded-full">Refusé</span>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Demande 4 -->
-                    <div class="demand-item flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-none hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all duration-300 cursor-pointer hover-lift w-full">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-500 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-business-time text-white"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-2">
-                                    <h4 class="font-semibold text-gray-900 dark:text-white">Congé maternité</h4>
-                                    <span class="text-blue-500">🟣</span>
-                                </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">2024-01-08 - 2024-01-08 (1 jour)</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Créé le 05 Jan 2024</p>
-                                <p class="text-xs text-blue-500 dark:text-blue-400 font-medium">En cours de traitement</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-full">En attente</span>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
+         <!-- Mes demandes récentes -->
+        <div class="lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.2s;">
+            <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Mes demandes récentes</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Vos dernières demandes de congés</p>
                     </div>
                 </div>
             </div>
+            <div class="p-6 space-y-4">
+                @php
+                    // Récupérer les demandes via le controller
+                    $demandesData = app('App\Http\Controllers\DashboardEmployesController')->getHistoriqueDemandes(request());
+                    $demandesResponse = json_decode($demandesData->getContent());
+                    $demandes = $demandesResponse->success ? collect($demandesResponse->demandes)->take(4) : collect([]);
+                @endphp
 
-            <!-- Notifications Sidebar Améliorée -->
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.3s;">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Notifications</h3>
+                @forelse($demandes as $demande)
+                    @php
+                        // Définir les couleurs selon le statut
+                        $statusColors = [
+                            'En attente' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-800 dark:text-yellow-300', 'icon' => '🟡', 'card' => 'bg-gray-50 dark:bg-gray-700/50'],
+                            'Approuvé' => ['bg' => 'bg-green-500', 'text' => 'text-white', 'icon' => '🟢', 'card' => 'bg-green-50 dark:bg-green-900/20'],
+                            'Refusé' => ['bg' => 'bg-red-500', 'text' => 'text-white', 'icon' => '🔴', 'card' => 'bg-red-50 dark:bg-red-900/20']
+                        ];
+                        $colors = $statusColors[$demande->statut_label] ?? $statusColors['En attente'];
+
+                        // Définir les icônes selon le type de congé
+                        $typeIcons = [
+                            'Congés payés' => 'fa-umbrella-beach',
+                            'Congé maladie' => 'fa-notes-medical',
+                            'RTT' => 'fa-business-time',
+                            'Congé maternité' => 'fa-baby',
+                            'Congé paternité' => 'fa-baby-carriage'
+                        ];
+                        $icon = $typeIcons[$demande->type_conge] ?? 'fa-calendar';
+
+                        // Couleur du gradient selon le type
+                        $gradients = [
+                            'Congés payés' => 'from-blue-500 to-purple-500',
+                            'Congé maladie' => 'from-green-500 to-emerald-500',
+                            'RTT' => 'from-red-500 to-pink-500',
+                            'Congé maternité' => 'from-blue-500 to-blue-500',
+                            'Congé paternité' => 'from-indigo-500 to-purple-500'
+                        ];
+                        $gradient = $gradients[$demande->type_conge] ?? 'from-gray-500 to-gray-600';
+                    @endphp
+
+                    <div class="demand-item flex items-center justify-between p-4 {{ $colors['card'] }} rounded-none hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer hover-lift w-full">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r {{ $gradient }} rounded-xl flex items-center justify-center">
+                                <i class="fas {{ $icon }} text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white">{{ $demande->type_conge }}</h4>
+                                    <span>{{ $colors['icon'] }}</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ \Carbon\Carbon::parse($demande->date_debut)->format('Y-m-d') }} -
+                                    {{ \Carbon\Carbon::parse($demande->date_fin)->format('Y-m-d') }}
+                                    ({{ $demande->nb_jours }} jour{{ $demande->nb_jours > 1 ? 's' : '' }})
+                                </p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                                    Créé {{ $demande->submitted_time }}
+                                </p>
+                                @if($demande->statut_label == 'Refusé' && $demande->commentaire_refus)
+                                    <p class="text-xs text-red-500 dark:text-red-400 font-medium">
+                                        Motif: {{ $demande->commentaire_refus }}
+                                    </p>
+                                @endif
+                                @if($demande->statut_label == 'En attente')
+                                    <p class="text-xs text-blue-500 dark:text-blue-400 font-medium">
+                                        En cours de traitement
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
                         <div class="flex items-center space-x-2">
-                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">10</span>
+                            <span class="px-4 py-2 {{ $colors['bg'] }} {{ $colors['text'] }} text-xs font-semibold rounded-full">
+                                {{ $demande->statut_label }}
+                            </span>
+                            @if($demande->has_attestation)
+                                <a href="{{ route('employes.dashboard.api.documents.attestation.telecharger', $demande->id) }}"
+                                   class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                                   title="Télécharger l'attestation">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            @endif
+                            @if($demande->has_document)
+                                <a href="{{ route('employes.dashboard.api.documents.justificatif.visualiser', $demande->id) }}"
+                                   class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                                   title="Voir le document">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Dernières mises à jour</p>
-                </div>
-                <div class="p-4 space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
-                    <!-- Notification Congé Approuvé -->
-                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 border-green-500">
-                        <div class="flex-shrink-0">
-                            <div class="w-3 h-3 bg-green-500 rounded-full mt-2 animate-pulse"></div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Demande approuvée 🟢</p>
-                                <div class="flex items-center space-x-1">
-                                    <button class="text-blue-500 hover:text-blue-700 text-xs">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="text-gray-400 hover:text-gray-600 text-xs">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">Votre congé du 15 au 20 Sept a été validé par votre chef de service</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs text-gray-400">Il y a 1j</span>
-                                <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">Congé</span>
-                            </div>
-                        </div>
+                @empty
+                    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-inbox text-4xl mb-2"></i>
+                        <p>Aucune demande récente</p>
                     </div>
-                    <!-- Notification Congé Refusé -->
-                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 border-red-500">
-                        <div class="flex-shrink-0">
-                            <div class="w-3 h-3 bg-red-500 rounded-full mt-2 animate-pulse"></div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Demande refusée 🔴</p>
-                                <div class="flex items-center space-x-1">
-                                    <button class="text-blue-500 hover:text-blue-700 text-xs">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="text-gray-400 hover:text-gray-600 text-xs">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">Congé du 10-12 Oct refusé. Motif: surcharge de travail</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs text-gray-400">Il y a 2j</span>
-                                <span class="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded-full">Congé</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Notification En attente -->
-                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 border-yellow-500">
-                        <div class="flex-shrink-0">
-                            <div class="w-3 h-3 bg-yellow-500 rounded-full mt-2 animate-pulse"></div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">En cours de traitement 🟡</p>
-                                <button class="text-gray-400 hover:text-gray-600 text-xs">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">Votre demande du 5-7 Nov est en cours d'examen</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs text-gray-400">Il y a 3h</span>
-                                <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 px-2 py-1 rounded-full">Congé</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Notification Administrative -->
-                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 border-blue-500">
-                        <div class="flex-shrink-0">
-                            <div class="w-3 h-3 bg-blue-500 rounded-full mt-2 animate-pulse"></div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Note de service 📑</p>
-                                <div class="flex items-center space-x-1">
-                                    <button class="text-blue-500 hover:text-blue-700 text-xs">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="text-gray-400 hover:text-gray-600 text-xs">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">Nouvelle procédure de demande de congés publiée</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs text-gray-400">Il y a 5h</span>
-                                <span class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full">Admin</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Notification RH -->
-                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 border-purple-500">
-                        <div class="flex-shrink-0">
-                            <div class="w-3 h-3 bg-purple-500 rounded-full mt-2 animate-pulse"></div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Annonce RH 🎉</p>
-                                <button class="text-gray-400 hover:text-gray-600 text-xs">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">Formation interne disponible : Gestion du temps</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs text-gray-400">Il y a 1j</span>
-                                <span class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-full">RH</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Notification Réunion -->
-                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 border-orange-500">
-                        <div class="flex-shrink-0">
-                            <div class="w-3 h-3 bg-orange-500 rounded-full mt-2 animate-pulse"></div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Rappel réunion 📢</p>
-                                <button class="text-gray-400 hover:text-gray-600 text-xs">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">Réunion du personnel demain 20 Sept à 10h</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs text-gray-400">Il y a 6h</span>
-                                <span class="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Admin</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Bouton voir toutes les notifications -->
-                <div class="p-4 border-t border-gray-200/50 dark:border-gray-700/50">
-                    <button class="w-full text-center text-sm text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
-                        Voir toutes les notifications
-                    </button>
-                </div>
+                @endforelse
             </div>
         </div>
 
-        <!-- Calendrier rapide et Statistiques -->
-        <div class="grid grid-cols-1 lg:grid-cols-1 gap-0 w-full">
-            <!-- Statistiques -->
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.6s;">
-                <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-yellow-500/5 to-orange-500/5">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Statistiques de l'équipe</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Vue d'ensemble de votre département</p>
+        <!-- Notifications Sidebar -->
+        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.3s;">
+            <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Notifications</h3>
+                    @php
+                        $notificationsData = app('App\Http\Controllers\DashboardEmployesController')->getNotifications(request());
+                        $notificationsResponse = json_decode($notificationsData->getContent());
+                        $notifications = $notificationsResponse->success ? collect($notificationsResponse->notifications)->take(6) : collect([]);
+                        $totalNotifications = $notificationsResponse->success ? $notificationsResponse->total : 0;
+                    @endphp
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ $totalNotifications }}</span>
+                    </div>
                 </div>
-                <div class="p-6 space-y-6">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Dernières mises à jour</p>
+            </div>
+            <div class="p-4 space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
+                @php
+                    $typeColors = [
+                        'conge_approuve' => ['border' => 'border-green-500', 'dot' => 'bg-green-500', 'badge' => 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300', 'icon' => '🟢', 'label' => 'Congé'],
+                        'conge_refuse' => ['border' => 'border-red-500', 'dot' => 'bg-red-500', 'badge' => 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300', 'icon' => '🔴', 'label' => 'Congé'],
+                        'conge_attente' => ['border' => 'border-yellow-500', 'dot' => 'bg-yellow-500', 'badge' => 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300', 'icon' => '🟡', 'label' => 'Congé'],
+                        'administrative' => ['border' => 'border-blue-500', 'dot' => 'bg-blue-500', 'badge' => 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300', 'icon' => '📑', 'label' => 'Admin'],
+                        'rh' => ['border' => 'border-purple-500', 'dot' => 'bg-purple-500', 'badge' => 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300', 'icon' => '🎉', 'label' => 'RH'],
+                        'reunion' => ['border' => 'border-orange-500', 'dot' => 'bg-orange-500', 'badge' => 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300', 'icon' => '📢', 'label' => 'Admin']
+                    ];
+                @endphp
+
+                @forelse($notifications as $notification)
+                    @php
+                        $colors = $typeColors[$notification->type] ?? $typeColors['administrative'];
+                    @endphp
+                    <div class="notification-item flex items-start space-x-3 animate-fade-in p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-none cursor-pointer transition-colors border-l-4 {{ $colors['border'] }}">
+                        <div class="flex-shrink-0">
+                            <div class="w-3 h-3 {{ $colors['dot'] }} rounded-full mt-2 animate-pulse"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                    {{ $notification->titre }} {{ $colors['icon'] }}
+                                </p>
+                                <div class="flex items-center space-x-1">
+                                    @if($notification->has_document)
+                                        <a href="{{ route('employes.dashboard.api.documents.notification.telecharger', $notification->id) }}"
+                                           class="text-blue-500 hover:text-blue-700 text-xs"
+                                           title="Télécharger le document">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    @endif
+                                    @if(!$notification->lu)
+                                        <form action="{{ route('employes.dashboard.api.notifications.marquerLue', $notification->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="text-gray-400 hover:text-gray-600 text-xs" title="Marquer comme lu">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">{{ $notification->message }}</p>
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-xs text-gray-400">{{ $notification->time_ago }}</span>
+                                <span class="text-xs {{ $colors['badge'] }} px-2 py-1 rounded-full">
+                                    {{ $colors['label'] }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-bell-slash text-4xl mb-2"></i>
+                        <p>Aucune notification</p>
+                    </div>
+                @endforelse
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 lg:grid-cols-1 gap-0 w-full">
+        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-none shadow-xl border border-gray-200/50 dark:border-gray-700/50 animate-slide-up overflow-hidden w-full" style="animation-delay: 0.6s;">
+            <div class="p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-yellow-500/5 to-orange-500/5">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Statistiques de l'équipe</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Vue d'ensemble de votre département</p>
+            </div>
+            <div class="p-6 space-y-6">
+                @php
+                    $statsData = app('App\Http\Controllers\DashboardEmployesController')->getStatistiques();
+                    $statsResponse = json_decode($statsData->getContent());
+                    $stats = $statsResponse->success ? $statsResponse->statistiques : null;
+                @endphp
+
+                @if($stats)
+                    <!-- Équipe du département -->
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
@@ -547,13 +426,15 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">25</p>
+                            <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $stats->equipe_departement->total }}</p>
                         </div>
                     </div>
+
+                    <!-- Demandes refusées -->
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-check-circle text-white"></i>
+                            <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-times-circle text-white"></i>
                             </div>
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white">Demandes refusées</p>
@@ -561,10 +442,14 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-2xl font-bold text-green-600 dark:text-green-400">3</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">-12% vs mois dernier</p>
+                            <p class="text-2xl font-bold text-red-600 dark:text-red-400">{{ $stats->demandes_refusees->mois_courant }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">
+                                {{ $stats->demandes_refusees->pourcentage > 0 ? '+' : '' }}{{ $stats->demandes_refusees->pourcentage }}% vs mois dernier
+                            </p>
                         </div>
                     </div>
+
+                    <!-- Demandes approuvées -->
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
@@ -576,10 +461,14 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-2xl font-bold text-green-600 dark:text-green-400">47</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">+12% vs mois dernier</p>
+                            <p class="text-2xl font-bold text-green-600 dark:text-green-400">{{ $stats->demandes_approuvees->mois_courant }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">
+                                {{ $stats->demandes_approuvees->pourcentage > 0 ? '+' : '' }}{{ $stats->demandes_approuvees->pourcentage }}% vs mois dernier
+                            </p>
                         </div>
                     </div>
+
+                    <!-- En attente -->
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center">
@@ -591,14 +480,19 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">8</p>
+                            <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">{{ $stats->en_attente->total }}</p>
                             <p class="text-xs text-gray-500 dark:text-gray-400">Délai moyen: 2j</p>
                         </div>
                     </div>
-
-                </div>
+                @else
+                    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-chart-bar text-4xl mb-2"></i>
+                        <p>Impossible de charger les statistiques</p>
+                    </div>
+                @endif
             </div>
         </div>
+    </div>
      <!-- Footer -->
             <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-700/50 p-6 mt-8">
                 <div class="max-w-7xl mx-auto">

@@ -42,7 +42,6 @@ class InformationsController extends Controller
                 ]);
             }
 
-            // Récupérer toutes les notes d'information du département
             $notifications = Notifications::where('type_notification', 'info')
                 ->whereHas('user', function($query) use ($user) {
                     $query->where('departement_id', $user->departement_id);
@@ -51,8 +50,7 @@ class InformationsController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
-            // Formater les données pour le frontend
-            $formattedNotes = $notifications->map(function($notification) {
+            $formattedNotes = $notifications->map(function($notification) use ($user) {
                 $docInfo = $notification->document_info ? json_decode($notification->document_info, true) : null;
 
                 return [
@@ -62,7 +60,7 @@ class InformationsController extends Controller
                     'date' => \Carbon\Carbon::parse($notification->created_at)->format('d/m/Y'),
                     'created_at' => $notification->created_at,
                     'user_id' => $notification->user_id,
-                    'is_owner' => $notification->user_id == Auth::id(),
+                    'is_owner' => $notification->user_id == $user->id_user, // ✅ CORRECTION ICI
                     'has_file' => $docInfo !== null,
                     'file_name' => $docInfo ? $docInfo['nom_fichier'] : null,
                     'file_type' => $docInfo ? strtolower($docInfo['type']) : 'note',
@@ -122,9 +120,9 @@ class InformationsController extends Controller
                 ]);
             }
 
-            // Créer la notification
+            // Créer la notification avec la bonne clé
             $notification = Notifications::create([
-                'user_id' => Auth::id(),
+                'user_id' => $user->id_user, // ✅ CORRECTION ICI
                 'titre' => $request->titre,
                 'message' => $request->message ?? '',
                 'type_notification' => 'info',
@@ -134,7 +132,7 @@ class InformationsController extends Controller
 
             // Récupérer tous les employés ACTIFS du département (sauf le chef)
             $employes = User::where('departement_id', $user->departement_id)
-                ->where('id_user', '!=', Auth::id())
+                ->where('id_user', '!=', $user->id_user) // ✅ CORRECTION ICI
                 ->where('actif', 1)
                 ->get();
 
@@ -222,9 +220,10 @@ class InformationsController extends Controller
     {
         try {
             $notification = Notifications::findOrFail($id);
+            $user = Auth::user();
 
-            // Marquer comme lu
-            if (!$notification->lu && $notification->user_id != Auth::id()) {
+            // Marquer comme lu (sauf si c'est le créateur)
+            if (!$notification->lu && $notification->user_id != $user->id_user) { // ✅ CORRECTION ICI
                 $notification->update(['lu' => true]);
             }
 
@@ -261,9 +260,10 @@ class InformationsController extends Controller
     {
         try {
             $notification = Notifications::findOrFail($id);
+            $user = Auth::user();
 
             // Vérifier que l'utilisateur est le créateur
-            if ($notification->user_id !== Auth::id()) {
+            if ($notification->user_id !== $user->id_user) { // ✅ CORRECTION ICI
                 return response()->json([
                     'success' => false,
                     'message' => 'Non autorisé'
@@ -328,9 +328,10 @@ class InformationsController extends Controller
     {
         try {
             $notification = Notifications::findOrFail($id);
+            $user = Auth::user();
 
             // Vérifier que l'utilisateur est le créateur
-            if ($notification->user_id !== Auth::id()) {
+            if ($notification->user_id !== $user->id_user) { // ✅ CORRECTION ICI
                 return response()->json([
                     'success' => false,
                     'message' => 'Non autorisé'

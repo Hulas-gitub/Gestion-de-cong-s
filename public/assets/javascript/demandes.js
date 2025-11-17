@@ -47,99 +47,65 @@ function renderEmployeeFilter() {
     const letters = Object.keys(groupedEmployees).sort();
 
     container.innerHTML = `
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-            <!-- Header Collapsible -->
-            <button
-                onclick="toggleEmployeeFilter()"
-                class="w-full flex items-center justify-between p-3 sm:p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-            >
-                <div class="flex items-center">
-                    <i class="fas fa-users mr-2 text-blue-500 text-sm sm:text-base"></i>
-                    <h3 class="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white">
-                        Filtrer par employé
-                    </h3>
-                    <span class="ml-2 text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full">
-                        ${employeesData.length}
-                    </span>
-                </div>
-                <i id="employeeFilterToggleIcon" class="fas fa-chevron-down text-gray-400 transition-transform duration-200 text-sm"></i>
-            </button>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    <i class="fas fa-users mr-2"></i>Filtrer par employé
+                </h3>
+                <button onclick="resetEmployeeFilter()" class="text-sm text-blue-500 hover:text-blue-600">
+                    <i class="fas fa-redo mr-1"></i>Réinitialiser
+                </button>
+            </div>
 
-            <!-- Contenu Collapsible -->
-            <div id="employeeFilterContent" class="hidden">
-                <div class="px-3 sm:px-4 pb-3 sm:pb-4 pt-0">
-                    <!-- Bouton Réinitialiser -->
-                    <button
-                        onclick="resetEmployeeFilter()"
-                        class="w-full sm:w-auto mb-3 px-3 py-1.5 text-xs sm:text-sm text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors flex items-center justify-center sm:justify-start"
+            <div class="mb-4">
+                <div class="relative">
+                    <input
+                        type="text"
+                        id="employeeSearchInput"
+                        placeholder="Rechercher un employé..."
+                        class="w-full px-4 py-2 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                        oninput="filterEmployeeList(this.value)"
                     >
-                        <i class="fas fa-redo mr-1.5"></i>Réinitialiser
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+                ${letters.map(letter => `
+                    <button
+                        onclick="scrollToLetter('${letter}')"
+                        class="px-3 py-1 text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-blue-500 hover:text-white transition-colors"
+                    >
+                        ${letter}
                     </button>
+                `).join('')}
+            </div>
 
-                    <!-- Barre de recherche -->
-                    <div class="mb-3">
-                        <div class="relative">
-                            <input
-                                type="text"
-                                id="employeeSearchInput"
-                                placeholder="Rechercher..."
-                                class="w-full px-3 sm:px-4 py-2 pl-9 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                                oninput="filterEmployeeList(this.value)"
-                            >
-                            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"></i>
+            <div id="employeeList" class="max-h-64 overflow-y-auto space-y-2">
+                ${letters.map(letter => `
+                    <div id="letter-${letter}" class="employee-group">
+                        <div class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 sticky top-0 bg-white dark:bg-gray-800 py-1">
+                            ${letter}
                         </div>
-                    </div>
-
-                    <!-- Lettres -->
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        ${letters.map(letter => `
+                        ${groupedEmployees[letter].map(emp => `
                             <button
-                                onclick="scrollToLetter('${letter}')"
-                                class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-blue-500 hover:text-white transition-colors"
+                                onclick="selectEmployee(${emp.id}, '${emp.prenom} ${emp.nom}')"
+                                data-employee-id="${emp.id}"
+                                data-employee-name="${emp.prenom} ${emp.nom}"
+                                class="employee-filter-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-sm ${currentEmployeeFilter === emp.id ? 'bg-blue-100 dark:bg-blue-900/30 border-l-4 border-blue-500' : ''}"
                             >
-                                ${letter}
+                                <i class="fas fa-user mr-2 text-gray-400"></i>
+                                <span class="text-gray-900 dark:text-white">${emp.prenom} ${emp.nom}</span>
+                                <span class="text-xs text-gray-500 ml-2">(${emp.matricule})</span>
                             </button>
                         `).join('')}
                     </div>
-
-                    <!-- Liste -->
-                    <div id="employeeList" class="max-h-48 sm:max-h-64 overflow-y-auto space-y-2">
-                        ${letters.map(letter => `
-                            <div id="letter-${letter}" class="employee-group">
-                                <div class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 sticky top-0 bg-white dark:bg-gray-800 py-1">
-                                    ${letter}
-                                </div>
-                                ${groupedEmployees[letter].map(emp => `
-                                    <button
-                                        onclick="selectEmployee(${emp.id}, '${emp.prenom} ${emp.nom}')"
-                                        data-employee-id="${emp.id}"
-                                        data-employee-name="${emp.prenom} ${emp.nom}"
-                                        class="employee-filter-btn w-full text-left px-2 sm:px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-xs ${currentEmployeeFilter === emp.id ? 'bg-blue-100 dark:bg-blue-900/30 border-l-4 border-blue-500' : ''}"
-                                    >
-                                        <i class="fas fa-user mr-2 text-gray-400 text-xs"></i>
-                                        <span class="text-gray-900 dark:text-white">${emp.prenom} ${emp.nom}</span>
-                                        <span class="text-xs text-gray-500 ml-1">(${emp.matricule})</span>
-                                    </button>
-                                `).join('')}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
+                `).join('')}
             </div>
         </div>
     `;
 }
 
-// Fonction toggle
-function toggleEmployeeFilter() {
-    const content = document.getElementById('employeeFilterContent');
-    const icon = document.getElementById('employeeFilterToggleIcon');
-
-    if (content && icon) {
-        content.classList.toggle('hidden');
-        icon.classList.toggle('rotate-180');
-    }
-}
 // =============================================
 // FONCTIONS DE FILTRE PAR EMPLOYÉ
 // =============================================
