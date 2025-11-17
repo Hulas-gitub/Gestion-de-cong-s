@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileUsersController;
 use App\Http\Controllers\TypeCongesController;
 use App\Http\Controllers\DashboardChefController;
 use App\Http\Controllers\DashboardEmployesController;
+use App\Http\Controllers\CalendrierEmployesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -111,10 +112,17 @@ Route::middleware(['auth', 'check.status'])->group(function () {
     Route::get('/calendrier-employers', function () {
         return view('employes.calendrier-employers');
     })->name('calendrier-employers');
+// Route pour afficher la page du calendrier
+Route::get('/calendrier-employers', [CalendrierEmployesController::class, 'index'])
+    ->name('calendrier-employers');
 
-    Route::get('/informations', function () {
-        return view('employes.informations');
-    })->name('informations');
+// Route AJAX pour récupérer les données du calendrier
+Route::get('/calendrier-employers/data', [CalendrierEmployesController::class, 'getData'])
+    ->name('calendrier-employers.data');
+
+// Route optionnelle pour les statistiques détaillées
+Route::get('/calendrier-employers/statistiques', [CalendrierEmployesController::class, 'getStatistiques'])
+    ->name('calendrier-employers.statistiques');
 
     // ========== GESTION DU PROFIL EMPLOYÉ ==========
     Route::get('/profile', [ProfileUsersController::class, 'index'])->name('profile');

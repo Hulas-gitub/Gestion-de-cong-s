@@ -548,7 +548,6 @@
 
  <script src="{{asset ('assets/javascript/dashboard-admin.js') }}"></script>
        <script src="{{ asset('assets/javascript/config.js') }}"></script>
-    <script src="{{ asset('assets/javascript/dashboard-manager.js') }}"></script>
   <script src="{{ asset('assets/javascript/logout.js') }}"></script>
   <!-- Bibliothèques pour l'export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
