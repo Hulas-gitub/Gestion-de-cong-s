@@ -168,8 +168,6 @@ async function chargerDonneesConges() {
             afficherStatistiquesConges();
             renderCalendar();
             afficherLegende();
-
-            notyf.success('Calendrier chargé avec succès');
         } else {
             throw new Error(result.message);
         }
@@ -609,7 +607,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     setInterval(updateDateTime, 1000);
 
     setTimeout(() => {
-        notyf.success('Calendrier des congés initialisé');
     }, 1000);
 
     const themeToggle = document.getElementById('theme-toggle');

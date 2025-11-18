@@ -611,3 +611,23 @@
 
 </body>
 </html>
+
+
+Tu vois ce code en faite asse pour l'admin pour le dashord de l'admin qui recupères les informations un peu dans tous les departements.
+mais en t'inspirant du code de l'adminon vas faire le controler du chef de departement pour  les paneaux indicatifs
+I:
+1-recuperer toutes les demande en atente des employé de son departement dont il est chef
+2-recuperer le nombre total d'employer du departement dont il est le chef avec le nom du departement en question
+3-recuperer le nombre de demande total de congé validés selon le mois de l'année en cours pour ses employés.
+4-recuperer le nombre total de des demandes refusés de ses employé 
+
+II: 
+1-pour les graphique avec chart.js alculer l'evolution des demandes par employé du departemnent dont le chef est  c'est à dire il conte le nombre de demandefa
+faites par l'employé à compté de nomvembre de l'année en cours sur les 12mois enxemple moussavous à une demande en janvier, petrin a une ou 2 demande en janvierou en fevrier ça depends
+en prsésant le type de congé mais on recupeère que les congés aprouvé pour mettres dans e graphique de chart.js du tableau de bord.
+2-graphique Type de congé recuperer tous les type de congés dans la table type congé avec les couleurs du calendrier de chaque type de congé pour afficher sur le graphique
+3-le graphique taux d'aprobation calcul le pourcentage des demande aprouvé sur une periode de 12mois de l'années en cours.
+
+j'ai déjà un code javascript qui gère les graphique dynamiqument mais statyqment avec le code html. 
+
+si tu as compris ce que je veux créons d'abord le controller pour le chef de partement afin de recuperer toutes ses informations qui lui concerne

@@ -397,15 +397,15 @@
                         </div>
                         <div class="space-y-2">
                             <div class="flex justify-between text-sm">
-                                <span class="text-gray-600 dark:text-gray-400">Consommés</span>
-                                <span class="font-semibold text-gray-900 dark:text-white" id="sick-leave-used">0 / 20 jours</span>
+                                <span class="text-gray-600 dark:text-gray-400"></span>
+                                <span class="font-semibold text-gray-900 dark:text-white" id="sick-leave-used"></span>
                             </div>
                             <div class="progress-bar-container">
                                 <div class="progress-bar" id="sick-leave-progress" style="width: 0%; background: linear-gradient(90deg, #ef4444, #f87171);"></div>
                             </div>
                             <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                                <span id="sick-leave-remaining">Restant: 20 jours</span>
-                                <span id="sick-leave-percentage">0%</span>
+                                <span id="sick-leave-remaining"></span>
+                                <span id="sick-leave-percentage"></span>
                             </div>
                         </div>
                     </div>

@@ -343,9 +343,9 @@
                         'conge_approuve' => ['border' => 'border-green-500', 'dot' => 'bg-green-500', 'badge' => 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300', 'icon' => '🟢', 'label' => 'Congé'],
                         'conge_refuse' => ['border' => 'border-red-500', 'dot' => 'bg-red-500', 'badge' => 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300', 'icon' => '🔴', 'label' => 'Congé'],
                         'conge_attente' => ['border' => 'border-yellow-500', 'dot' => 'bg-yellow-500', 'badge' => 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300', 'icon' => '🟡', 'label' => 'Congé'],
-                        'administrative' => ['border' => 'border-blue-500', 'dot' => 'bg-blue-500', 'badge' => 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300', 'icon' => '📑', 'label' => 'Admin'],
+                        'administrative' => ['border' => 'border-blue-500', 'dot' => 'bg-blue-500', 'badge' => 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300', 'icon' => '📑', 'label' => ''],
                         'rh' => ['border' => 'border-purple-500', 'dot' => 'bg-purple-500', 'badge' => 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300', 'icon' => '🎉', 'label' => 'RH'],
-                        'reunion' => ['border' => 'border-orange-500', 'dot' => 'bg-orange-500', 'badge' => 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300', 'icon' => '📢', 'label' => 'Admin']
+                        'reunion' => ['border' => 'border-orange-500', 'dot' => 'bg-orange-500', 'badge' => 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300', 'icon' => '📢', 'label' => '']
                     ];
                 @endphp
 
@@ -369,14 +369,6 @@
                                            title="Télécharger le document">
                                             <i class="fas fa-download"></i>
                                         </a>
-                                    @endif
-                                    @if(!$notification->lu)
-                                        <form action="{{ route('employes.dashboard.api.notifications.marquerLue', $notification->id) }}" method="POST" class="inline">
-                                            @csrf
-                                            <button type="submit" class="text-gray-400 hover:text-gray-600 text-xs" title="Marquer comme lu">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </form>
                                     @endif
                                 </div>
                             </div>
