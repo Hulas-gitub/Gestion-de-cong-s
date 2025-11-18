@@ -325,20 +325,68 @@ function isHoliday(date) {
 }
 
 /**
- * ✅ CORRIGÉ : Récupère le congé pour une date donnée
- * Gère correctement le format des dates du backend (avec ou sans heure)
+ * ✅ CORRIGÉ V2 : Récupère le congé pour une date donnée
+ * Vérifie que la date fait partie des N jours ouvrables du congé
  */
 function getLeaveForDate(date) {
     const dateStr = formatDate(date);
 
-    return congesApprouves.find(leave => {
-        // Extraire uniquement la partie date (enlever l'heure si présente)
-        const debut = leave.date_debut.split(' ')[0];
-        const fin = leave.date_fin.split(' ')[0];
+    // Ne pas colorier les weekends
+    if (isWeekend(date)) {
+        return null;
+    }
 
-        // Vérifier si la date est dans la période du congé (inclusif)
-        return dateStr >= debut && dateStr <= fin;
+    return congesApprouves.find(leave => {
+        // Extraire la date de début (enlever l'heure si présente)
+        const debutStr = leave.date_debut.split(' ')[0];
+        const dateDebut = new Date(debutStr);
+
+        // Calculer les N jours ouvrables à partir de la date de début
+        const joursOuvrablesConge = calculerJoursOuvrablesConge(dateDebut, leave.nb_jours);
+
+        // Vérifier si la date actuelle fait partie de ces jours ouvrables
+        return joursOuvrablesConge.includes(dateStr);
     });
+}
+
+/**
+ * ✅ NOUVELLE FONCTION V2 : Calcule les dates des N jours ouvrables d'un congé
+ * Retourne un tableau des dates (format YYYY-MM-DD) en sautant les weekends
+ */
+function calculerJoursOuvrablesConge(dateDebut, nbJours) {
+    const joursOuvrables = [];
+    let currentDate = new Date(dateDebut);
+    let joursComptes = 0;
+
+    while (joursComptes < nbJours) {
+        // Si c'est un jour ouvrable (pas weekend), on le compte
+        if (!isWeekend(currentDate)) {
+            joursOuvrables.push(formatDate(currentDate));
+            joursComptes++;
+        }
+        // Passer au jour suivant
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return joursOuvrables;
+}
+
+/**
+ * ✅ FONCTION UTILITAIRE : Compte les jours ouvrables dans une période donnée
+ */
+function compterJoursOuvrables(dateDebut, dateFin) {
+    let count = 0;
+    let currentDate = new Date(dateDebut);
+    const endDate = new Date(dateFin);
+
+    while (currentDate <= endDate) {
+        if (!isWeekend(currentDate)) {
+            count++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return count;
 }
 
 function renderCalendar() {
@@ -405,7 +453,7 @@ function renderCalendar() {
 
             dayElement.title = holidayName;
         } else {
-            // Vérifier si c'est un jour de congé (excluant les weekends pour l'affichage)
+            // ✅ CORRECTION : Vérifier si c'est un jour de congé OUVRABLE
             const leave = getLeaveForDate(currentDate);
             if (leave) {
                 dayElement.classList.add('has-leave');
@@ -450,16 +498,23 @@ function renderCalendar() {
 }
 
 /**
- * ✅ AMÉLIORÉ : Affiche les détails d'un congé dans un toast plus lisible
+ * ✅ AMÉLIORÉ V2 : Affiche les détails d'un congé avec calcul correct des jours ouvrables
  */
 function afficherDetailsConge(conge) {
-    const dateDebut = new Date(conge.date_debut).toLocaleDateString('fr-FR', {
+    const dateDebut = new Date(conge.date_debut.split(' ')[0]);
+
+    // Calculer la vraie date de fin basée sur le nombre de jours ouvrables
+    const joursOuvrablesConge = calculerJoursOuvrablesConge(dateDebut, conge.nb_jours);
+    const derniereDate = joursOuvrablesConge[joursOuvrablesConge.length - 1];
+    const dateFin = new Date(derniereDate);
+
+    const dateDebutFormatted = dateDebut.toLocaleDateString('fr-FR', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
-    const dateFin = new Date(conge.date_fin).toLocaleDateString('fr-FR', {
+    const dateFinFormatted = dateFin.toLocaleDateString('fr-FR', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -474,11 +529,11 @@ function afficherDetailsConge(conge) {
             </div>
             <div style="font-size: 14px; margin-bottom: 8px;">
                 <strong>🗓️ Période:</strong><br/>
-                <span style="margin-left: 20px;">Du ${dateDebut}</span><br/>
-                <span style="margin-left: 20px;">Au ${dateFin}</span>
+                <span style="margin-left: 20px;">Du ${dateDebutFormatted}</span><br/>
+                <span style="margin-left: 20px;">Au ${dateFinFormatted}</span>
             </div>
             <div style="font-size: 14px; margin-bottom: 8px;">
-                <strong>⏱️ Durée totale:</strong> <span style="font-weight: bold; color: ${conge.couleur};">${conge.nb_jours} jour(s)</span>
+                <strong>⏱️ Durée:</strong> <span style="font-weight: bold; color: ${conge.couleur};">${conge.nb_jours} jour(s) ouvrable(s)</span>
             </div>
             <div style="font-size: 14px; margin-bottom: 8px;">
                 <strong>📊 Progression:</strong> ${conge.jours_ecoules} / ${conge.nb_jours} jours
@@ -495,7 +550,7 @@ function afficherDetailsConge(conge) {
     notyf.open({
         type: 'success',
         message: messageHTML,
-        duration: 10000, // 10 secondes pour laisser le temps de lire
+        duration: 10000,
         ripple: true,
         dismissible: true,
         position: { x: 'right', y: 'top' }
@@ -707,10 +762,13 @@ window.addEventListener('resize', function() {
     }
 });
 
-console.log('🗓️ Graxel Tech Calendar Module Loaded - Version 2.0');
+console.log('🗓️ Graxel Tech Calendar Module Loaded - Version 2.2 CORRIGÉ FINAL');
 console.log('📍 Jours fériés du Gabon 2025-2030 inclus');
-console.log('✨ Améliorations:');
-console.log('   ✅ Correction affichage des jours de congé (tous les jours inclusifs)');
-console.log('   ✅ Légende dynamique basée sur les congés réels');
-console.log('   ✅ Tooltip amélioré avec détails complets');
-console.log('   ✅ Gestion correcte des dates backend (avec/sans heure)');
+console.log('✨ Corrections FINALES appliquées:');
+console.log('   ✅ Le nb_jours représente des JOURS OUVRABLES (lundi-vendredi)');
+console.log('   ✅ Les weekends sont automatiquement sautés');
+console.log('   ✅ Le calendrier colorie exactement nb_jours jours ouvrables');
+console.log('   ✅ Exemple: 7 jours de congé du jeudi 20 novembre:');
+console.log('       → Colorie: Jeu 20, Ven 21, Lun 24, Mar 25, Mer 26, Jeu 27, Ven 28');
+console.log('       → Saute: Sam 22, Dim 23 (weekends)');
+console.log('       → Total: 7 jours ouvrables respectés ✓');

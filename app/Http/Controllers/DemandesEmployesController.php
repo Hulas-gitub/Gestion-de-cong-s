@@ -32,50 +32,9 @@ class DemandesEmployesController extends Controller
     /**
      * Afficher la page des congés de l'employé avec ses demandes
      */
-  public function index()
-{
-    $user = Auth::user();
-    // Récupérer toutes les demandes de l'employé
-    $demandes = DemandeConge::where('user_id', $user->id_user)
-        ->with(['validateur', 'typeConge'])
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-    // Calculer le solde disponible
-    $soldeDisponible = $this->calculerSoldeDisponible($user);
-
-    // Si la requête est AJAX, retourner du JSON
-    if (request()->ajax() || request()->wantsJson()) {
-        return response()->json([
-            'success' => true,
-            'demandes' => $demandes,
-            'soldeDisponible' => $soldeDisponible
-        ]);
-    }
-
-    // Sinon, retourner la vue normale
-    $roles = Role::all();
-    $allDepartements = Departement::all();
-    $users = User::all();
-    $typesConges = TypeConge::where('actif', 1)->get();
-
-    return view('employes.conges-employers', compact(
-        'demandes',
-        'soldeDisponible',
-        'roles',
-        'allDepartements',
-        'users',
-        'typesConges'
-    ));
-}
-/**
- * Récupérer les données des demandes en AJAX
- */
-public function getData()
-{
-    try {
+    public function index()
+    {
         $user = Auth::user();
-
         // Récupérer toutes les demandes de l'employé
         $demandes = DemandeConge::where('user_id', $user->id_user)
             ->with(['validateur', 'typeConge'])
@@ -85,24 +44,67 @@ public function getData()
         // Calculer le solde disponible
         $soldeDisponible = $this->calculerSoldeDisponible($user);
 
-        return response()->json([
-            'success' => true,
-            'demandes' => $demandes,
-            'soldeDisponible' => $soldeDisponible
-        ]);
+        // Si la requête est AJAX, retourner du JSON
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'demandes' => $demandes,
+                'soldeDisponible' => $soldeDisponible
+            ]);
+        }
 
-    } catch (\Exception $e) {
-        Log::error('Erreur récupération données demandes: ' . $e->getMessage());
-        return response()->json([
-            'success' => false,
-            'message' => 'Erreur lors du chargement des données'
-        ], 500);
+        // Sinon, retourner la vue normale
+        $roles = Role::all();
+        $allDepartements = Departement::all();
+        $users = User::all();
+        $typesConges = TypeConge::where('actif', 1)->get();
+
+        return view('employes.conges-employers', compact(
+            'demandes',
+            'soldeDisponible',
+            'roles',
+            'allDepartements',
+            'users',
+            'typesConges'
+        ));
     }
-}
+
+    /**
+     * Récupérer les données des demandes en AJAX
+     */
+    public function getData()
+    {
+        try {
+            $user = Auth::user();
+
+            // Récupérer toutes les demandes de l'employé
+            $demandes = DemandeConge::where('user_id', $user->id_user)
+                ->with(['validateur', 'typeConge'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // Calculer le solde disponible
+            $soldeDisponible = $this->calculerSoldeDisponible($user);
+
+            return response()->json([
+                'success' => true,
+                'demandes' => $demandes,
+                'soldeDisponible' => $soldeDisponible
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Erreur récupération données demandes: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du chargement des données'
+            ], 500);
+        }
+    }
+
     /**
      * Créer une nouvelle demande de congé
      */
-   public function store(Request $request)
+    public function store(Request $request)
     {
         try {
             $user = Auth::user();
@@ -159,13 +161,13 @@ public function getData()
 
             $typeCongeNom = strtolower($typeConge->nom_type);
 
-            // Calculer le nombre de jours (excluant weekends et jours fériés)
-            $nbJours = $this->calculerNombreJours($validated['date_debut'], $validated['date_fin']);
+            // ✅ CALCUL DU NOMBRE DE JOURS : TOUS LES JOURS CALENDAIRES (weekends inclus)
+            $nbJours = $this->calculerNombreJoursCalendaires($validated['date_debut'], $validated['date_fin']);
 
             if ($nbJours <= 0) {
                 return response()->json([
                     'success' => false,
-                    'message' => '❌ Aucun jour ouvré dans la période sélectionnée.'
+                    'message' => '❌ La période sélectionnée est invalide.'
                 ], 422);
             }
 
@@ -535,195 +537,195 @@ public function getData()
         }
     }
 
-/**
- * Modifier une demande de congé
- */
-public function modifier(Request $request, $id)
-{
-    try {
-        $user = Auth::user();
-        $demande = DemandeConge::where('id_demande', $id)
-            ->where('user_id', $user->id_user)
-            ->firstOrFail();
+    /**
+     * Modifier une demande de congé
+     */
+    public function modifier(Request $request, $id)
+    {
+        try {
+            $user = Auth::user();
+            $demande = DemandeConge::where('id_demande', $id)
+                ->where('user_id', $user->id_user)
+                ->firstOrFail();
 
-        // Vérifier que le congé n'a pas encore commencé
-        $dateDebut = Carbon::parse($demande->date_debut);
-        $aujourdhui = Carbon::now();
+            // Vérifier que le congé n'a pas encore commencé
+            $dateDebut = Carbon::parse($demande->date_debut);
+            $aujourdhui = Carbon::now();
 
-        if ($aujourdhui->gte($dateDebut)) {
-            return response()->json([
-                'success' => false,
-                'message' => '❌ Impossible de modifier une demande dont le congé a déjà commencé.'
-            ], 422);
-        }
-
-        // ✅ VALIDATION AVEC DOCUMENT (optionnel)
-        $validated = $request->validate([
-            'date_debut' => 'required|date|after_or_equal:today',
-            'date_fin' => 'required|date|after_or_equal:date_debut',
-            'motif' => 'nullable|string|max:1000',
-            'document_justificatif' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240' // ← AJOUTÉ
-        ], [
-            'date_debut.required' => 'La date de début est obligatoire',
-            'date_debut.after_or_equal' => 'La date de début doit être aujourd\'hui ou dans le futur',
-            'date_fin.required' => 'La date de fin est obligatoire',
-            'date_fin.after_or_equal' => 'La date de fin doit être après ou égale à la date de début',
-            'document_justificatif.mimes' => 'Le document doit être au format: PDF, DOC, DOCX, JPG, JPEG ou PNG',
-            'document_justificatif.max' => 'Le document ne doit pas dépasser 10 MB'
-        ]);
-
-        // Récupérer le type de congé
-        $typeConge = $demande->typeConge;
-        $typeCongeNom = strtolower($typeConge->nom_type);
-
-        // Vérifier le délai de 7 jours pour congé payé
-        if ($typeCongeNom === 'congé payé' || $typeCongeNom === 'congés payés') {
-            $nouvelleDateDebut = Carbon::parse($validated['date_debut']);
-            $joursAvance = $aujourdhui->diffInDays($nouvelleDateDebut, false);
-
-            if ($joursAvance < 7) {
+            if ($aujourdhui->gte($dateDebut)) {
                 return response()->json([
                     'success' => false,
-                    'message' => '❌ Délai de préavis insuffisant. La nouvelle date doit être au moins 7 jours après aujourd\'hui.'
-                ], 422);
-            }
-        }
-
-        // Recalculer le nombre de jours
-        $nbJours = $this->calculerNombreJours($validated['date_debut'], $validated['date_fin']);
-
-        if ($nbJours <= 0) {
-            return response()->json([
-                'success' => false,
-                'message' => '❌ Aucun jour ouvré dans la période sélectionnée.'
-            ], 422);
-        }
-
-        // Vérifier la limite de 4 jours pour "Autre"
-        if ($typeCongeNom === 'autre' && $nbJours > 4) {
-            return response()->json([
-                'success' => false,
-                'message' => '❌ Le congé "Autre" est limité à 4 jours maximum.'
-            ], 422);
-        }
-
-        // Vérifier le solde pour congés payés et "Autre"
-        $typesDeductibles = ['congé payé', 'congés payés', 'autre'];
-        if (in_array($typeCongeNom, $typesDeductibles)) {
-            $soldeDisponible = $this->calculerSoldeDisponible($user);
-
-            // Ajouter les jours de la demande actuelle au solde
-            $soldeAvecDemandeActuelle = $soldeDisponible + $demande->nb_jours;
-
-            if ($soldeAvecDemandeActuelle < 2) {
-                return response()->json([
-                    'success' => false,
-                    'message' => '❌ Vous devez travailler au moins 1 mois complet pour accumuler des jours de congé.'
+                    'message' => '❌ Impossible de modifier une demande dont le congé a déjà commencé.'
                 ], 422);
             }
 
-            if ($nbJours > $soldeAvecDemandeActuelle) {
-                return response()->json([
-                    'success' => false,
-                    'message' => "❌ Solde insuffisant. Vous disposez de {$soldeAvecDemandeActuelle} jour(s)."
-                ], 422);
-            }
-        }
-
-        // Vérifier le chevauchement avec d'autres demandes
-        $chevauchement = DemandeConge::where('user_id', $user->id_user)
-            ->where('id_demande', '!=', $id)
-            ->whereIn('statut', ['En attente', 'Approuvé'])
-            ->where(function ($query) use ($validated) {
-                $query->whereBetween('date_debut', [$validated['date_debut'], $validated['date_fin']])
-                    ->orWhereBetween('date_fin', [$validated['date_debut'], $validated['date_fin']])
-                    ->orWhere(function ($q) use ($validated) {
-                        $q->where('date_debut', '<=', $validated['date_debut'])
-                          ->where('date_fin', '>=', $validated['date_fin']);
-                    });
-            })
-            ->exists();
-
-        if ($chevauchement) {
-            return response()->json([
-                'success' => false,
-                'message' => '❌ Vous avez déjà une demande de congé sur cette période.'
-            ], 422);
-        }
-
-        // Vérifier le quota de congés simultanés
-        if (!$this->verifierQuotaDepartement($user->departement_id, $validated['date_debut'], $validated['date_fin'], $demande->id_demande)) {
-            return response()->json([
-                'success' => false,
-                'message' => '❌ Le quota de congés simultanés est atteint pour cette période.'
-            ], 422);
-        }
-
-        // ✅ GESTION DU NOUVEAU DOCUMENT JUSTIFICATIF
-        $documentPath = $demande->document_justificatif; // Garder l'ancien par défaut
-
-        if ($request->hasFile('document_justificatif')) {
-            // Supprimer l'ancien document s'il existe
-            if ($demande->document_justificatif && Storage::disk('public')->exists($demande->document_justificatif)) {
-                Storage::disk('public')->delete($demande->document_justificatif);
-                Log::info('🗑️ Ancien document supprimé', ['chemin' => $demande->document_justificatif]);
-            }
-
-            // Uploader le nouveau document
-            $file = $request->file('document_justificatif');
-            $filename = time() . '_' . $user->matricule . '_' . $file->getClientOriginalName();
-            $documentPath = $file->storeAs('uploads/justificatifs', $filename, 'public');
-
-            Log::info('📎 Nouveau document uploadé', [
-                'fichier' => $filename,
-                'chemin' => $documentPath,
-                'taille' => $file->getSize()
+            // ✅ VALIDATION AVEC DOCUMENT (optionnel)
+            $validated = $request->validate([
+                'date_debut' => 'required|date|after_or_equal:today',
+                'date_fin' => 'required|date|after_or_equal:date_debut',
+                'motif' => 'nullable|string|max:1000',
+                'document_justificatif' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240'
+            ], [
+                'date_debut.required' => 'La date de début est obligatoire',
+                'date_debut.after_or_equal' => 'La date de début doit être aujourd\'hui ou dans le futur',
+                'date_fin.required' => 'La date de fin est obligatoire',
+                'date_fin.after_or_equal' => 'La date de fin doit être après ou égale à la date de début',
+                'document_justificatif.mimes' => 'Le document doit être au format: PDF, DOC, DOCX, JPG, JPEG ou PNG',
+                'document_justificatif.max' => 'Le document ne doit pas dépasser 10 MB'
             ]);
+
+            // Récupérer le type de congé
+            $typeConge = $demande->typeConge;
+            $typeCongeNom = strtolower($typeConge->nom_type);
+
+            // Vérifier le délai de 7 jours pour congé payé
+            if ($typeCongeNom === 'congé payé' || $typeCongeNom === 'congés payés') {
+                $nouvelleDateDebut = Carbon::parse($validated['date_debut']);
+                $joursAvance = $aujourdhui->diffInDays($nouvelleDateDebut, false);
+
+                if ($joursAvance < 7) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => '❌ Délai de préavis insuffisant. La nouvelle date doit être au moins 7 jours après aujourd\'hui.'
+                    ], 422);
+                }
+            }
+
+            // Recalculer le nombre de jours (TOUS LES JOURS CALENDAIRES)
+            $nbJours = $this->calculerNombreJoursCalendaires($validated['date_debut'], $validated['date_fin']);
+
+            if ($nbJours <= 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ La période sélectionnée est invalide.'
+                ], 422);
+            }
+
+            // Vérifier la limite de 5 jours pour "Autre"
+            if ($typeCongeNom === 'autre' && $nbJours > 5) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ Le congé "Autre" est limité à 5 jours maximum.'
+                ], 422);
+            }
+
+            // Vérifier le solde pour congés payés et "Autre"
+            $typesDeductibles = ['congé payé', 'congés payés', 'autre'];
+            if (in_array($typeCongeNom, $typesDeductibles)) {
+                $soldeDisponible = $this->calculerSoldeDisponible($user);
+
+                // Ajouter les jours de la demande actuelle au solde
+                $soldeAvecDemandeActuelle = $soldeDisponible + $demande->nb_jours;
+
+                if ($soldeAvecDemandeActuelle < 2) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => '❌ Vous devez travailler au moins 1 mois complet pour accumuler des jours de congé.'
+                    ], 422);
+                }
+
+                if ($nbJours > $soldeAvecDemandeActuelle) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "❌ Solde insuffisant. Vous disposez de {$soldeAvecDemandeActuelle} jour(s)."
+                    ], 422);
+                }
+            }
+
+            // Vérifier le chevauchement avec d'autres demandes
+            $chevauchement = DemandeConge::where('user_id', $user->id_user)
+                ->where('id_demande', '!=', $id)
+                ->whereIn('statut', ['En attente', 'Approuvé'])
+                ->where(function ($query) use ($validated) {
+                    $query->whereBetween('date_debut', [$validated['date_debut'], $validated['date_fin']])
+                        ->orWhereBetween('date_fin', [$validated['date_debut'], $validated['date_fin']])
+                        ->orWhere(function ($q) use ($validated) {
+                            $q->where('date_debut', '<=', $validated['date_debut'])
+                              ->where('date_fin', '>=', $validated['date_fin']);
+                        });
+                })
+                ->exists();
+
+            if ($chevauchement) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ Vous avez déjà une demande de congé sur cette période.'
+                ], 422);
+            }
+
+            // Vérifier le quota de congés simultanés
+            if (!$this->verifierQuotaDepartement($user->departement_id, $validated['date_debut'], $validated['date_fin'], $demande->id_demande)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ Le quota de congés simultanés est atteint pour cette période.'
+                ], 422);
+            }
+
+            // ✅ GESTION DU NOUVEAU DOCUMENT JUSTIFICATIF
+            $documentPath = $demande->document_justificatif; // Garder l'ancien par défaut
+
+            if ($request->hasFile('document_justificatif')) {
+                // Supprimer l'ancien document s'il existe
+                if ($demande->document_justificatif && Storage::disk('public')->exists($demande->document_justificatif)) {
+                    Storage::disk('public')->delete($demande->document_justificatif);
+                    Log::info('🗑️ Ancien document supprimé', ['chemin' => $demande->document_justificatif]);
+                }
+
+                // Uploader le nouveau document
+                $file = $request->file('document_justificatif');
+                $filename = time() . '_' . $user->matricule . '_' . $file->getClientOriginalName();
+                $documentPath = $file->storeAs('uploads/justificatifs', $filename, 'public');
+
+                Log::info('📎 Nouveau document uploadé', [
+                    'fichier' => $filename,
+                    'chemin' => $documentPath,
+                    'taille' => $file->getSize()
+                ]);
+            }
+
+            // ✅ MISE À JOUR DE LA DEMANDE
+            $demande->update([
+                'date_debut' => $validated['date_debut'],
+                'date_fin' => $validated['date_fin'],
+                'nb_jours' => $nbJours,
+                'motif' => $validated['motif'] ?? $demande->motif,
+                'document_justificatif' => $documentPath,
+                'statut' => 'En attente',
+                'validateur_id' => null,
+                'date_validation' => null,
+                'motif_refus' => null
+            ]);
+
+            Log::info('✅ Demande modifiée', [
+                'demande_id' => $demande->id_demande,
+                'employe' => $user->email,
+                'nb_jours' => $nbJours,
+                'document' => $documentPath ? 'Oui' : 'Non'
+            ]);
+
+            // Notifier le chef
+            $this->envoyerNotificationChef($demande, $user);
+
+            return response()->json([
+                'success' => true,
+                'message' => '✅ Votre demande a été modifiée et renvoyée pour approbation. Un email a été envoyé à votre chef.'
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '❌ Erreur de validation',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Erreur modification demande: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            return response()->json([
+                'success' => false,
+                'message' => '❌ Une erreur est survenue lors de la modification.'
+            ], 500);
         }
-
-        // ✅ MISE À JOUR DE LA DEMANDE
-        $demande->update([
-            'date_debut' => $validated['date_debut'],
-            'date_fin' => $validated['date_fin'],
-            'nb_jours' => $nbJours,
-            'motif' => $validated['motif'] ?? $demande->motif,
-            'document_justificatif' => $documentPath, // ← AJOUTÉ
-            'statut' => 'En attente',
-            'validateur_id' => null,
-            'date_validation' => null,
-            'motif_refus' => null
-        ]);
-
-        Log::info('✅ Demande modifiée', [
-            'demande_id' => $demande->id_demande,
-            'employe' => $user->email,
-            'nb_jours' => $nbJours,
-            'document' => $documentPath ? 'Oui' : 'Non'
-        ]);
-
-        // Notifier le chef
-        $this->envoyerNotificationChef($demande, $user);
-
-        return response()->json([
-            'success' => true,
-            'message' => '✅ Votre demande a été modifiée et renvoyée pour approbation. Un email a été envoyé à votre chef.'
-        ]);
-
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return response()->json([
-            'success' => false,
-            'message' => '❌ Erreur de validation',
-            'errors' => $e->errors()
-        ], 422);
-    } catch (\Exception $e) {
-        Log::error('Erreur modification demande: ' . $e->getMessage());
-        Log::error('Stack trace: ' . $e->getTraceAsString());
-        return response()->json([
-            'success' => false,
-            'message' => '❌ Une erreur est survenue lors de la modification.'
-        ], 500);
     }
-}
 
     /**
      * Signaler un retour anticipé
@@ -741,8 +743,8 @@ public function modifier(Request $request, $id)
                 'nouvelle_date_fin' => 'required|date|before:' . $demande->date_fin . '|after_or_equal:' . $demande->date_debut
             ]);
 
-            // Recalculer le nombre de jours réellement pris
-            $nouveauxJours = $this->calculerNombreJours($demande->date_debut, $validated['nouvelle_date_fin']);
+            // Recalculer le nombre de jours réellement pris (TOUS LES JOURS CALENDAIRES)
+            $nouveauxJours = $this->calculerNombreJoursCalendaires($demande->date_debut, $validated['nouvelle_date_fin']);
 
             $demande->update([
                 'date_fin' => $validated['nouvelle_date_fin'],
@@ -781,20 +783,32 @@ public function modifier(Request $request, $id)
     }
 
     /**
-     * Calculer le nombre de jours ouvrés (excluant weekends et jours fériés)
+     * ✅ NOUVEAU : Calculer le nombre de jours CALENDAIRES (tous les jours inclus)
+     * Du 20 au 26 = 7 jours (weekends et fériés inclus)
      */
-    private function calculerNombreJours($dateDebut, $dateFin)
+    private function calculerNombreJoursCalendaires($dateDebut, $dateFin)
+    {
+        $debut = Carbon::parse($dateDebut);
+        $fin = Carbon::parse($dateFin);
+
+        // +1 car on compte les deux dates inclusivement
+        return $debut->diffInDays($fin) + 1;
+    }
+
+    /**
+     * ✅ MODIFIÉ : Calculer le nombre de jours OUVRÉS (pour le calcul du solde uniquement)
+     * Exclut UNIQUEMENT les weekends (pas les jours fériés sauf si férié = weekend)
+     */
+    private function calculerNombreJoursOuvres($dateDebut, $dateFin)
     {
         $debut = Carbon::parse($dateDebut);
         $fin = Carbon::parse($dateFin);
         $jours = 0;
 
-        // Jours fériés du Gabon
-        $joursFeries = $this->getJoursFeriesGabon();
-
+        // Parcourir chaque jour de la période
         while ($debut->lte($fin)) {
-            // Vérifier si c'est un jour ouvré (pas weekend, pas férié)
-            if (!$debut->isWeekend() && !in_array($debut->format('Y-m-d'), $joursFeries)) {
+            // Compter uniquement les jours qui NE SONT PAS des weekends
+            if (!$debut->isWeekend()) {
                 $jours++;
             }
             $debut->addDay();
@@ -805,6 +819,8 @@ public function modifier(Request $request, $id)
 
     /**
      * Récupérer les jours fériés du Gabon (année en cours + 3 ans)
+     * NOTE : Cette fonction n'est plus utilisée pour le calcul du nombre de jours
+     * mais conservée pour référence future
      */
     private function getJoursFeriesGabon()
     {
@@ -826,10 +842,10 @@ public function modifier(Request $request, $id)
     }
 
     /**
-     * Calculer le solde de congés disponible
+     * ✅ MODIFIÉ : Calculer le solde de congés disponible
      * Règle : 1 mois de travail = 2 jours de congé
-     * Le calcul continue uniquement quand le compte est "Actif"
-     * Le solde s'affiche UNIQUEMENT quand l'employé a travaillé au moins 1 mois (donc >= 2 jours accumulés)
+     * Le calcul du solde utilise uniquement les jours OUVRÉS (sans weekends)
+     * Mais les jours fériés sont inclus dans le solde disponible
      */
     private function calculerSoldeDisponible($user)
     {
@@ -847,6 +863,7 @@ public function modifier(Request $request, $id)
         }
 
         // Soustraire les congés "Autre" et "Congés payés" déjà APPROUVÉS
+        // On utilise le nb_jours tel qu'enregistré (jours calendaires)
         $congesPris = DemandeConge::where('user_id', $user->id_user)
             ->where('statut', 'Approuvé')
             ->whereHas('typeConge', function ($query) {
@@ -918,16 +935,20 @@ public function modifier(Request $request, $id)
                             'employe' => $employe->email,
                             'demande_id' => $demande->id_demande
                         ]);
+                        return true;
                     } else {
                         Log::warning('⚠️ Échec envoi email au chef', [
                             'chef' => $chef->email,
                             'employe' => $employe->email
                         ]);
+                        return false;
                     }
                 }
             }
+            return false;
         } catch (\Exception $e) {
             Log::error('❌ Erreur envoi email chef: ' . $e->getMessage());
+            return false;
         }
     }
 }
