@@ -12,6 +12,7 @@
 /.vscode
 /.zed
 /auth.json
+/vendor
 Homestead.json
 Homestead.yaml
 Thumbs.db
