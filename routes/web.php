@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardEmployesController;
 use App\Http\Controllers\CalendrierEmployesController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Routes d'authentification (Invités uniquement)

@@ -37,16 +37,10 @@ class ProfileUsersController extends Controller
         try {
             $user = Auth::user()->load(['role', 'departement']);
 
-            // ✅ CORRECTION : Nettoyer et générer l'URL complète de la photo
+            // Générer l'URL complète de la photo
             $photoUrl = null;
-            if ($user->photo_url) {
-                // Nettoyer le chemin (enlever les backslashes et préfixes incorrects)
-                $cleanPath = str_replace('\\', '/', $user->photo_url);
-                $cleanPath = preg_replace('/^storage\/app\/public\//', '', $cleanPath);
-
-                if (Storage::disk('public')->exists($cleanPath)) {
-                    $photoUrl = asset('storage/' . $cleanPath);
-                }
+            if ($user->photo_url && Storage::disk('public')->exists($user->photo_url)) {
+                $photoUrl = asset('storage/' . $user->photo_url);
             }
 
             return response()->json([
@@ -132,71 +126,60 @@ class ProfileUsersController extends Controller
     /**
      * Mettre à jour la photo de profil
      */
- public function updatePhoto(Request $request)
-{
-    try {
-        $user = Auth::user();
+    public function updatePhoto(Request $request)
+    {
+        try {
+            $user = Auth::user();
 
-        // Validation
-        $validator = Validator::make($request->all(), [
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ], [
-            'photo.required' => 'Veuillez sélectionner une photo',
-            'photo.image' => 'Le fichier doit être une image',
-            'photo.mimes' => 'L\'image doit être au format jpeg, png, jpg ou gif',
-            'photo.max' => 'L\'image ne doit pas dépasser 2MB',
-        ]);
+            // Validation
+            $validator = Validator::make($request->all(), [
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+            ], [
+                'photo.required' => 'Veuillez sélectionner une photo',
+                'photo.image' => 'Le fichier doit être une image',
+                'photo.mimes' => 'L\'image doit être au format jpeg, png, jpg ou gif',
+                'photo.max' => 'L\'image ne doit pas dépasser 2MB',
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            // Supprimer l'ancienne photo si elle existe
+            if ($user->photo_url && Storage::disk('public')->exists($user->photo_url)) {
+                Storage::disk('public')->delete($user->photo_url);
+            }
+
+            // Enregistrer la nouvelle photo
+            $photo = $request->file('photo');
+            $filename = time() . '_' . $user->matricule . '.' . $photo->getClientOriginalExtension();
+            $path = $photo->storeAs('uploads/profile', $filename, 'public');
+
+            // Mettre à jour l'utilisateur
+            $user->update([
+                'photo_url' => $path
+            ]);
+
+            $photoUrl = asset('storage/' . $path);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Photo de profil mise à jour avec succès',
+                'photo_url' => $photoUrl
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la mise à jour de la photo: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $validator->errors()->first()
-            ], 422);
+                'message' => 'Erreur lors de la mise à jour de la photo'
+            ], 500);
         }
-
-        // Supprimer l'ancienne photo si elle existe
-        if ($user->photo_url) {
-            $oldPath = str_replace('\\', '/', $user->photo_url);
-            if (Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
-            }
-        }
-
-        // Enregistrer la nouvelle photo
-        $photo = $request->file('photo');
-        $filename = time() . '_' . $user->matricule . '.' . $photo->getClientOriginalExtension();
-
-        // ✅ IMPORTANT : Utiliser putFileAs au lieu de storeAs pour éviter les problèmes de chemin
-        Storage::disk('public')->putFileAs(
-            'uploads/profile',
-            $photo,
-            $filename
-        );
-
-        // ✅ Construire le chemin avec des slashes normaux
-        $path = 'uploads/profile/' . $filename;
-
-        // Mettre à jour l'utilisateur
-        $user->update([
-            'photo_url' => $path
-        ]);
-
-        $photoUrl = asset('storage/' . $path);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Photo de profil mise à jour avec succès',
-            'photo_url' => $photoUrl
-        ]);
-
-    } catch (\Exception $e) {
-        Log::error('Erreur lors de la mise à jour de la photo: ' . $e->getMessage());
-        return response()->json([
-            'success' => false,
-            'message' => 'Erreur lors de la mise à jour de la photo'
-        ], 500);
     }
-}
+
     /**
      * Supprimer la photo de profil
      */
@@ -205,14 +188,8 @@ class ProfileUsersController extends Controller
         try {
             $user = Auth::user();
 
-            // ✅ CORRECTION : Nettoyer le chemin avant suppression
-            if ($user->photo_url) {
-                $cleanPath = str_replace('\\', '/', $user->photo_url);
-                $cleanPath = preg_replace('/^storage\/app\/public\//', '', $cleanPath);
-
-                if (Storage::disk('public')->exists($cleanPath)) {
-                    Storage::disk('public')->delete($cleanPath);
-                }
+            if ($user->photo_url && Storage::disk('public')->exists($user->photo_url)) {
+                Storage::disk('public')->delete($user->photo_url);
             }
 
             $user->update([
